@@ -31,6 +31,6 @@ As a site administrator, I want to easily update and manage the website, so that
 -Filled out Team Contract<br>
 -Created Github & Discord<br>
 -Created Jira (Link: https://group1se3350.atlassian.net/jira/software/projects/SE3350/boards/1 )<br>
--Created Confluence (Link: https://se3350group1.atlassian.net/wiki/home )<br>
+-Created Confluence (Link: https://group1se3350.atlassian.net/wiki/spaces/TEAM/overview )<br>
 <br>
 ## Week 2:<br>
