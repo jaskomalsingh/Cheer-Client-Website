@@ -34,9 +34,9 @@ As a site administrator, I want to easily update and manage the website, so that
 -Created Confluence (Link: https://group1se3350.atlassian.net/wiki/spaces/TEAM/overview )<br>
 <br>
 ## Week 2:<br>
--Update user stories
--Assign story points to each user story
--Assign each memeber user story(s) to work on
--Begin work on our assigned user stories
+-Update user stories<br>
+-Assign story points to each user story<br>
+-Assign each memeber user story(s) to work on<br>
+-Begin work on our assigned user stories<br>
 
 
