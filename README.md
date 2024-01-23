@@ -53,6 +53,13 @@ Photo Gallery with Content Management System<br>
 -As a registered user, I want chatroom functionality, so that I can communicate in real-time with other members and staff, fostering a sense of community and support.<br>
 -As an admin, I want to be able to monitor and manage the chatroom, so that I can ensure conversations are productive, respectful, and in line with community standards.<br>
 
+## Nice to Haves<br>
+### Payment System<br>
+-As a member, I want a secure payment system on the website, so that I can easily pay for memberships, programs, or events online.<br>
+-As an admin, I want to integrate a payment system, so that I can automate the collection of payments and streamline financial transactions.<br>
+### Payroll Calculator<br>
+-As a staff member, I want a payroll calculator accessible through the website, so that I can estimate my earnings and understand deductions.<br>
+-As an admin, I want a payroll calculator for my staff, so they can independently access information about their wages, which reduces queries to the HR department.<br>
 
 # Minutes:<br>
 ## Week 1:<br>
