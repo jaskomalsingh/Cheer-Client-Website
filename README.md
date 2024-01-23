@@ -31,7 +31,7 @@
 
 ## Should Haves<br>
 ### Form Builder System<br>
-- As an admin, I want a form builder system integrated into the website, so that I can easily create and customize waivers and other forms required for members to sign up for programs.<br>
+-As an admin, I want a form builder system integrated into the website, so that I can easily create and customize waivers and other forms required for members to sign up for programs.<br>
 ### Calendar System <br>
 -As an admin, I want to be able to create and manage events using a calendar system, so that I can schedule programs, events, or classes and keep members informed.<br>
 -As a member, I want to view a calendar of events and have the ability to sign up for these events through the website, so that I can participate in activities of my interest.<br>
