@@ -40,6 +40,20 @@
 -As a staff member, I want a clock-in/clock-out functionality on the website, so that I can easily record my working hours.<br>
 -As an admin, I want to track the working hours of staff through a clock-in/clock-out system on the website, so that I can manage staffing and payroll effectively.<br>
 
+## Could Haves<br>
+### Speech Button for Reading Screen Content <br>
+-As a user with accessibility needs or a preference for audio information, I want a speech button that reads out important information on the screen, so that I can understand content without reading text.
+Photo Gallery with Content Management System<br>
+-As a website admin, I want a photo gallery feature with a content management system, so that I can easily upload and organize photos to showcase our company's events and activities.<br>
+-As a website visitor, I want to view a photo gallery, so that I can visually engage with the company's events and community involvement.<br>
+### Company Review Section<br>
+-As a prospective client or member, I want to read reviews about the company, so that I can gauge the quality of services and community feedback.<br>
+-As an admin, I want the ability to manage reviews, including removing any that are inappropriate or do not meet our guidelines, to maintain the integrity of the feedback on our services.<br>
+### Chatroom Functionality<br>
+-As a registered user, I want chatroom functionality, so that I can communicate in real-time with other members and staff, fostering a sense of community and support.<br>
+-As an admin, I want to be able to monitor and manage the chatroom, so that I can ensure conversations are productive, respectful, and in line with community standards.<br>
+
+
 # Minutes:<br>
 ## Week 1:<br>
 -Created Initial Requirements & User Stories<br>
