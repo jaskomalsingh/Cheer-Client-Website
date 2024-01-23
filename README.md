@@ -42,8 +42,8 @@
 
 ## Could Haves<br>
 ### Speech Button for Reading Screen Content <br>
--As a user with accessibility needs or a preference for audio information, I want a speech button that reads out important information on the screen, so that I can understand content without reading text.
-Photo Gallery with Content Management System<br>
+-As a user with accessibility needs or a preference for audio information, I want a speech button that reads out important information on the screen, so that I can understand content without reading text.<br>
+### Photo Gallery with Content Management System<br>
 -As a website admin, I want a photo gallery feature with a content management system, so that I can easily upload and organize photos to showcase our company's events and activities.<br>
 -As a website visitor, I want to view a photo gallery, so that I can visually engage with the company's events and community involvement.<br>
 ### Company Review Section<br>
