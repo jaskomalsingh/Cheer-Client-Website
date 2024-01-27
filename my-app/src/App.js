@@ -1,24 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import {ContactPage} from './pages/ContactPage'
+import {ContentManagement1} from './pages/ContentManagement1'
+import {ContentManagement2} from './pages/ContentManagement2'
+import {ContentManagement3} from './pages/ContentManagement3'
+import {HomePage} from './pages/HomePage'
+import {NewsletterPopup} from './pages/NewsletterPopup'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    
+      <HomePage />
+    
   );
 }
 

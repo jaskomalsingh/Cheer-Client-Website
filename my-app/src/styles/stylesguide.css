@@ -1,0 +1,33 @@
+:root {
+    --black: rgba(0, 0, 0, 1);
+    --body-font-family: "NotoSans-Regular", Helvetica;
+    --body-font-size: 14px;
+    --body-font-style: normal;
+    --body-font-weight: 400;
+    --body-letter-spacing: 0px;
+    --body-line-height: 150%;
+    --button-font-family: "NotoSans-Regular", Helvetica;
+    --button-font-size: 14px;
+    --button-font-style: normal;
+    --button-font-weight: 400;
+    --button-letter-spacing: 0px;
+    --button-line-height: 139.9999976158142%;
+    --gray: rgba(166, 166, 166, 1);
+    --h-3-font-family: "NotoSans-Bold", Helvetica;
+    --h-3-font-size: 16px;
+    --h-3-font-style: normal;
+    --h-3-font-weight: 700;
+    --h-3-letter-spacing: 0px;
+    --h-3-line-height: 125%;
+    --input-field-label-font-family: "Roboto-Regular", Helvetica;
+    --input-field-label-font-size: 9px;
+    --input-field-label-font-style: normal;
+    --input-field-label-font-weight: 400;
+    --input-field-label-letter-spacing: 1.8px;
+    --input-field-label-line-height: normal;
+    --white: rgba(255, 255, 255, 1);
+    --x-oc-gray-2: rgba(233, 236, 239, 1);
+    --x-oc-gray-3: rgba(222, 226, 230, 1);
+    --x-oc-gray-9: rgba(33, 37, 41, 1);
+  }
+  
