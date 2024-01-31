@@ -17,7 +17,7 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ContentManagement3 />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<SignIn />} />       
           <Route path="/adminusercontrol" element={<AdminUserControl/>} />
         </Routes>
