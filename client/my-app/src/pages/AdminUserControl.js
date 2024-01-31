@@ -32,6 +32,8 @@ function AdminUserControl() {
         email: user.email,
         isDeactivated: user.isDeactivated,
         role: user.role,
+        isVerified: user.isVerified,
+        isNews: user.isNews
       }),
     })
       .then(response => {
@@ -58,13 +60,28 @@ function AdminUserControl() {
           <p onClick={() => handleExpandClick(user._id)}>{user.username} - {user.email}</p>
           {expandedUserId === user._id && (
             <div>
-              <p>Verified: {user.isVerified ? 'Yes' : 'No'}</p>
+              <p>
+                Verified: 
+                <input
+                  type="checkbox"
+                  checked={user.isVerified}
+                  onChange={e => handleChange(index, { isVerified: e.target.checked })}
+                />
+              </p>
               <p>
                 Deactivated: 
                 <input
                   type="checkbox"
                   checked={user.isDeactivated}
                   onChange={e => handleChange(index, { isDeactivated: e.target.checked })}
+                />
+              </p>
+              <p>
+                Signed up forlnews Letter: 
+                <input
+                  type="checkbox"
+                  checked={user.isNews}
+                  onChange={e => handleChange(index, { isNews: e.target.checked })}
                 />
               </p>
               <p>
