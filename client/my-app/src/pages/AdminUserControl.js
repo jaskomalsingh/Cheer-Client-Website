@@ -33,7 +33,8 @@ function AdminUserControl() {
         isDeactivated: user.isDeactivated,
         role: user.role,
         isVerified: user.isVerified,
-        isNews: user.isNews
+        isNews: user.isNews,
+        fullname: user.fullname
       }),
     })
       .then(response => {
@@ -57,7 +58,7 @@ function AdminUserControl() {
       <h2>User Management</h2>
       {users.map((user, index) => (
         <div key={user._id}>
-          <p onClick={() => handleExpandClick(user._id)}>{user.username} - {user.email}</p>
+          <p onClick={() => handleExpandClick(user._id)}>{user.fullname} - {user.email}</p>
           {expandedUserId === user._id && (
             <div>
               <p>
