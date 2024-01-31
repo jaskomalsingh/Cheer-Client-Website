@@ -1,70 +1,13 @@
 import React from "react";
 import "../styles/homePage.css";
+import {Header} from "./Header";
+import {Footer} from "./Footer";
 
 export const HomePage = () => {
   return (
     <div className="home-page">
       <div className="div">
-        <div className="content">
-          <div className="overlap-group">
-            <div className="background">
-              <div className="overlap-group">
-                <div className="background-wrapper">
-                  <img className="img" alt="Background" src="https://c.animaapp.com/lPCECV6H/img/background.png" />
-                </div>
-                <div className="copyright">
-                  <img className="line" alt="Line" src="https://c.animaapp.com/lPCECV6H/img/line-5.svg" />
-                  <p className="text-wrapper">
-                    ©2024 SE3350 Group 1. All rights reserved | Terms of Service | Privacy Policy
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="content-2">
-              <div className="logo">
-                <div className="logo-wrapper">
-                  <img className="logo-2" alt="Logo" src="https://c.animaapp.com/lPCECV6H/img/logo.svg" />
-                </div>
-              </div>
-              <div className="content-3">
-                <div className="div-2">
-                  <div className="title">
-                    <div className="text-wrapper-2">Product</div>
-                    <div className="rectangle" />
-                  </div>
-                  <div className="text">
-                    <div className="text-wrapper-3">C.H.E.E.R. Works</div>
-                    <div className="text-wrapper-4">C.H.E.E.R. Group</div>
-                    <div className="text-wrapper-4">C.H.E.E.R. Living</div>
-                    <div className="text-wrapper-4">C.H.E.E.R. Connections</div>
-                  </div>
-                </div>
-                <div className="element">
-                  <div className="title">
-                    <div className="text-wrapper-2">Company</div>
-                    <div className="rectangle" />
-                  </div>
-                  <div className="text">
-                    <div className="text-wrapper-3">About</div>
-                    <div className="text-wrapper-4">Page 1</div>
-                    <div className="text-wrapper-4">Page 2</div>
-                    <div className="text-wrapper-4">Page 3</div>
-                    <div className="text-wrapper-4">Page 4</div>
-                    <div className="text-wrapper-4">Contact Us</div>
-                  </div>
-                </div>
-                <div className="div-3">
-                  <div className="title">
-                    <div className="text-wrapper-2">{""}</div>
-                  </div>
-                  <button className="button">
-                    <div className="text-wrapper-5">Contact Us</div>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Footer />
         <div className="values">
           <div className="history">
             <div className="text-2">
@@ -82,7 +25,7 @@ export const HomePage = () => {
                 <div className="div-2">
                   <div className="text-wrapper-7">Founding and Purpose</div>
                   <p className="p">
-                    Founded in 1995, ElderCircle was established by a group of caregivers and activists to support
+                    Founded in 2021, OLLI was established by a group of caregivers and activists to support
                     seniors with intellectual disabilities, fostering a supportive community for them and their
                     families.
                   </p>
@@ -96,7 +39,7 @@ export const HomePage = () => {
                 <div className="div-2">
                   <div className="text-wrapper-7">Expansion of Services</div>
                   <p className="text-wrapper-8">
-                    ElderCircle initially offered support groups, then expanded to include assisted housing and
+                    OLLI initially offered support groups, then expanded to include assisted housing and
                     employment programs in the 2000s, enhancing seniors&#39; independence and engagement.
                   </p>
                 </div>
@@ -109,7 +52,7 @@ export const HomePage = () => {
                 <div className="div-2">
                   <div className="text-wrapper-7">Present</div>
                   <p className="text-wrapper-8">
-                    Today, ElderCircle is a leading example in inclusive senior care, continuously evolving to meet the
+                    Today, OLLI is a leading example in inclusive senior care, continuously evolving to meet the
                     needs of seniors and their families, staying true to its vision of a community-based supportive
                     network.
                   </p>
@@ -284,52 +227,9 @@ export const HomePage = () => {
         <div className="banner">
           <img className="image-3" alt="Image" src="https://c.animaapp.com/lPCECV6H/img/image-6.png" />
         </div>
-        <div className="overlap">
-          <header className="header">
-            <div className="ongoing-living-wrapper">
-              <p className="ongoing-living">Ongoing Living &amp; Learning Inc.</p>
-            </div>
-            <div className="menu-bar">
-              <div className="home-wrapper">
-                <div className="home">
-                  <div className="text-wrapper-22">About</div>
-                  <div className="ellipse" />
-                </div>
-              </div>
-              <div className="element-17">
-                <div className="home-2">
-                  <div className="text-wrapper-23">Page 1</div>
-                  <div className="ellipse-2" />
-                </div>
-              </div>
-              <div className="element-17">
-                <div className="home-2">
-                  <div className="text-wrapper-23">Page 2</div>
-                  <div className="ellipse-2" />
-                </div>
-              </div>
-              <div className="element-18">
-                <div className="text-wrapper-23">Page 3</div>
-                <div className="ellipse-2" />
-              </div>
-              <div className="element-18">
-                <div className="text-wrapper-23">Page 4</div>
-                <div className="ellipse-2" />
-              </div>
-              <div className="element-19">
-                <div className="text-wrapper-23">Contact</div>
-                <div className="ellipse-2" />
-              </div>
-            </div>
-            <button className="button-2">
-              <div className="content-12">
-                <div className="text-wrapper-24">Login</div>
-              </div>
-            </button>
-          </header>
-          <img className="image-4" alt="Image" src="https://c.animaapp.com/lPCECV6H/img/image-8@2x.png" />
+        <Header />
         </div>
       </div>
-    </div>
+    
   );
 };

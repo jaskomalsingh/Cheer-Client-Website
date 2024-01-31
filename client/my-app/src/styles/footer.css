@@ -1,0 +1,207 @@
+.footer .content {
+    margin-top: auto;
+    height: 489px;
+    left: -1px;
+    position: absolute;
+    flex-direction: column;
+    top: 3654px;
+    width: 1920px;
+  }
+  .footer .overlap-group {
+    height: 489px;
+    position: relative;
+  }
+  .footer .background {
+    height: 489px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 1920px;
+  }
+  .footer .background-wrapper {
+    background-color: #464f34;
+    height: 489px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 1920px;
+  }
+  .footer .img {
+    height: 489px;
+    left: 1px;
+    position: absolute;
+    top: 0;
+    width: 1919px;
+  }
+  .footer .copyright {
+    height: 44px;
+    left: 360px;
+    position: absolute;
+    top: 419px;
+    width: 1202px;
+  }
+
+  .footer .line {
+    height: 1px;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    top: -1px;
+    width: 1200px;
+  }
+  .footer .text-wrapper {
+    color: #ffffff;
+    font-family: "Lato-Regular", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    left: 351px;
+    letter-spacing: 0;
+    line-height: 23.6px;
+    position: absolute;
+    top: 20px;
+    white-space: nowrap;
+  }
+  .footer .content-2 {
+    align-items: flex-start;
+    display: flex;
+    gap: 290px;
+    left: 443px;
+    position: absolute;
+    top: 118px;
+    width: 1215px;
+  }
+  .footer .logo {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 171px;
+    position: relative;
+  }
+  
+  .footer .logo-wrapper {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 31px;
+    position: relative;
+    width: 181.29px;
+  }
+  
+  .footer .logo-2 {
+    flex: 0 0 auto;
+    margin-right: -259.71px;
+    position: relative;
+  }
+  .footer .content-3 {
+    align-items: flex-start;
+    display: flex;
+    gap: 99px;
+    position: relative;
+    width: 694px;
+  }
+  .footer .div-wrapper {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+  }
+  .footer .title {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 11px;
+    position: relative;
+  }
+  .footer .text-wrapper-2 {
+    color: #ffffff;
+    font-family: "Cabin-SemiBold", Helvetica;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 23.2px;
+    margin-top: -1px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+  .footer .rectangle {
+    background-color: #d87d56;
+    border-radius: 20px;
+    height: 3.1px;
+    position: relative;
+    width: 31.95px;
+  }
+  .footer .text {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    position: relative;
+  }
+  .footer .text-wrapper-3 {
+    color: #ffffff;
+    font-family: "Lato-Regular", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 23.6px;
+    margin-top: -1px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+  
+  .footer .text-wrapper-4 {
+    color: #ffffff;
+    font-family: "Lato-Regular", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 23.6px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+  .footer .element {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+  }
+  .footer .div-3 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+  }
+  .footer .button {
+    all: unset;
+    align-items: flex-start;
+    background-color: #ebebd3;
+    border-radius: 42px;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    padding: 15px 23px;
+    position: relative;
+  }
+  .footer .text-wrapper-5 {
+    color: #464f34;
+    font-family: "Lato-SemiBold", Helvetica;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 28.8px;
+    margin-top: -1px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }

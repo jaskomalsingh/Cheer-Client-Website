@@ -9,16 +9,18 @@
   .home-page .div {
     background-color: #ffffff;
     height: 3793px;
-    overflow: hidden;
     position: relative;
     width: 1919px;
   }
   
   .home-page .content {
+    
+    margin-top: auto;
     height: 489px;
     left: -1px;
     position: absolute;
-    top: 3304px;
+    flex-direction: column;
+    top: 3654px;
     width: 1920px;
   }
   
@@ -245,7 +247,7 @@
     gap: 117px;
     left: 360px;
     position: absolute;
-    top: 2533px;
+    top: 2740px;
     width: 1199px;
   }
   
@@ -531,7 +533,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    height: 243px;
+    height: 206px;
     margin-right: -0.14px;
     padding: 33px 23px;
     position: relative;
@@ -599,7 +601,7 @@
     gap: 10px;
     height: 1064px;
     left: 0;
-    padding: 50px 359px 170px;
+    padding: 50px 0px 170px;
     position: absolute;
     top: 1362px;
     width: 1919px;
@@ -752,7 +754,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    height: 417px;
+    height: 350px;
     padding: 49px 47px;
     position: relative;
     width: 386px;

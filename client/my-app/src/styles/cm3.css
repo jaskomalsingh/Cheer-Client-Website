@@ -304,14 +304,24 @@
     top: 0;
   }
   
-  .content-management .ellipse {
+  .content-management .new-button {
     background-color: #464f34;
     border-radius: 24px;
     height: 48px;
     position: relative;
     width: 48px;
   }
-  
+  .content-management .ellipse {
+    background-color: #d87d56;
+    border: 0.98px solid;
+    border-color: #e3ab9a;
+    border-radius: 4.33px;
+    height: 9px;
+    left: 0;
+    position: absolute;
+    top: 10px;
+    width: 9px;
+  }
   .content-management .icon-wrapper {
     align-items: center;
     display: inline-flex;
