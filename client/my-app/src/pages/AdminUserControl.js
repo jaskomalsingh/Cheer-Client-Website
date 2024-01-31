@@ -77,7 +77,7 @@ function AdminUserControl() {
                 />
               </p>
               <p>
-                Signed up forlnews Letter: 
+                Signed up for newsletter: 
                 <input
                   type="checkbox"
                   checked={user.isNews}
