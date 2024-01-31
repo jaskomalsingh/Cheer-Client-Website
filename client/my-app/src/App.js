@@ -9,6 +9,7 @@ import {ContentManagement3} from './pages/ContentManagement3'
 import {HomePage} from './pages/HomePage'
 import SignIn from './pages/SignIn.js';
 import {NewsletterPopup} from './pages/NewsletterPopup'
+import AdminUserControl from './pages/AdminUserControl.js';
 
 
 const App = () => {
@@ -18,7 +19,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<ContentManagement3 />} />
           <Route path="/signin" element={<SignIn />} />       
-
+          <Route path="/adminusercontrol" element={<AdminUserControl/>} />
         </Routes>
       </BrowserRouter>
     </div>

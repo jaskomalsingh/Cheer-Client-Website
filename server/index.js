@@ -44,7 +44,13 @@ run();
 const usersCollection = client.db(dbName).collection('Users');
 
 
-function validateInput(username, password, email) {
+function validateInput(username, password, email, role) {
+
+    const validRoles = ['Admin', 'User', 'Employee', 'VerifiedUser'];
+
+    if (validRoles.includes(role)) {
+        return 'Not Valid Role'
+    }
     if (!username || !password || !email) {
         return 'Please enter all required fields';
     }
@@ -78,9 +84,66 @@ async function sendVerificationEmail(email, token) {
     await transporter.sendMail(mailOptions);
 }
 
+authRouter.route('/getuser')
+    .get(async (req, res) => {
+        try {
+            const {email} = req.body;
+            const user = await usersCollection.findOne({email});
+            res.json(user)
+        } catch {
+            console.error('Error getting user', error);
+            res.status(500).send('Internal server error');
+        }
+        
+});
+
+authRouter.route('/getallusers')
+    .get(async (req, res) => {
+        try {
+            // Fetch all users from the collection
+            const users = await usersCollection.find({}).toArray(); // Convert the cursor to an array
+            res.json(users); // Send the array of users as a response
+        } catch (error) {
+            console.error('Error getting users:', error);
+            res.status(500).send('Internal server error');
+        }
+});
+
+authRouter.route('/updateuser')
+    .post(async (req, res) => {
+        try {
+            const { email, isDeactivated, role } = req.body;  // Destructure the fields from the request body
+
+            // Build the update object based on what's provided in the request
+            const updateFields = {};
+            if (isDeactivated !== undefined) updateFields.isDeactivated = isDeactivated;
+            if (role) updateFields.role = role;
+
+            // Ensure we have at least one field to update
+            if (Object.keys(updateFields).length === 0) {
+                return res.status(400).send('No valid fields provided for update');
+            }
+
+            // Update the user in the database
+            const result = await usersCollection.updateOne({ email }, { $set: updateFields });
+
+            // Check if a user was found and updated
+            if (result.matchedCount === 0) {
+                return res.status(404).send('User not found');
+            }
+
+            res.status(200).send('User updated successfully');
+        } catch (error) {
+            console.error('Error updating user:', error);
+            res.status(500).send('Internal server error');
+        }
+});
+
+
+
 authRouter.post('/signup', async (req, res) => {
     try {
-        const { username, password, email, ad, emp } = req.body;
+        const { username, password, email, role} = req.body;
 
         // Validate input
         const validationError = validateInput(username, password, email);
@@ -109,8 +172,7 @@ authRouter.post('/signup', async (req, res) => {
             isDeactivated: false,
             isVerified: false,
             verificationToken: token,
-            isAdmin: ad,
-            isEmployee: emp
+            role: role
         });
 
         res.status(200).send('User successfully registered');
