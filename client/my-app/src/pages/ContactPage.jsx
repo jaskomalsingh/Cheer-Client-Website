@@ -74,7 +74,7 @@
 
 import React, { useRef } from "react";
 import "../styles/contact.css";
-import { Header } from "./Header";
+import Header from "./Header";
 import { Footer } from "./Footer";
 import emailjs from 'emailjs-com';
 
