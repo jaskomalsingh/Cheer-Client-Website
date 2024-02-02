@@ -3,8 +3,27 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 1920px;
+    width: 100vw;
 }
+
+.header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around; /* This spreads out the nav items evenly */
+  }
+  
+ .header nav li {
+    display: flex;
+  }
+  
+ .header nav a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    /* You can add more styling here to suit your design */
+  }
 
 .header {
     -webkit-backdrop-filter: blur(21px) brightness(100%);
@@ -17,7 +36,7 @@
     padding: 40px 360px;
     position: absolute;
     top: 0;
-    width: 1920px;
+    width: 100%;
 }
 
 .header .ongoing-living-wrapper {

@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/homePage.css";
-import {Header} from "./Header";
+import Header from "./Header";
 import {Footer} from "./Footer";
 
 export const HomePage = () => {

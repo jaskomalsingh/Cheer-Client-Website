@@ -1,5 +1,5 @@
 import React from "react";
-import {Header} from "./Header";
+import Header from "./Header";
 import {Footer} from "./Footer";
 import {CMSideBar} from "./CMSideBar";
 import "../styles/cm3.css";

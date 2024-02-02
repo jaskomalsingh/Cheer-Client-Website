@@ -10,14 +10,20 @@ import {HomePage} from './pages/HomePage'
 import SignIn from './pages/SignIn.js';
 import {NewsletterPopup} from './pages/NewsletterPopup'
 import AdminUserControl from './pages/AdminUserControl.js';
+import Header from './pages/Header';
 
 
 const App = () => {
   return (
     <div>
       <BrowserRouter>
+        <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/cm1" element={<ContentManagement1 />} />
+          <Route path="/cm2" element={<ContentManagement2 />} />
+          <Route path="/cm3" element={<ContentManagement3 />} />
           <Route path="/signin" element={<SignIn />} />       
           <Route path="/adminusercontrol" element={<AdminUserControl/>} />
         </Routes>

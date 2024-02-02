@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useState, useEffect, Component } from "react";
 import "../styles/header.css";
+import HeaderPage from "./HeaderPage.jsx";
+import { Link, useLocation } from "react-router-dom";
 
-export const Header = () => {
+function Header() {
+    const [activePage, setActivePage] = useState("About");
+
+    //const isPageHighlighted = (page) => {
+    //    return activePage === page; 
+    //};
+
+    const location = useLocation();
+
+    const isPageHighlighted = (path) => {
+        // Assuming `to` is the path you pass to each HeaderPage component
+        return location.pathname === path;
+    };
+
+
+    const onClick = (page) => {
+        setActivePage(page);
+    };
+
     return (
         <div className="overlap">
             <header className="header">
@@ -9,44 +29,25 @@ export const Header = () => {
                     <p className="ongoing-living">Ongoing Living &amp; Learning Inc.</p>
                 </div>
                 <div className="menu-bar">
-                    <div className="home-wrapper">
-                        <div className="home">
-                            <div className="text-wrapper-22">About</div>
-                            <div className="ellipse" />
-                        </div>
-                    </div>
-                    <div className="element-17">
-                        <div className="home-2">
-                            <div className="text-wrapper-23">Page 1</div>
-                            <div className="ellipse-2" />
-                        </div>
-                    </div>
-                    <div className="element-17">
-                        <div className="home-2">
-                            <div className="text-wrapper-23">Page 2</div>
-                            <div className="ellipse-2" />
-                        </div>
-                    </div>
-                    <div className="element-18">
-                        <div className="text-wrapper-23">Page 3</div>
-                        <div className="ellipse-2" />
-                    </div>
-                    <div className="element-18">
-                        <div className="text-wrapper-23">Page 4</div>
-                        <div className="ellipse-2" />
-                    </div>
-                    <div className="element-19">
-                        <div className="text-wrapper-23">Contact</div>
-                        <div className="ellipse-2" />
-                    </div>
+                    <HeaderPage pageTitle="About" to="/" onClick={() => onClick("About")} selected={isPageHighlighted("/")}></HeaderPage>
+                    <HeaderPage pageTitle="CM1" to="/cm1" onClick={() => onClick("CM1")} selected={isPageHighlighted("/cm1")}></HeaderPage>
+                    <HeaderPage pageTitle="CM2" to="/cm2" onClick={() => onClick("CM2")} selected={isPageHighlighted("/cm2")}></HeaderPage>
+                    <HeaderPage pageTitle="CM3" to="/cm3" onClick={() => onClick("CM3")} selected={isPageHighlighted("/cm3")}></HeaderPage>
+                    <HeaderPage pageTitle="Admin" to="/adminusercontrol" onClick={() => onClick("Admin")} selected={isPageHighlighted("/adminusercontrol")}></HeaderPage>
+                    <HeaderPage pageTitle="Contact" to="/contact" onClick={() => onClick("Contact")} selected={isPageHighlighted("/contact")}></HeaderPage>
                 </div>
-                <button className="login-button">
-                    <div className="content-12">
-                        <div className="text-wrapper-24">Login</div>
-                    </div>
-                </button>
+                <Link to="/signin">
+                    <button className="login-button">
+                        <div className="content-12">
+                            <div className="text-wrapper-24">Login</div>
+                        </div>
+                    </button>
+                </Link>
             </header>
             <img className="image-4" alt="Image" src="https://c.animaapp.com/lPCECV6H/img/image-8@2x.png" />
         </div>
     )
 }
+
+
+export default Header;

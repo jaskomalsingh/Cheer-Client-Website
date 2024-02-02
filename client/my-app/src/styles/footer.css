@@ -5,7 +5,7 @@
     position: absolute;
     flex-direction: column;
     top: 3654px;
-    width: 1920px;
+    width: 100%;
   }
   .footer .overlap-group {
     height: 489px;
@@ -16,7 +16,7 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 1920px;
+    width: 100%;
   }
   .footer .background-wrapper {
     background-color: #464f34;
@@ -24,21 +24,23 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 1920px;
+    width: 100%;
   }
   .footer .img {
     height: 489px;
     left: 1px;
     position: absolute;
     top: 0;
-    width: 1919px;
+    width: 100%;
   }
   .footer .copyright {
     height: 44px;
-    left: 360px;
+    left: 50%;
+    transform: translateX(-50%);
     position: absolute;
     top: 419px;
-    width: 1202px;
+    width: 100%;
+    max-width: 1200px;
   }
 
   .footer .line {
@@ -47,7 +49,8 @@
     object-fit: cover;
     position: absolute;
     top: -1px;
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
   }
   .footer .text-wrapper {
     color: #ffffff;
@@ -65,10 +68,12 @@
     align-items: flex-start;
     display: flex;
     gap: 290px;
-    left: 443px;
+    left: 50%;
+    transform: translateX(-50%);
     position: absolute;
     top: 118px;
-    width: 1215px;
+    width: 100%;
+    max-width: 1200px;
   }
   .footer .logo {
     align-items: flex-start;

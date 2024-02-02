@@ -10,7 +10,7 @@
     background-color: #ffffff;
     height: 3793px;
     position: relative;
-    width: 1919px;
+    width: 100%;
   }
   
   .home-page .content {
@@ -21,7 +21,7 @@
     position: absolute;
     flex-direction: column;
     top: 3654px;
-    width: 1920px;
+    width: 100%;
   }
   
   .home-page .overlap-group {
@@ -34,16 +34,16 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 1920px;
+    width: 100%;
   }
-  
+
   .home-page .background-wrapper {
     background-color: #464f34;
     height: 489px;
     left: 0;
     position: absolute;
     top: 0;
-    width: 1920px;
+    width: 100%;
   }
   
   .home-page .img {
@@ -51,15 +51,17 @@
     left: 1px;
     position: absolute;
     top: 0;
-    width: 1919px;
+    width: 100%;
   }
   
   .home-page .copyright {
     height: 44px;
-    left: 360px;
+    left: 50%;
+    transform: translateX(-50%);
     position: absolute;
     top: 419px;
-    width: 1202px;
+    width: 100%;
+    max-width: 1200px;
   }
   
   .home-page .line {
@@ -74,7 +76,7 @@
   .home-page .text-wrapper {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     left: 351px;
     letter-spacing: 0;
@@ -88,10 +90,12 @@
     align-items: flex-start;
     display: flex;
     gap: 290px;
-    left: 443px;
+    left: 50%;
     position: absolute;
+    transform: translateX(-50%);
     top: 118px;
-    width: 1215px;
+    width: 100%;
+    max-width: 1200px;
   }
   
   .home-page .logo {
@@ -146,7 +150,7 @@
   .home-page .text-wrapper-2 {
     color: #ffffff;
     font-family: "Cabin-SemiBold", Helvetica;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 23.2px;
@@ -175,7 +179,7 @@
   .home-page .text-wrapper-3 {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 23.6px;
@@ -188,7 +192,7 @@
   .home-page .text-wrapper-4 {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 23.6px;
@@ -231,7 +235,7 @@
   .home-page .text-wrapper-5 {
     color: #464f34;
     font-family: "Lato-SemiBold", Helvetica;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 28.8px;
@@ -245,10 +249,12 @@
     align-items: flex-start;
     display: flex;
     gap: 117px;
-    left: 360px;
+    left: 50%;
+    transform: translateX(-50%);
     position: absolute;
     top: 2740px;
-    width: 1199px;
+    width: 1200px;
+    max-width: 95%;
   }
   
   .home-page .history {
@@ -285,7 +291,7 @@
   .home-page .history-2 {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 2.32px;
     line-height: 23.6px;
@@ -300,7 +306,7 @@
   .home-page .text-wrapper-6 {
     color: #181818;
     font-family: "Cabin-Bold", Helvetica;
-    font-size: 45px;
+    font-size: 2.8125rem;
     font-weight: 700;
     letter-spacing: 0;
     line-height: 52.2px;
@@ -347,7 +353,7 @@
   .home-page .text-wrapper-7 {
     color: #181818;
     font-family: "Cabin-SemiBold", Helvetica;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 23.2px;
@@ -360,7 +366,7 @@
   .home-page .p {
     color: #585566;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     height: 52.21px;
     letter-spacing: 0;
@@ -388,7 +394,7 @@
   .home-page .text-wrapper-8 {
     color: #585566;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 23.6px;
@@ -437,7 +443,7 @@
   .home-page .text-wrapper-9 {
     color: #181818;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 2.32px;
     line-height: 23.6px;
@@ -450,7 +456,7 @@
   .home-page .text-wrapper-10 {
     color: #181818;
     font-family: "Cabin-Bold", Helvetica;
-    font-size: 45px;
+    font-size: 2.8125rem;
     font-weight: 700;
     letter-spacing: 0;
     line-height: 52.2px;
@@ -472,7 +478,7 @@
   .home-page .at-o-l-l-i-our {
     color: #585566;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 23.6px;
@@ -516,7 +522,7 @@
   .home-page .text-wrapper-11 {
     color: #585566;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 23.6px;
@@ -543,7 +549,7 @@
   .home-page .text-wrapper-12 {
     color: #585566;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     height: 48.83px;
     letter-spacing: 0;
@@ -604,7 +610,7 @@
     padding: 50px 0px 170px;
     position: absolute;
     top: 1362px;
-    width: 1919px;
+    width: 100%;
   }
   
   .home-page .content-7 {
@@ -643,7 +649,7 @@
   .home-page .services {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 2.32px;
     line-height: 23.6px;
@@ -657,7 +663,7 @@
   .home-page .text-wrapper-13 {
     color: #181818;
     font-family: "Cabin-Bold", Helvetica;
-    font-size: 45px;
+    font-size: 2.8125rem;
     font-weight: 700;
     letter-spacing: 0;
     line-height: 52.2px;
@@ -726,7 +732,7 @@
   .home-page .text-wrapper-14 {
     color: #181818;
     font-family: "Cabin-SemiBold", Helvetica;
-    font-size: 25px;
+    font-size: 1.5625rem;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 29px;
@@ -739,7 +745,7 @@
   .home-page .text-wrapper-15 {
     color: #585566;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 23.6px;
@@ -780,7 +786,7 @@
   .home-page .text-wrapper-16 {
     color: #000000;
     font-family: "Cabin-SemiBold", Helvetica;
-    font-size: 25px;
+    font-size: 1.5625rem;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 29px;
@@ -793,7 +799,7 @@
   .home-page .text-wrapper-17 {
     color: #000000;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 23.6px;
@@ -804,7 +810,7 @@
   .home-page .text-wrapper-18 {
     color: #181818;
     font-family: "Cabin-SemiBold", Helvetica;
-    font-size: 25px;
+    font-size: 1.5625rem;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 29px;
@@ -836,7 +842,7 @@
   .home-page .text-wrapper-19 {
     color: #181818;
     font-family: "Cabin-SemiBold", Helvetica;
-    font-size: 25px;
+    font-size: 1.5625rem;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 29px;
@@ -850,10 +856,12 @@
     align-items: flex-start;
     display: flex;
     gap: 65px;
-    left: 360px;
+    left: 50%;
+    transform: translateX(-50%);
     position: absolute;
     top: 747px;
     width: 1200px;
+    max-width: 95%;
   }
   
   .home-page .content-11 {
@@ -899,7 +907,7 @@
   .home-page .about-ongoing-living {
     color: #181818;
     font-family: "Cabin-Bold", Helvetica;
-    font-size: 45px;
+    font-size: 2.8125rem;
     font-weight: 700;
     height: 106.55px;
     letter-spacing: 0;
@@ -921,7 +929,7 @@
   .home-page .text-wrapper-20 {
     color: #181818;
     font-family: "Lato-Bold", Helvetica;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 700;
     letter-spacing: 0;
     line-height: 26.6px;
@@ -933,7 +941,7 @@
   .home-page .text-wrapper-21 {
     color: #585566;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 23.6px;
@@ -974,7 +982,7 @@
     left: 0;
     position: absolute;
     top: 125px;
-    width: 1920px;
+    width: 100%;
   }
   
   .home-page .image-3 {
@@ -983,7 +991,7 @@
     object-fit: cover;
     position: absolute;
     top: 0;
-    width: 1919px;
+    width: 100%;
   }
   
   .home-page .overlap {
@@ -991,7 +999,7 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 1920px;
+    width: 100%;
   }
   
   .home-page .header {
@@ -1005,7 +1013,7 @@
     padding: 40px 360px;
     position: absolute;
     top: 0;
-    width: 1920px;
+    width: 100%;
   }
   
   .home-page .ongoing-living-wrapper {
@@ -1019,7 +1027,7 @@
   .home-page .ongoing-living {
     color: #ffffff;
     font-family: "Cabin-SemiBold", Helvetica;
-    font-size: 30px;
+    font-size: 1.875rem;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 31.5px;
@@ -1052,7 +1060,7 @@
   .home-page .text-wrapper-22 {
     color: #d87d56;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 17.7px;
+    font-size: 1.10625rem;
     font-weight: 400;
     left: 17px;
     letter-spacing: 0;
@@ -1089,7 +1097,7 @@
   .home-page .text-wrapper-23 {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 17.7px;
+    font-size: 1.10625rem;
     font-weight: 400;
     left: 17px;
     letter-spacing: 0;
@@ -1155,7 +1163,7 @@
   .home-page .text-wrapper-24 {
     color: #353535;
     font-family: "Lato-SemiBold", Helvetica;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 28.8px;
