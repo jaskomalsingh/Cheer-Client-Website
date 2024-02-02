@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Component } from "react";
 import "../styles/header.css";
-import HeaderPage from "./HeaderPage.jsx";
+import HeaderPage from "./HeaderPage";
 import { Link, useLocation } from "react-router-dom";
 
 function Header() {
