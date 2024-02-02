@@ -62,25 +62,27 @@
 -As an admin, I want a payroll calculator for my staff, so they can independently access information about their wages, which reduces queries to the HR department.<br>
 
 # Minutes:<br>
-## Week 1:<br>
+## Week 1:(SKY)<br>
 -Created Initial Requirements & User Stories<br>
 -Filled out Team Contract<br>
 -Created Github & Discord<br>
 -Created Jira (Link: https://group1se3350.atlassian.net/jira/software/projects/SE3350/boards/1 )<br>
 -Created Confluence (Link: https://group1se3350.atlassian.net/wiki/spaces/TEAM/overview )<br>
 <br>
-## Week 2:<br>
+## Week 2(SKY):<br>
 -Commit dependencies to github<br>
 -Update user stories<br>
 -Assign story points to each user story<br>
 -Assign each memeber user story(s) to work on<br>
 -Begin work on our assigned user stories<br>
 
-## Week 3:<br>
--Created the sign up, login and edit users pages 
--Included newsletter fields into the MongoDb
--Began working on sprint 1 document 
--Setup frontend UI and implemented into the code
+## Week 3(JAS):<br>
+-Created the sign up, login and edit users pages<br>
+-Included newsletter fields into the MongoDb<br>
+-Began working on sprint 1 document<br>
+-Setup frontend UI and implemented into the code<br>
+
+## Week 4(ROHAN):<br>
 
 
 
