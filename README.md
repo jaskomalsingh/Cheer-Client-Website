@@ -76,4 +76,11 @@
 -Assign each memeber user story(s) to work on<br>
 -Begin work on our assigned user stories<br>
 
+## Week 3:<br>
+-Created the sign up, login and edit users pages 
+-Included newsletter fields into the MongoDb
+-Began working on sprint 1 document 
+-Setup frontend UI and implemented into the code
+
+
 

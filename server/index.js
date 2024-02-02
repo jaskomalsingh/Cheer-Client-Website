@@ -51,7 +51,8 @@ function validateInput(username, password, email, role) {
     if (validRoles.includes(role)) {
         return 'Not Valid Role'
     }
-    if (!username || !password || !email) {
+
+    if (!username || !password || !email || isNews == undefined) {
         return 'Please enter all required fields';
     }
     if (typeof username !== 'string' || typeof password !== 'string' || typeof email !== 'string' ||
@@ -112,11 +113,12 @@ authRouter.route('/getallusers')
 authRouter.route('/updateuser')
     .post(async (req, res) => {
         try {
-            const { email, isDeactivated, role } = req.body;  // Destructure the fields from the request body
+            const { email, isDeactivated, role, isNews} = req.body;  // Destructure the fields from the request body
 
             // Build the update object based on what's provided in the request
             const updateFields = {};
             if (isDeactivated !== undefined) updateFields.isDeactivated = isDeactivated;
+            if (isNews !== undefined) updateFields.isNews
             if (role) updateFields.role = role;
 
             // Ensure we have at least one field to update
@@ -143,7 +145,7 @@ authRouter.route('/updateuser')
 
 authRouter.post('/signup', async (req, res) => {
     try {
-        const { username, password, email, role} = req.body;
+        const { username, password, email, role, isNews} = req.body;
 
         // Validate input
         const validationError = validateInput(username, password, email);
@@ -172,7 +174,8 @@ authRouter.post('/signup', async (req, res) => {
             isDeactivated: false,
             isVerified: false,
             verificationToken: token,
-            role: role
+            role: role,
+            isNews: isNews
         });
 
         res.status(200).send('User successfully registered');
