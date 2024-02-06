@@ -44,7 +44,7 @@ run();
 const usersCollection = client.db(dbName).collection('Users');
 
 
-function validateInput(username, password, email, role) {
+function validateInputSignUp(fullname, password, email, role, isNews) {
 
     const validRoles = ['Admin', 'User', 'Employee', 'VerifiedUser'];
 
@@ -52,14 +52,27 @@ function validateInput(username, password, email, role) {
         return 'Not Valid Role'
     }
 
-    if (!username || !password || !email || isNews == undefined) {
-        return 'Please enter all required fields';
+    if (!fullname || !password || !email || !role || isNews == undefined) {
+        return 'Please enter all required fields' + isNews;
     }
-    if (typeof username !== 'string' || typeof password !== 'string' || typeof email !== 'string' ||
-        !username.trim() || !password.trim() || !email.trim()) {
+    if (typeof fullname !== 'string' || typeof password !== 'string' || typeof email !== 'string' ||
+        !fullname.trim() || !password.trim() || !email.trim()) {
         return 'Invalid input';
     }
-    if (username.length > 50 || password.length > 50 || email.length > 100) {
+    if (fullname.length > 50 || password.length > 50 || email.length > 100) {
+        return 'Input too long';
+    }
+    return null; // Indicating no error
+}
+
+function validateInputSignIn(email, password) {
+    if(!email || !password){
+        return 'Please enter all required fields';
+    }
+    if(typeof email !== 'string' || typeof password !== 'string'){
+        return 'invalid input type';
+    }
+    if (email.length > 100 || password.length > 50) {
         return 'Input too long';
     }
     return null; // Indicating no error
@@ -141,14 +154,40 @@ authRouter.route('/updateuser')
         }
 });
 
+authRouter.post('/signin', async (req, res) => {
+    try{
+        const {email, password} = req.body;
 
+        const validationError = validateInputSignIn(email, password);
+        if(validationError) {
+            return res.status(400).send(validationError);
+        }
+
+        const user = await usersCollection.findOne({ email });
+        if(user){
+            matching = await bcrypt.compare(password, user.password);
+        }
+        
+        if(!user || !matching){
+            return res.status(401).send('incorrect email or password');
+        } else if (!user.isVerified) {
+            return res.status(402).send('account not verified');
+        } else {
+            return res.status(200).send(user);
+        }
+
+    } catch (error) {
+        console.error('Signup error:', error);
+        res.status(500).send('Internal error');
+    }
+});
 
 authRouter.post('/signup', async (req, res) => {
     try {
-        const { username, password, email, role, isNews} = req.body;
+        const { fullname, password, email, role, isNews} = req.body;
 
         // Validate input
-        const validationError = validateInput(username, password, email);
+        const validationError = validateInputSignUp(fullname, password, email, role, isNews);
         if (validationError) {
             return res.status(400).send(validationError);
         }
@@ -168,7 +207,7 @@ authRouter.post('/signup', async (req, res) => {
         // Hash password and create user
         const hashedPassword = await bcrypt.hash(password, 10);
         await usersCollection.insertOne({
-            username,
+            fullname,
             password: hashedPassword,
             email,
             isDeactivated: false,
