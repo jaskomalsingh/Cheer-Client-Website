@@ -17,8 +17,7 @@ app.use(cors())
 app.use(express.json())
 app.use('/api/auth', authRouter);
 
-const uri = 'mongodb+srv://3350group1:rohangobind@group1.mtclsmw.mongodb.net/?retryWrites=true&w=majority';
-
+const uri = process.env.MONGO_URI;
 const dbName = '3350';
 const client = new MongoClient(uri, {
     serverApi: {
@@ -199,7 +198,7 @@ authRouter.post('/signup', async (req, res) => {
         }
 
         // Create verification token
-        const token = jwt.sign({ email }, 'TESTSECRETKEY', { expiresIn: '2h' });
+        const token = jwt.sign({ email },process.env.JWT_SECRET_KEY , { expiresIn: '2h' });
 
         // Send verification email
         await sendVerificationEmail(email, token);
@@ -223,6 +222,38 @@ authRouter.post('/signup', async (req, res) => {
         res.status(500).send('Internal error');
     }
 });
+
+authRouter.route('/verify')
+    .get(async (req, res) => {
+        try {
+            const { token } = req.query;
+            if (!token) {
+                return res.status(400).send('Token mising');
+            }
+
+            jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, decoded) => {
+                if (err) {
+                    return res.status(401).send('Invalid token');
+                }
+
+                const { email } = decoded;
+
+                const result = await usersCollection.updateOne(
+                    { email },
+                    { $set: { isVerified: true } }
+                );
+                if (result.matchedCount === 1 && result.modifiedCount === 1) {
+                    return res.status(200).send('Account successfully verified');
+                }
+                else {
+                    return res.status(400).send('Invalid token or user already verified');
+                }
+            });
+        } catch (error) {
+            console.log(error)
+            res.status(500).send('Internal error');
+        }
+    });
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
