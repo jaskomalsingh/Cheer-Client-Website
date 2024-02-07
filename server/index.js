@@ -329,9 +329,9 @@ async function sendNewsletterToSubscribers(title, content) {
 
         //email sending promises
         const sendEmailPromises = subscribers.map(subscriber => {
-            return newsletterSender.sendEmail({
+            return newsletterSender.sendMail({
                 from:  '3316lab4@gmail.com',
-                to: subscribers.email,
+                to: subscriber.email,
                 subject: title, 
                 html: content,//assuming the content is HTML formatted
             });
@@ -346,6 +346,29 @@ async function sendNewsletterToSubscribers(title, content) {
     }
 }
 
+authRouter.patch('/toggle-newsletter-subscription', async (req, res) => {
+    try {
+        const { email, isNews } = req.body; // Expecting the user's email and the new isNews status
+
+        if (!email || isNews === undefined) {
+            return res.status(400).send('Email and isNews status are required');
+        }
+
+        const result = await usersCollection.updateOne(
+            { email: email },
+            { $set: { isNews: isNews } }
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(404).send('User not found');
+        }
+
+        res.status(200).send(`Newsletter subscription status updated to ${isNews} for ${email}`);
+    } catch (error) {
+        console.error('Error updating newsletter subscription status:', error);
+        res.status(500).send('Internal server error');
+    }
+});
 
 
 app.listen(port, () => {
