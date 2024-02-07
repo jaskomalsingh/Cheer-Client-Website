@@ -27,6 +27,14 @@ const client = new MongoClient(uri, {
     }
 });
 
+const newsletterSender = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: '3316lab4@gmail.com',
+        pass: 'tedo qnsn iwun lzqt'
+    },
+});
+
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
@@ -41,6 +49,7 @@ async function run() {
 
 run();
 const usersCollection = client.db(dbName).collection('Users');
+const newslettersCollection = client.db(dbName).collection('Newsletters');
 
 
 function validateInputSignUp(fullname, password, email, role, isNews) {
@@ -254,6 +263,90 @@ authRouter.route('/verify')
             res.status(500).send('Internal error');
         }
     });
+
+// Assuming authRouter is your express router for authentication related paths
+authRouter.get('/newsletter-subscribers', async (req, res) => {
+    try {
+        const subscribers = await getNewsletterSubscribers();
+        res.json(subscribers);
+    } catch (error) {
+        console.error('Error fetching newsletter subscribers:', error);
+        res.status(500).send('Internal server error');
+    }
+});
+
+async function getNewsletterSubscribers() {
+    return await usersCollection.find({ isNews: true }, { projection: { fullname: 1, email: 1 } }).toArray();
+}
+//creating a newsletter
+authRouter.post('/create-newsletter', async(req, res)=>{
+    try {
+        const { title, content} = req.body;
+        //basic validation
+        if(!title || !content){
+            return res.status(400).send('Title and content both are required!');
+        }
+        //Insert the newsletter into cthe collection
+        await newslettersCollection.insertOne({title, content, createdAt: new Date() });
+
+        //send the newsletter to all subscribers
+        await sendNewsletterToSubscribers(title, content);
+        res.status(201).send('Newsletter created and sent to all subscribers successfully!');
+
+    }catch (error){
+        console.error('Error creating or sending newsletter: ', error);
+        res.status(500).send('Internal server error');
+    }
+});
+
+//fetching all newsletters
+authRouter.get('/get-newsletters', async(req, res) => {
+    try{
+        const { title } = req.query;//retrieve the title from query parameters
+        //if  a title is provided, fetch the specific newsletter including its content 
+        //otheriwse fetch all the newsletters without their content to simplify the list
+        if (title){
+            const newsletter = await newslettersCollection.findOne({ title: title });
+        if (!newsletter) {
+            return res.status(404).send('Newsletter not found');
+        }
+        return res.status(200).json(newsletter);
+    } else {
+        // If no title is provided, fetch all newsletters without their content
+        const newsletters = await newslettersCollection.find({}, { projection: { content: 0 } }).toArray();
+        return res.status(200).json(newsletters);
+    }
+} catch (error) {
+    console.error('Error fetching newsletters:', error);
+    res.status(500).send('Internal server error');
+}
+});
+
+async function sendNewsletterToSubscribers(title, content) {
+    try{
+//fetch subscribed users
+        const subscribers = await getNewsletterSubscribers();
+
+        //email sending promises
+        const sendEmailPromises = subscribers.map(subscriber => {
+            return newsletterSender.sendEmail({
+                from:  '3316lab4@gmail.com',
+                to: subscribers.email,
+                subject: title, 
+                html: content,//assuming the content is HTML formatted
+            });
+        });
+        //wait for all emails to be sent
+        await Promise.all(sendEmailPromises);
+
+        console.log('Newsletter sent to all subscribers sucessfully.');
+
+    } catch (error) {
+        console.error('Failed to send newsletter:', error);
+    }
+}
+
+
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
