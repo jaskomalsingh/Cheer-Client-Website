@@ -44,7 +44,9 @@ function Header() {
                     </button>
                 </Link>
             </header>
-            <img className="image-4" alt="Image" src="https://c.animaapp.com/lPCECV6H/img/image-8@2x.png" />
+            <Link to="/">
+                <img className="image-4" alt="Image" src="https://c.animaapp.com/lPCECV6H/img/image-8@2x.png" />
+            </Link>
         </div>
     )
 }
