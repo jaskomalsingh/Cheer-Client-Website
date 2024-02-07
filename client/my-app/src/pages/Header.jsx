@@ -30,7 +30,7 @@ function Header() {
                 </div>
                 <div className="menu-bar">
                     <HeaderPage pageTitle="About" to="/" onClick={() => onClick("About")} selected={isPageHighlighted("/")}></HeaderPage>
-                    <HeaderPage pageTitle="CM1" to="/cm1" onClick={() => onClick("CM1")} selected={isPageHighlighted("/cm1")}></HeaderPage>
+                    <HeaderPage pageTitle="Newsletter" to="/cm1" onClick={() => onClick("CM1")} selected={isPageHighlighted("/cm1")}></HeaderPage>
                     <HeaderPage pageTitle="CM2" to="/cm2" onClick={() => onClick("CM2")} selected={isPageHighlighted("/cm2")}></HeaderPage>
                     <HeaderPage pageTitle="CM3" to="/cm3" onClick={() => onClick("CM3")} selected={isPageHighlighted("/cm3")}></HeaderPage>
                     <HeaderPage pageTitle="Admin" to="/adminusercontrol" onClick={() => onClick("Admin")} selected={isPageHighlighted("/adminusercontrol")}></HeaderPage>

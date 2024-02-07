@@ -30,8 +30,8 @@ const client = new MongoClient(uri, {
 const newsletterSender = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'olal.cheer@gmail.com',
-        pass: 'ipds iteh efaz mwdu'
+        user: '3316lab4@gmail.com',
+        pass: 'tedo qnsn iwun lzqt'
     },
 });
 
@@ -91,13 +91,13 @@ async function sendVerificationEmail(email, token) {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'olal.cheer@gmail.com',
-            pass: 'ipds iteh efaz mwdu'
+            user: '3316lab4@gmail.com',
+            pass: 'tedo qnsn iwun lzqt'
         }
     });
 
     const mailOptions = {
-        from: 'olal.cheer@gmail.com',
+        from: '3316lab4@gmail.com',
         to: email,
         subject: 'Verify your Account',
         text: `Click on this link to verify your account: ${link}`,
@@ -330,7 +330,7 @@ async function sendNewsletterToSubscribers(title, content) {
         //email sending promises
         const sendEmailPromises = subscribers.map(subscriber => {
             return newsletterSender.sendMail({
-                from:  'olal.cheer@gmail.com',
+                from:  '3316lab4@gmail.com',
                 to: subscriber.email,
                 subject: title, 
                 html: content,//assuming the content is HTML formatted
