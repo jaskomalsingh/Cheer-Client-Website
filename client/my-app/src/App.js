@@ -7,10 +7,13 @@ import {ContentManagement1} from './pages/ContentManagement1'
 import {ContentManagement2} from './pages/ContentManagement2'
 import {ContentManagement3} from './pages/ContentManagement3'
 import {HomePage} from './pages/HomePage'
-import SignIn from './pages/SignIn.js';
-import {NewsletterPopup} from './pages/NewsletterPopup'
+import SignIn from './pages/SignIn';
+import {SignUp} from './pages/SignUp';
+import {EditUserProfile} from './pages/EditUserProfile.jsx';
+import NewsletterPopup from './pages/NewsletterPopup'
 import AdminUserControl from './pages/AdminUserControl.js';
 import Header from './pages/Header';
+import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
 
 
 const App = () => {
@@ -24,7 +27,9 @@ const App = () => {
           <Route path="/cm1" element={<ContentManagement1 />} />
           <Route path="/cm2" element={<ContentManagement2 />} />
           <Route path="/cm3" element={<ContentManagement3 />} />
-          <Route path="/signin" element={<SignIn />} />       
+          <Route path="/signin" element={<SignIn />} /> 
+          <Route path="/signup" element={<SignUp />} />    
+          <Route path="/edituserprofile" element={<EditUserProfile />} />          
           <Route path="/adminusercontrol" element={<AdminUserControl/>} />
         </Routes>
       </BrowserRouter>
