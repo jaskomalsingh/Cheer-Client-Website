@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import Header from "./Header";
-import { Footer } from "./Footer";
-import {CMSideBar } from "./CMSideBar";
-
+import Footer from "./Footer";
+import CMSideBar from "./CMSideBar";
+import { UserRowEntry } from "./UserRowEntry";
 import "../styles/cm2.css";
 
 export const ContentManagement2 = () => {
@@ -10,9 +10,9 @@ const [data, setData] = useState([]);
   return (
     <div className="content-management">
       <div className="div">
-        <Footer />
+        <Footer height="924px" />
         <div className="manage-subscribers">
-          <div className="div-wrapper">
+          <div className="rectangle">
             <div className="text-wrapper-6">Manage Subscribers</div>
           </div>
           <div className="rectangle-2" />
@@ -88,7 +88,7 @@ const [data, setData] = useState([]);
               <div className="text-wrapper-8">Remove</div>
             </div>
           </button>
-        <CMSideBar />
+        <CMSideBar currentTab="Subscribers"/>
           <div className="rectangle-11" />
           <img className="union-9" alt="Union" src="union-1-9.svg" />
           <div className="text-wrapper-16">email@email.com</div>

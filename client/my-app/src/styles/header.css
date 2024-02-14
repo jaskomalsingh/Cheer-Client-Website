@@ -26,17 +26,31 @@
   }
 
 .header {
+    display: flex;
+    justify-content: center;
     -webkit-backdrop-filter: blur(21px) brightness(100%);
     align-items: center;
     backdrop-filter: blur(21px) brightness(100%);
     background-color: #464f34e8;
     display: flex;
-    gap: 105px;
+    gap: 5%;
     left: 0;
-    padding: 40px 360px;
     position: absolute;
     top: 0;
     width: 100%;
+    margin: auto;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1920px) {
+    .header{
+        padding: 40px 0px;
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .header{
+        padding: 40px 360px;
+    }
 }
 
 .header .ongoing-living-wrapper {
@@ -45,6 +59,7 @@
     flex: 0 0 auto;
     gap: 11px;
     position: relative;
+
 }
 
 .header .ongoing-living {
@@ -64,7 +79,7 @@
     align-items: flex-start;
     display: inline-flex;
     flex: 0 0 auto;
-    gap: 30px;
+    gap: 40px;
     position: relative;
 }
 

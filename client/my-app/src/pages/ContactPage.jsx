@@ -75,7 +75,7 @@
 import React, { useRef } from "react";
 import "../styles/contact.css";
 import Header from "./Header";
-import { Footer } from "./Footer";
+import  Footer  from "./Footer";
 import emailjs from 'emailjs-com';
 
 export const ContactPage = () => {
@@ -105,7 +105,7 @@ export const ContactPage = () => {
   return (
     <div className="contact-page">
       <div className="div">
-        <Footer />
+        <Footer height="922px" />
         <div className="contact-form">
           <div className="proccess">
             <div className="text-2">

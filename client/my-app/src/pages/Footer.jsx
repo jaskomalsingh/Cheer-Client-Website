@@ -1,10 +1,10 @@
-import React from "react";
-import "../styles/footer.css";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-
-export const Footer = () => {
+import "../styles/footer.css";
+function Footer({height}) {
+  
   return (
-    <div className="content">
+    <div className="footer-content" style={{'--top': height}}>
       <div className="overlap-group">
         <div className="background">
           <div className="overlap-group">
@@ -26,10 +26,10 @@ export const Footer = () => {
             </div>
           </div>
           <div className="content-3">
-            <div className="div-wrapper">
+            <div className="footer-div-wrapper">
               <div className="title">
                 <div className="text-wrapper-2">Product</div>
-                <div className="rectangle" />
+                <div className="footer-rectangle" />
               </div>
               <div className="text">
                 <div className="text-wrapper-3">C.H.E.E.R. Works</div>
@@ -41,7 +41,7 @@ export const Footer = () => {
             <div className="element">
               <div className="title">
                 <div className="text-wrapper-2">Company</div>
-                <div className="rectangle" />
+                <div className="footer-rectangle" />
               </div>
               <div className="text">
                 <Link to="/"><div className="text-wrapper-3">About</div></Link>
