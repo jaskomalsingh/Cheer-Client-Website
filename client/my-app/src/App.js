@@ -11,7 +11,7 @@ import SignIn from './pages/SignIn';
 import {SignUp} from './pages/SignUp';
 import {EditUserProfile} from './pages/EditUserProfile.jsx';
 import NewsletterPopup from './pages/NewsletterPopup'
-import AdminUserControl from './pages/AdminUserControl.js';
+import AdminUserControl from './pages/AdminUserControl.jsx';
 import Header from './pages/Header';
 import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
 
