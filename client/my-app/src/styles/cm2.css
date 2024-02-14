@@ -13,16 +13,7 @@
     position: relative;
     width: 1919px;
   }
-  
-  .content-management .footer-content {
-    height: 489px;
-    left: 0;
-    position: absolute;
-    top: 1074px;
-    width: 1920px;
-  }
-
-  
+    
   .content-management .element-2 {
     align-items: center;
     display: inline-flex;
@@ -49,7 +40,7 @@
     gap: 10px;
     height: 681px;
     left: 0;
-    padding: 50px 0px 170px;
+    padding: 50px 0px 0px;
     position: absolute;
     top: 243px;
     width: 1919px;

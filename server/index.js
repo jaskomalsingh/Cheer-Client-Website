@@ -17,8 +17,7 @@ app.use(cors())
 app.use(express.json())
 app.use('/api/auth', authRouter);
 
-const uri = 'mongodb+srv://3350group1:rohangobind@group1.mtclsmw.mongodb.net/?retryWrites=true&w=majority';
-
+const uri = process.env.MONGO_URI;
 const dbName = '3350';
 const client = new MongoClient(uri, {
     serverApi: {
@@ -26,6 +25,14 @@ const client = new MongoClient(uri, {
         strict: true,
         deprecationErrors: true,
     }
+});
+
+const newsletterSender = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: '3316lab4@gmail.com',
+        pass: 'tedo qnsn iwun lzqt'
+    },
 });
 
 async function run() {
@@ -42,9 +49,10 @@ async function run() {
 
 run();
 const usersCollection = client.db(dbName).collection('Users');
+const newslettersCollection = client.db(dbName).collection('Newsletters');
 
 
-function validateInput(username, password, email, role) {
+function validateInputSignUp(fullname, password, email, role, isNews) {
 
     const validRoles = ['Admin', 'User', 'Employee', 'VerifiedUser'];
 
@@ -52,14 +60,27 @@ function validateInput(username, password, email, role) {
         return 'Not Valid Role'
     }
 
-    if (!username || !password || !email || isNews == undefined) {
-        return 'Please enter all required fields';
+    if (!fullname || !password || !email || !role || isNews == undefined) {
+        return 'Please enter all required fields' + isNews;
     }
-    if (typeof username !== 'string' || typeof password !== 'string' || typeof email !== 'string' ||
-        !username.trim() || !password.trim() || !email.trim()) {
+    if (typeof fullname !== 'string' || typeof password !== 'string' || typeof email !== 'string' ||
+        !fullname.trim() || !password.trim() || !email.trim()) {
         return 'Invalid input';
     }
-    if (username.length > 50 || password.length > 50 || email.length > 100) {
+    if (fullname.length > 50 || password.length > 50 || email.length > 100) {
+        return 'Input too long';
+    }
+    return null; // Indicating no error
+}
+
+function validateInputSignIn(email, password) {
+    if(!email || !password){
+        return 'Please enter all required fields';
+    }
+    if(typeof email !== 'string' || typeof password !== 'string'){
+        return 'invalid input type';
+    }
+    if (email.length > 100 || password.length > 50) {
         return 'Input too long';
     }
     return null; // Indicating no error
@@ -141,14 +162,40 @@ authRouter.route('/updateuser')
         }
 });
 
+authRouter.post('/signin', async (req, res) => {
+    try{
+        const {email, password} = req.body;
 
+        const validationError = validateInputSignIn(email, password);
+        if(validationError) {
+            return res.status(400).send(validationError);
+        }
+
+        const user = await usersCollection.findOne({ email });
+        if(user){
+            matching = await bcrypt.compare(password, user.password);
+        }
+        
+        if(!user || !matching){
+            return res.status(401).send('incorrect email or password');
+        } else if (!user.isVerified) {
+            return res.status(402).send('account not verified');
+        } else {
+            return res.status(200).send(user);
+        }
+
+    } catch (error) {
+        console.error('Signup error:', error);
+        res.status(500).send('Internal error');
+    }
+});
 
 authRouter.post('/signup', async (req, res) => {
     try {
-        const { username, password, email, role, isNews} = req.body;
+        const { fullname, password, email, role, isNews} = req.body;
 
         // Validate input
-        const validationError = validateInput(username, password, email);
+        const validationError = validateInputSignUp(fullname, password, email, role, isNews);
         if (validationError) {
             return res.status(400).send(validationError);
         }
@@ -160,7 +207,7 @@ authRouter.post('/signup', async (req, res) => {
         }
 
         // Create verification token
-        const token = jwt.sign({ email }, 'TESTSECRETKEY', { expiresIn: '2h' });
+        const token = jwt.sign({ email },process.env.JWT_SECRET_KEY , { expiresIn: '2h' });
 
         // Send verification email
         await sendVerificationEmail(email, token);
@@ -168,7 +215,7 @@ authRouter.post('/signup', async (req, res) => {
         // Hash password and create user
         const hashedPassword = await bcrypt.hash(password, 10);
         await usersCollection.insertOne({
-            username,
+            fullname,
             password: hashedPassword,
             email,
             isDeactivated: false,
@@ -184,6 +231,145 @@ authRouter.post('/signup', async (req, res) => {
         res.status(500).send('Internal error');
     }
 });
+
+authRouter.route('/verify')
+    .get(async (req, res) => {
+        try {
+            const { token } = req.query;
+            if (!token) {
+                return res.status(400).send('Token mising');
+            }
+
+            jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, decoded) => {
+                if (err) {
+                    return res.status(401).send('Invalid token');
+                }
+
+                const { email } = decoded;
+
+                const result = await usersCollection.updateOne(
+                    { email },
+                    { $set: { isVerified: true } }
+                );
+                if (result.matchedCount === 1 && result.modifiedCount === 1) {
+                    return res.status(200).send('Account successfully verified');
+                }
+                else {
+                    return res.status(400).send('Invalid token or user already verified');
+                }
+            });
+        } catch (error) {
+            console.log(error)
+            res.status(500).send('Internal error');
+        }
+    });
+
+// Assuming authRouter is your express router for authentication related paths
+authRouter.get('/newsletter-subscribers', async (req, res) => {
+    try {
+        const subscribers = await getNewsletterSubscribers();
+        res.json(subscribers);
+    } catch (error) {
+        console.error('Error fetching newsletter subscribers:', error);
+        res.status(500).send('Internal server error');
+    }
+});
+
+async function getNewsletterSubscribers() {
+    return await usersCollection.find({ isNews: true }, { projection: { fullname: 1, email: 1 } }).toArray();
+}
+//creating a newsletter
+authRouter.post('/create-newsletter', async(req, res)=>{
+    try {
+        const { title, content} = req.body;
+        //basic validation
+        if(!title || !content){
+            return res.status(400).send('Title and content both are required!');
+        }
+        //Insert the newsletter into cthe collection
+        await newslettersCollection.insertOne({title, content, createdAt: new Date() });
+
+        //send the newsletter to all subscribers
+        await sendNewsletterToSubscribers(title, content);
+        res.status(201).send('Newsletter created and sent to all subscribers successfully!');
+
+    }catch (error){
+        console.error('Error creating or sending newsletter: ', error);
+        res.status(500).send('Internal server error');
+    }
+});
+
+//fetching all newsletters
+authRouter.get('/get-newsletters', async(req, res) => {
+    try{
+        const { title } = req.query;//retrieve the title from query parameters
+        //if  a title is provided, fetch the specific newsletter including its content 
+        //otheriwse fetch all the newsletters without their content to simplify the list
+        if (title){
+            const newsletter = await newslettersCollection.findOne({ title: title });
+        if (!newsletter) {
+            return res.status(404).send('Newsletter not found');
+        }
+        return res.status(200).json(newsletter);
+    } else {
+        // If no title is provided, fetch all newsletters without their content
+        const newsletters = await newslettersCollection.find({}, { projection: { content: 0 } }).toArray();
+        return res.status(200).json(newsletters);
+    }
+} catch (error) {
+    console.error('Error fetching newsletters:', error);
+    res.status(500).send('Internal server error');
+}
+});
+
+async function sendNewsletterToSubscribers(title, content) {
+    try{
+//fetch subscribed users
+        const subscribers = await getNewsletterSubscribers();
+
+        //email sending promises
+        const sendEmailPromises = subscribers.map(subscriber => {
+            return newsletterSender.sendMail({
+                from:  '3316lab4@gmail.com',
+                to: subscriber.email,
+                subject: title, 
+                html: content,//assuming the content is HTML formatted
+            });
+        });
+        //wait for all emails to be sent
+        await Promise.all(sendEmailPromises);
+
+        console.log('Newsletter sent to all subscribers sucessfully.');
+
+    } catch (error) {
+        console.error('Failed to send newsletter:', error);
+    }
+}
+
+authRouter.patch('/toggle-newsletter-subscription', async (req, res) => {
+    try {
+        const { email, isNews } = req.body; // Expecting the user's email and the new isNews status
+
+        if (!email || isNews === undefined) {
+            return res.status(400).send('Email and isNews status are required');
+        }
+
+        const result = await usersCollection.updateOne(
+            { email: email },
+            { $set: { isNews: isNews } }
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(404).send('User not found');
+        }
+
+        res.status(200).send(`Newsletter subscription status updated to ${isNews} for ${email}`);
+    } catch (error) {
+        console.error('Error updating newsletter subscription status:', error);
+        res.status(500).send('Internal server error');
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

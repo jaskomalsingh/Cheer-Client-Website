@@ -8,7 +8,7 @@ export const ContentManagement3 = () => {
   return (
     <div className="content-management">
       <div className="div">
-      <Footer />
+      <Footer height="924px" />
         <div className="manage-newsletters">
           <div className="div-wrapper">
             <div className="text-wrapper-6">Manage Newsletters</div>

@@ -17,7 +17,6 @@ function Header() {
         return location.pathname === path;
     };
 
-
     const onClick = (page) => {
         setActivePage(page);
     };
@@ -25,13 +24,15 @@ function Header() {
     return (
         <div className="overlap">
             <header className="header">
+                <Link to="/">
                 <img className="image-4" alt="Image" src="https://c.animaapp.com/lPCECV6H/img/image-8@2x.png" />
+                </Link>
                 <div className="ongoing-living-wrapper">
                     <p className="ongoing-living">Ongoing Living &amp; Learning Inc.</p>
                 </div>
                 <div className="menu-bar">
                     <HeaderPage pageTitle="About" to="/" onClick={() => onClick("About")} selected={isPageHighlighted("/")}></HeaderPage>
-                    <HeaderPage pageTitle="CM1" to="/cm1" onClick={() => onClick("CM1")} selected={isPageHighlighted("/cm1")}></HeaderPage>
+                    <HeaderPage pageTitle="Newsletter" to="/cm1" onClick={() => onClick("CM1")} selected={isPageHighlighted("/cm1")}></HeaderPage>
                     <HeaderPage pageTitle="CM2" to="/cm2" onClick={() => onClick("CM2")} selected={isPageHighlighted("/cm2")}></HeaderPage>
                     <HeaderPage pageTitle="CM3" to="/cm3" onClick={() => onClick("CM3")} selected={isPageHighlighted("/cm3")}></HeaderPage>
                     <HeaderPage pageTitle="Admin" to="/adminusercontrol" onClick={() => onClick("Admin")} selected={isPageHighlighted("/adminusercontrol")}></HeaderPage>
@@ -45,7 +46,6 @@ function Header() {
                     </button>
                 </Link>
             </header>
-            
         </div>
     )
 }

@@ -8,7 +8,7 @@ export const HomePage = () => {
   return (
     <div className="home-page">
       <div className="div">
-        <Footer />
+        <Footer height="3654px"/>
         <div className="values">
           <div className="history">
             <div className="text-2">

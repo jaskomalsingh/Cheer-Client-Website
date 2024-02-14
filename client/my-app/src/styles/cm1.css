@@ -14,16 +14,6 @@
   width: 1919px;
 }
 
-.content-management .footer-content {
-  height: 489px;
-  left: 0;
-  position: absolute;
-  top: 1024px;
-  width: 1920px;
-  margin-top: auto;
-  flex-direction: column;
-}
-
 .content-management .text-2 {
   align-items: flex-start;
   display: inline-flex;
