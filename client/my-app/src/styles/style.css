@@ -1,4 +1,7 @@
-.sign-up, .edit-user-profile {
+
+
+
+.sign-up, .edit-user-profile, .edit-profile-form {
   background-color: #ffffff;
   display: flex;
   flex-direction: row;
