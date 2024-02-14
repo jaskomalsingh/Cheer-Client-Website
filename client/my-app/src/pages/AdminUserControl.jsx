@@ -1,6 +1,6 @@
 import React from "react";
-import { Accordion } from "./Accordion";
-import "./style.css";
+//import { Accordion } from "./Accordion";
+//import "./style.css";
 
 export const AdminUserControl = () => {
   return (
@@ -181,3 +181,4 @@ export const AdminUserControl = () => {
     </div>
   );
 };
+export default AdminUserControl;
