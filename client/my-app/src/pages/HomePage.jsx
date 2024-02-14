@@ -1,13 +1,14 @@
 import React from "react";
 import "../styles/homePage.css";
+import "../styles/footer.css";
 import Header from "./Header";
-import {Footer} from "./Footer";
+import Footer from "./Footer";
 
 export const HomePage = () => {
   return (
     <div className="home-page">
       <div className="div">
-        <Footer />
+        <Footer height="3654px"/>
         <div className="values">
           <div className="history">
             <div className="text-2">

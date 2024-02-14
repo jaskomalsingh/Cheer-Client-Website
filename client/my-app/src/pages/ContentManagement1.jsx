@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "./Header";
-import {Footer} from "./Footer";
-import {CMSideBar} from "./CMSideBar";
+import Footer from "./Footer";
+import CMSideBar from "./CMSideBar";
 import { Editor } from "@tinymce/tinymce-react";
 import "../styles/cm1.css";
 
@@ -40,7 +40,7 @@ export const ContentManagement1 = () => {
   return (
     <div className="content-management">
       <div className="div-2">
-        <Footer />
+        <Footer height="1024px"/>
         <div className="newsletter-builder">
           <div className="div-wrapper">
             <div className="text-wrapper-heading">Newsletter Builder</div>
@@ -67,7 +67,7 @@ export const ContentManagement1 = () => {
             value={content}
   onEditorChange={(newContent) => setContent(newContent)}
   init={{
-    height: 500,
+    height: 400,
     menubar: false,
     plugins: [
       'advlist autolink lists link image charmap print preview anchor',
@@ -85,7 +85,7 @@ export const ContentManagement1 = () => {
               <div className="text-wrapper-create">Create</div>
             </div>
           </button>
-          <CMSideBar />
+          <CMSideBar currentTab="New..."/>
         </div>
         <div className="text-4">
           <div className="text-wrapper-heading">Content Management</div>

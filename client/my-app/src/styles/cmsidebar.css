@@ -1,0 +1,86 @@
+.content-management .mini-side-bar {
+    background-color: #ebebd3;
+    border-radius: 4px;
+    height: 681px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 108px;
+  }
+  
+  .content-management .overlap-group-2 {
+    height: 185px;
+    left: 8px;
+    position: relative;
+    top: 48px;
+    width: 93px;
+  }
+
+  .content-management .nav {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 24px;
+    left: 22px;
+    position: absolute;
+    top: 0;
+  }
+
+  .content-management .new-button {
+    background-color: #464f34;
+    border-radius: 24px;
+    height: 48px;
+    position: relative;
+    width: 48px;
+  }
+  
+  .content-management .icon-wrapper {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 8px;
+    padding: 8px 12px;
+    position: relative;
+  }
+
+  .content-management .text-wrapper-17 {
+    color: #000000;
+    font-family: "Noto Sans-Regular", Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    left: 4px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 167px;
+    width: 84px;
+  }
+  
+  .content-management .text-wrapper-18 {
+    color: #000000;
+    font-family: "Noto Sans-Regular", Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    left: 1px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 103px;
+    width: 92px;
+  }
+  
+  .content-management .text-wrapper-19 {
+    color: #000000;
+    font-family: "Noto Sans-Regular", Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 47px;
+    width: 92px;
+  }
