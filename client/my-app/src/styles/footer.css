@@ -1,24 +1,15 @@
-.footer .content {
-    margin-top: auto;
-    height: 489px;
-    left: -1px;
-    position: absolute;
-    flex-direction: column;
-    top: 3654px;
-    width: 100%;
-  }
-  .footer .overlap-group {
+  .footer-content .overlap-group {
     height: 489px;
     position: relative;
   }
-  .footer .background {
+  .footer-content .background {
     height: 489px;
     left: 0;
     position: absolute;
     top: 0;
     width: 100%;
   }
-  .footer .background-wrapper {
+  .footer-content .background-wrapper {
     background-color: #464f34;
     height: 489px;
     left: 0;
@@ -26,14 +17,14 @@
     top: 0;
     width: 100%;
   }
-  .footer .img {
+  .footer-content .img {
     height: 489px;
     left: 1px;
     position: absolute;
     top: 0;
     width: 100%;
   }
-  .footer .copyright {
+  .footer-content .copyright {
     height: 44px;
     left: 50%;
     transform: translateX(-50%);
@@ -43,7 +34,7 @@
     max-width: 1200px;
   }
 
-  .footer .line {
+  .footer-content .line {
     height: 1px;
     left: 0;
     object-fit: cover;
@@ -52,7 +43,7 @@
     width: 100%;
     max-width: 1200px;
   }
-  .footer .text-wrapper {
+  .footer-content .text-wrapper {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
     font-size: 16px;
@@ -64,7 +55,7 @@
     top: 20px;
     white-space: nowrap;
   }
-  .footer .content-2 {
+  .footer-content .content-2 {
     align-items: flex-start;
     display: flex;
     gap: 290px;
@@ -75,7 +66,7 @@
     width: 100%;
     max-width: 1200px;
   }
-  .footer .logo {
+  .footer-content .logo {
     align-items: flex-start;
     display: inline-flex;
     flex: 0 0 auto;
@@ -83,7 +74,7 @@
     position: relative;
   }
   
-  .footer .logo-wrapper {
+  .footer-content .logo-wrapper {
     align-items: flex-start;
     display: flex;
     flex-direction: column;
@@ -92,19 +83,19 @@
     width: 181.29px;
   }
   
-  .footer .logo-2 {
+  .footer-content .logo-2 {
     flex: 0 0 auto;
     margin-right: -259.71px;
     position: relative;
   }
-  .footer .content-3 {
+  .footer-content .content-3 {
     align-items: flex-start;
     display: flex;
     gap: 99px;
     position: relative;
     width: 694px;
   }
-  .footer .div-wrapper {
+  .footer-content .footer-div-wrapper {
     align-items: flex-start;
     display: inline-flex;
     flex: 0 0 auto;
@@ -112,7 +103,7 @@
     gap: 10px;
     position: relative;
   }
-  .footer .title {
+  .footer-content .title {
     align-items: flex-start;
     display: inline-flex;
     flex: 0 0 auto;
@@ -120,7 +111,7 @@
     gap: 11px;
     position: relative;
   }
-  .footer .text-wrapper-2 {
+  .footer-content .text-wrapper-2 {
     color: #ffffff;
     font-family: "Cabin-SemiBold", Helvetica;
     font-size: 20px;
@@ -132,21 +123,21 @@
     white-space: nowrap;
     width: fit-content;
   }
-  .footer .rectangle {
+  .footer-content .footer-rectangle {
     background-color: #d87d56;
     border-radius: 20px;
     height: 3.1px;
     position: relative;
     width: 31.95px;
   }
-  .footer .text {
+  .footer-content .text {
     align-items: flex-start;
     display: inline-flex;
     flex: 0 0 auto;
     flex-direction: column;
     position: relative;
   }
-  .footer .text-wrapper-3 {
+  .footer-content .text-wrapper-3 {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
     font-size: 16px;
@@ -159,7 +150,7 @@
     width: fit-content;
   }
   
-  .footer .text-wrapper-4 {
+  .footer-content .text-wrapper-4 {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
     font-size: 16px;
@@ -170,7 +161,7 @@
     white-space: nowrap;
     width: fit-content;
   }
-  .footer .element {
+  .footer-content .element {
     align-items: center;
     display: inline-flex;
     flex: 0 0 auto;
@@ -178,7 +169,7 @@
     gap: 10px;
     position: relative;
   }
-  .footer .div-3 {
+  .footer-content .div-3 {
     align-items: flex-start;
     display: inline-flex;
     flex: 0 0 auto;
@@ -186,7 +177,7 @@
     gap: 16px;
     position: relative;
   }
-  .footer .button {
+  .footer-content .button {
     all: unset;
     align-items: flex-start;
     background-color: #ebebd3;
@@ -198,7 +189,7 @@
     padding: 15px 23px;
     position: relative;
   }
-  .footer .text-wrapper-5 {
+  .footer-content .text-wrapper-5 {
     color: #464f34;
     font-family: "Lato-SemiBold", Helvetica;
     font-size: 18px;

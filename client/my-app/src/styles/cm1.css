@@ -8,155 +8,20 @@
 
 .content-management .div-2 {
   background-color: #ffffff;
-  height: 1413px;
+  height: 1513px;
   overflow: hidden;
   position: relative;
   width: 1919px;
 }
 
-.content-management .content {
+.content-management .footer-content {
   height: 489px;
   left: 0;
   position: absolute;
-  top: 924px;
+  top: 1024px;
   width: 1920px;
   margin-top: auto;
   flex-direction: column;
-}
-
-.content-management .background {
-  height: 489px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 1920px;
-}
-
-.content-management .background-wrapper {
-  background-color: #464f34;
-  height: 489px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 1920px;
-}
-
-.content-management .img {
-  height: 489px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 1919px;
-}
-
-.content-management .copyright {
-  height: 44px;
-  left: 360px;
-  position: absolute;
-  top: 419px;
-  width: 1202px;
-}
-
-.content-management .line {
-  height: 1px;
-  left: 0;
-  object-fit: cover;
-  position: absolute;
-  top: -1px;
-  width: 1200px;
-}
-
-.content-management .text-wrapper-2 {
-  color: #ffffff;
-  font-family: "Lato-Regular", Helvetica;
-  font-size: 16px;
-  font-weight: 400;
-  left: 351px;
-  letter-spacing: 0;
-  line-height: 23.6px;
-  position: absolute;
-  top: 20px;
-  white-space: nowrap;
-}
-
-.content-management .content-2 {
-  align-items: flex-start;
-  display: flex;
-  gap: 290px;
-  left: 443px;
-  position: absolute;
-  top: 118px;
-  width: 1215px;
-}
-
-.content-management .logo {
-  align-items: flex-start;
-  display: inline-flex;
-  flex: 0 0 auto;
-  gap: 171px;
-  position: relative;
-}
-
-.content-management .logo-wrapper {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  gap: 31px;
-  position: relative;
-  width: 181.29px;
-}
-
-.content-management .logo-2 {
-  flex: 0 0 auto;
-  margin-right: -259.71px;
-  position: relative;
-}
-
-.content-management .content-3 {
-  align-items: flex-start;
-  display: flex;
-  gap: 99px;
-  position: relative;
-  width: 694px;
-}
-
-.content-management .element {
-  align-items: flex-start;
-  display: inline-flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  gap: 10px;
-  position: relative;
-}
-
-.content-management .title {
-  align-items: flex-start;
-  display: inline-flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  gap: 11px;
-  position: relative;
-}
-
-.content-management .text-wrapper-3 {
-  color: #ffffff;
-  font-family: "Cabin-SemiBold", Helvetica;
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 23.2px;
-  margin-top: -1px;
-  position: relative;
-  white-space: nowrap;
-  width: fit-content;
-}
-
-.content-management .rectangle {
-  background-color: #d87d56;
-  border-radius: 20px;
-  height: 3.1px;
-  position: relative;
-  width: 31.95px;
 }
 
 .content-management .text-2 {
@@ -165,31 +30,6 @@
   flex: 0 0 auto;
   flex-direction: column;
   position: relative;
-}
-
-.content-management .text-wrapper-4 {
-  color: #ffffff;
-  font-family: "Lato-Regular", Helvetica;
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 23.6px;
-  margin-top: -1px;
-  position: relative;
-  white-space: nowrap;
-  width: fit-content;
-}
-
-.content-management .text-wrapper-5 {
-  color: #ffffff;
-  font-family: "Lato-Regular", Helvetica;
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 23.6px;
-  position: relative;
-  white-space: nowrap;
-  width: fit-content;
 }
 
 .content-management .element-2 {
@@ -223,18 +63,6 @@
   position: relative;
 }
 
-.content-management .text-wrapper-6 {
-  color: #464f34;
-  font-family: "Lato-SemiBold", Helvetica;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 28.8px;
-  margin-top: -1px;
-  position: relative;
-  white-space: nowrap;
-  width: fit-content;
-}
 
 .content-management .newsletter-builder {
   align-items: center;
@@ -244,7 +72,7 @@
   gap: 10px;
   height: 681px;
   left: 0;
-  padding: 50px 0px 170px;
+  padding: 50px 0px 50px;
   position: absolute;
   top: 243px;
   width: 1919px;
@@ -368,7 +196,7 @@
 .content-management .mini-side-bar {
   background-color: #ebebd3;
   border-radius: 4px;
-  height: 681px;
+  height: 631px;
   left: 0;
   position: absolute;
   top: 0;
@@ -487,69 +315,6 @@
   width: 782px;
 }
 
-.content-management .overlap {
-  height: 125px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 1920px;
-}
-
-.content-management .header {
-  -webkit-backdrop-filter: blur(21px) brightness(100%);
-  align-items: center;
-  backdrop-filter: blur(21px) brightness(100%);
-  background-color: #464f34e8;
-  display: flex;
-  gap: 105px;
-  left: 0;
-  padding: 40px 360px;
-  position: absolute;
-  top: 0;
-  width: 1920px;
-}
-
-.content-management .ongoing-living-wrapper {
-  align-items: center;
-  display: inline-flex;
-  flex: 0 0 auto;
-  gap: 11px;
-  position: relative;
-}
-
-.content-management .ongoing-living {
-  color: #ffffff;
-  font-family: "Cabin-SemiBold", Helvetica;
-  font-size: 30px;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 31.5px;
-  margin-top: -1px;
-  position: relative;
-  white-space: nowrap;
-  width: fit-content;
-}
-
-.content-management .menu-bar {
-  align-items: flex-start;
-  display: inline-flex;
-  flex: 0 0 auto;
-  gap: 30px;
-  position: relative;
-}
-
-.content-management .home-wrapper {
-  height: 28px;
-  position: relative;
-  width: 65.89px;
-}
-
-.content-management .home {
-  height: 28px;
-  position: relative;
-  width: 68px;
-}
-
 .content-management .text-wrapper-13 {
   color: #ffffff;
   font-family: "Lato-Regular", Helvetica;
@@ -563,27 +328,10 @@
   white-space: nowrap;
 }
 
-.content-management .ellipse-2 {
-  border: 0.98px solid;
-  border-color: #505050;
-  border-radius: 4.33px;
-  height: 9px;
-  left: 0;
-  position: absolute;
-  top: 10px;
-  width: 9px;
-}
-
 .content-management .element-5 {
   height: 28px;
   position: relative;
   width: 102.89px;
-}
-
-.content-management .home-2 {
-  height: 28px;
-  position: relative;
-  width: 105px;
 }
 
 .content-management .text-wrapper-14 {
@@ -597,18 +345,6 @@
   position: absolute;
   top: 0;
   white-space: nowrap;
-}
-
-.content-management .ellipse-3 {
-  background-color: #d87d56;
-  border: 0.98px solid;
-  border-color: #e3ab9a;
-  border-radius: 4.33px;
-  height: 9px;
-  left: 0;
-  position: absolute;
-  top: 10px;
-  width: 9px;
 }
 
 .content-management .element-6 {
@@ -657,111 +393,10 @@
   width: 90px;
 }
 
-.content-management .overlap-group {
-  height: 489px;
-  position: relative;
-}
-
-.content-management .background-wrapper {
-  background-color: #464f34;
-  height: 489px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 1920px;
-}
-
-.content-management .img {
-  height: 489px;
-  left: 1px;
-  position: absolute;
-  top: 0;
-  width: 1919px;
-}
-
-.content-management .copyright {
-  height: 44px;
-  left: 360px;
-  position: absolute;
-  top: 419px;
-  width: 1202px;
-}
-
-.content-management .text-wrapper-22 {
-  color: #d87d56;
-  font-family: "Lato-Regular", Helvetica;
-  font-size: 17.7px;
-  font-weight: 400;
-  left: 17px;
-  letter-spacing: 0;
-  line-height: 28.4px;
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-}
-
 .content-management .new-add-button {
   background-color: #464f34;
   border-radius: 24px;
   height: 48px;
   position: relative;
   width: 48px;
-}
-
-.content-management .element-17 {
-  height: 28px;
-  position: relative;
-  width: 69.89px;
-}
-
-.content-management .text-wrapper-23 {
-  color: #ffffff;
-  font-family: "Lato-Regular", Helvetica;
-  font-size: 17.7px;
-  font-weight: 400;
-  left: 17px;
-  letter-spacing: 0;
-  line-height: 28.4px;
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-}
-
-.content-management .element-18 {
-  height: 28px;
-  position: relative;
-  width: 71.89px;
-}
-
-.content-management .content-12 {
-  align-items: center;
-  display: flex;
-  flex: 0 0 auto;
-  gap: 11px;
-  justify-content: flex-end;
-  margin-left: -93px;
-  margin-right: -93px;
-  position: relative;
-  width: 262px;
-}
-
-.content-management .text-wrapper-24 {
-  color: #353535;
-  font-family: "Lato-SemiBold", Helvetica;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 28.8px;
-  margin-top: -1px;
-  position: relative;
-  width: 139px;
-}
-
-.content-management .div-3 {
-  align-items: flex-start;
-  display: inline-flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  gap: 16px;
-  position: relative;
 }

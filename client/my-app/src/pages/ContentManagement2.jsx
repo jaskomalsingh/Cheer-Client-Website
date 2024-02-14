@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "./Header";
-import { Footer } from "./Footer";
-import { CMSideBar } from "./CMSideBar";
+import Footer from "./Footer";
+import CMSideBar from "./CMSideBar";
 import { UserRowEntry } from "./UserRowEntry";
 import "../styles/cm2.css";
 
@@ -14,7 +14,7 @@ export const ContentManagement2 = () => {
       <div className="div">
         <Footer />
         <div className="manage-subscribers">
-          <div className="div-wrapper">
+          <div className="rectangle">
             <div className="text-wrapper-6">Manage Subscribers</div>
           </div>
           <div className="rectangle-2" />
@@ -28,7 +28,7 @@ export const ContentManagement2 = () => {
               </div>
             </button>
 
-          <CMSideBar />
+          <CMSideBar currentTab="Subscribers"/>
         </div>
         <div className="text-2">
           <div className="text-wrapper-6">Content Management</div>

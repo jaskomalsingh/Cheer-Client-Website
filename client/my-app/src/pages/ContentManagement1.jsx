@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
-import {Footer} from "./Footer";
-import {CMSideBar} from "./CMSideBar";
+import Footer from "./Footer";
+import CMSideBar from "./CMSideBar";
 import { Editor } from "@tinymce/tinymce-react";
 import "../styles/cm1.css";
 
@@ -39,7 +39,7 @@ export const ContentManagement1 = () => {
               <div className="text-wrapper-create">Create</div>
             </div>
           </button>
-          <CMSideBar />
+          <CMSideBar currentTab="New..."/>
         </div>
         <div className="text-4">
           <div className="text-wrapper-heading">Content Management</div>

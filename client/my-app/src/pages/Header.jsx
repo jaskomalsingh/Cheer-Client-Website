@@ -25,6 +25,7 @@ function Header() {
     return (
         <div className="overlap">
             <header className="header">
+                <img className="image-4" alt="Image" src="https://c.animaapp.com/lPCECV6H/img/image-8@2x.png" />
                 <div className="ongoing-living-wrapper">
                     <p className="ongoing-living">Ongoing Living &amp; Learning Inc.</p>
                 </div>
@@ -44,7 +45,7 @@ function Header() {
                     </button>
                 </Link>
             </header>
-            <img className="image-4" alt="Image" src="https://c.animaapp.com/lPCECV6H/img/image-8@2x.png" />
+            
         </div>
     )
 }
