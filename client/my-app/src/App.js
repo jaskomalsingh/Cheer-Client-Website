@@ -14,6 +14,7 @@ import NewsletterPopup from './pages/NewsletterPopup'
 import AdminUserControl from './pages/AdminUserControl.js';
 import Header from './pages/Header';
 import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
+import {Clock} from './pages/Clock.jsx'
 
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />    
           <Route path="/edituserprofile" element={<EditUserProfile />} />          
           <Route path="/adminusercontrol" element={<AdminUserControl/>} />
+          <Route path="/clock" element = {<Clock/>} />
         </Routes>
       </BrowserRouter>
     </div>
