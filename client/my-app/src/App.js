@@ -13,8 +13,11 @@ import {EditUserProfile} from './pages/EditUserProfile.jsx';
 import NewsletterPopup from './pages/NewsletterPopup'
 import AdminUserControl from './pages/AdminUserControl.js';
 import Header from './pages/Header';
+<<<<<<< Updated upstream
 import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
 import {Clock} from './pages/Clock.jsx'
+=======
+>>>>>>> Stashed changes
 
 
 const App = () => {

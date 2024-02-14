@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import CheckBoxWithLabel from "./CheckBoxWithLabel";
 import "../styles/style.css";
 
 const EditProfileForm = () => {
-    const [fullName, setFullName] = useState('John Doe');
+    const [fullName, setFullName] = useState('');
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
