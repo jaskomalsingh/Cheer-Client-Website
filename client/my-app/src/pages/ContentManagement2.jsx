@@ -10,7 +10,11 @@ const [data, setData] = useState([]);
   return (
     <div className="content-management">
       <div className="div">
+<<<<<<< Updated upstream
         <Footer height="924px" />
+=======
+        < Footer/>
+>>>>>>> Stashed changes
         <div className="manage-subscribers">
           <div className="rectangle">
             <div className="text-wrapper-6">Manage Subscribers</div>

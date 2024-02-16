@@ -12,11 +12,17 @@ import {SignUp} from './pages/SignUp';
 import {EditUserProfile} from './pages/EditUserProfile.jsx';
 import NewsletterPopup from './pages/NewsletterPopup'
 import AdminUserControl from './pages/AdminUserControl.js';
+<<<<<<< Updated upstream
 import Header from './pages/Header';
 <<<<<<< Updated upstream
 import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
 import {Clock} from './pages/Clock.jsx'
 =======
+>>>>>>> Stashed changes
+=======
+//import Header from './pages/Header';
+import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
+import  ManageSubscriber  from './pages/ManageSubscriber.js';
 >>>>>>> Stashed changes
 
 
@@ -24,8 +30,9 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
-        <Header />
+        {/*<Header />*/}
         <Routes>
+          <Route path="/ManageSubscriber" element={<ManageSubscriber />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/cm1" element={<ContentManagement1 />} />
