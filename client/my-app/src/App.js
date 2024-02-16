@@ -11,19 +11,17 @@ import SignIn from './pages/SignIn';
 import {SignUp} from './pages/SignUp';
 import {EditUserProfile} from './pages/EditUserProfile.jsx';
 import NewsletterPopup from './pages/NewsletterPopup'
-import AdminUserControl from './pages/AdminUserControl.js';
-<<<<<<< Updated upstream
+
+
 import Header from './pages/Header';
-<<<<<<< Updated upstream
-import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
+
+
 import {Clock} from './pages/Clock.jsx'
-=======
->>>>>>> Stashed changes
-=======
+
 //import Header from './pages/Header';
-import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
+//import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
 import  ManageSubscriber  from './pages/ManageSubscriber.js';
->>>>>>> Stashed changes
+
 
 
 const App = () => {
@@ -41,7 +39,7 @@ const App = () => {
           <Route path="/signin" element={<SignIn />} /> 
           <Route path="/signup" element={<SignUp />} />    
           <Route path="/edituserprofile" element={<EditUserProfile />} />          
-          <Route path="/adminusercontrol" element={<AdminUserControl/>} />
+         
           <Route path="/clock" element = {<Clock/>} />
         </Routes>
       </BrowserRouter>
