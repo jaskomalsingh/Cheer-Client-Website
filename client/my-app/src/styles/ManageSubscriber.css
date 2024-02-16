@@ -1,11 +1,12 @@
-/* Style for the main content management page */
 .content-management-page {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 20px;
+    margin-top: 150px;/* Adjust this value to the height of your header */; /* New line added */
     font-family: Arial, sans-serif;
-  }
+}
+
   
   h1 {
     color: #333;
