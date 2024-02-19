@@ -1,4 +1,4 @@
-.content-management .mini-side-bar {
+ .mini-side-bar {
     background-color: #ebebd3;
     border-radius: 4px;
     height: 681px;
@@ -8,7 +8,7 @@
     width: 108px;
   }
   
-  .content-management .overlap-group-2 {
+  .mini-side-bar .overlap-group-2 {
     height: 185px;
     left: 8px;
     position: relative;
@@ -16,7 +16,7 @@
     width: 93px;
   }
 
-  .content-management .nav {
+  .mini-side-bar .nav {
     align-items: flex-start;
     display: inline-flex;
     flex-direction: column;
@@ -26,7 +26,7 @@
     top: 0;
   }
 
-  .content-management .new-button {
+  .mini-side-bar .new-button {
     background-color: #464f34;
     border-radius: 24px;
     height: 48px;
@@ -34,7 +34,7 @@
     width: 48px;
   }
   
-  .content-management .icon-wrapper {
+  .mini-side-bar .icon-wrapper {
     align-items: center;
     display: inline-flex;
     flex: 0 0 auto;
@@ -43,7 +43,7 @@
     position: relative;
   }
 
-  .content-management .text-wrapper-17 {
+  .mini-side-bar .text-wrapper-17 {
     color: #000000;
     font-family: "Noto Sans-Regular", Helvetica;
     font-size: 14px;
@@ -57,7 +57,7 @@
     width: 84px;
   }
   
-  .content-management .text-wrapper-18 {
+  .mini-side-bar .text-wrapper-18 {
     color: #000000;
     font-family: "Noto Sans-Regular", Helvetica;
     font-size: 14px;
@@ -71,7 +71,7 @@
     width: 92px;
   }
   
-  .content-management .text-wrapper-19 {
+  .mini-side-bar .text-wrapper-19 {
     color: #000000;
     font-family: "Noto Sans-Regular", Helvetica;
     font-size: 14px;
@@ -84,3 +84,29 @@
     top: 47px;
     width: 92px;
   }
+
+  .mini-side-bar .new-add-button {
+    background-color: #464f34;
+    border-radius: 24px;
+    height: 48px;
+    position: relative;
+    width: 48px;
+  }
+  .mini-side-bar .line-2 {
+    height: 16px;
+    left: 46px;
+    object-fit: cover;
+    position: absolute;
+    top: 16px;
+    width: 1px;
+  }
+  
+  .mini-side-bar .line-3 {
+    height: 1px;
+    left: 38px;
+    object-fit: cover;
+    position: absolute;
+    top: 23px;
+    width: 16px;
+  }
+  
