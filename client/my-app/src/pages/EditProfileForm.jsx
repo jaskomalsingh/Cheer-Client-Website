@@ -29,14 +29,14 @@ const EditProfileForm = () => {
         newp: newPassword,
         isNews: subscribeToNewsletter,
       })
-      alert(body);
+    
     } else {
       body = JSON.stringify({
         email: email,
         fullname: fullName,
         isNews: subscribeToNewsletter,
       })
-      alert(body);
+  
     }
 
     try {
