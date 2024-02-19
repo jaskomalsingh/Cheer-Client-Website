@@ -7,10 +7,11 @@ import {ContentManagement1} from './pages/ContentManagement1'
 import {ContentManagement2} from './pages/ContentManagement2'
 import {ContentManagement3} from './pages/ContentManagement3'
 import {HomePage} from './pages/HomePage'
-import SignIn from './pages/SignIn';
+import SignIn from './pages/LoginForm.jsx';
 import {SignUp} from './pages/SignUp';
 import {EditUserProfile} from './pages/EditUserProfile.jsx';
 import NewsletterPopup from './pages/NewsletterPopup'
+import SignedIn from './pages/SignedIn.jsx'
 
 
 import Header from './pages/Header';
@@ -38,7 +39,7 @@ const App = () => {
           <Route path="/cm3" element={<ContentManagement3 />} />
           <Route path="/signin" element={<SignIn />} /> 
           <Route path="/signup" element={<SignUp />} />    
-          <Route path="/edituserprofile" element={<EditUserProfile />} />          
+          <Route path="/signedin" element={<SignedIn />} />       
          
           <Route path="/clock" element = {<Clock/>} />
         </Routes>

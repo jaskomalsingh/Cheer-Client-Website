@@ -174,13 +174,17 @@ authRouter.post('/signin', async (req, res) => {
         const user = await usersCollection.findOne({ email });
         if(user){
             matching = await bcrypt.compare(password, user.password);
+            console.log(password + " user: "+ user.password + "result"+ (await bcrypt.compare(password, user.password)));
         }
         
         if(!user || !matching){
+            
             return res.status(401).send('incorrect email or password');
         } else if (!user.isVerified) {
+            
             return res.status(402).send('account not verified');
         } else {
+            
             return res.status(200).send(user);
         }
 
