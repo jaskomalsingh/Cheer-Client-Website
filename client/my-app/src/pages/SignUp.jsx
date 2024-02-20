@@ -27,7 +27,7 @@ export const SignUp = () => {
       role: "user", // Assuming 'User' as a default role
       isNews: subscribeToNewsletter,
     })
-    console.log(body);
+    
 
 
     try {
