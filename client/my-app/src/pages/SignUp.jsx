@@ -10,19 +10,25 @@ export const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [subscribeToNewsletter, setSubscribeToNewsletter] = useState(false);
+  let body
 
   const handleSignUp = async (e) => {
     e.preventDefault();
 
     // Data to be sent to the backend
     const signUpData = {
-      fullname: fullName,
-      email,
-      password,
-      confirmPassword,
-      isNews: subscribeToNewsletter,
-      role: "User" // Assuming 'User' as a default role
+
+     
     };
+    body = JSON.stringify({
+      fullname: fullName,
+      password: password,
+      email: email,
+      role: "user", // Assuming 'User' as a default role
+      isNews: subscribeToNewsletter,
+    })
+    console.log(body);
+
 
     try {
       // Sending a POST request to the backend
@@ -31,16 +37,16 @@ export const SignUp = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(signUpData),
+        body: body,
       });
 
-      const responseData = await response.json();
 
       if (response.status === 200) {
-        console.log('Sign up successful:', responseData);
+        console.log('Sign up successful:', response.message);
+        alert("Sign up successful, Please continue to login")
         // Handle successful sign up (e.g., redirect to login page or display success message)
       } else {
-        console.log('Sign up failed:', responseData);
+        console.log('Sign up failed:', response.message);
         // Handle errors (e.g., display error message)
       }
     } catch (error) {
