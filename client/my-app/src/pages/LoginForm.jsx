@@ -33,8 +33,13 @@ export const LoginForm = () => {
     
     
       if (response.ok) {
-        localStorage.setItem('jwtToken', response.token);
-        localStorage.setItem('email', email);
+        const userData = await response.json(); // Correctly extract JSON data from the response
+        localStorage.setItem('fullname', userData.fullname);
+        localStorage.setItem('email', userData.email);
+        localStorage.setItem('isDeactivated', userData.isDeactivated.toString()); // Convert boolean to string
+        localStorage.setItem('isVerified', userData.isVerified.toString()); // Convert boolean to string
+        localStorage.setItem('role', userData.role);
+        localStorage.setItem('isNews', userData.isNews.toString()); // Convert boolean to string
         alert('Log in successful');
         navigate('/signedin');
       } else {

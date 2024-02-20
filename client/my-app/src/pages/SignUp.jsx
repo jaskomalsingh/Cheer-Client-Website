@@ -10,18 +10,49 @@ export const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [subscribeToNewsletter, setSubscribeToNewsletter] = useState(false);
+  let body
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    console.log('Form values:', {
-      fullName,
-      email,
-      password,
-      confirmPassword,
-      subscribeToNewsletter,
-    });
-    // Implement your logic for sign up here
-  };
+
+    // Data to be sent to the backend
+    const signUpData = {
+
+     
+    };
+    body = JSON.stringify({
+      fullname: fullName,
+      password: password,
+      email: email,
+      role: "user", // Assuming 'User' as a default role
+      isNews: subscribeToNewsletter,
+    })
+    
+
+
+    try {
+      // Sending a POST request to the backend
+      const response = await fetch('http://localhost:3001/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      });
+
+
+      if (response.status === 200) {
+        console.log('Sign up successful:', response.message);
+        alert("Sign up successful, Please continue to login")
+        // Handle successful sign up (e.g., redirect to login page or display success message)
+      } else {
+        console.log('Sign up failed:', response.message);
+        // Handle errors (e.g., display error message)
+      }
+    } catch (error) {
+      console.error('Error during sign up:', error);
+    }
+};
 
   return (
     <div className="sign-up">

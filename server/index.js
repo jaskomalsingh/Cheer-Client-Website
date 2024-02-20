@@ -131,6 +131,53 @@ authRouter.route('/getallusers')
         }
 });
 
+const saltRounds = 10; // or another appropriate value for bcrypt
+
+authRouter.route('/editprofile')
+  .post(async (req, res) => {
+    const { email, fullname, oldp, newp, isNews } = req.body;
+
+    try {
+      const user = await usersCollection.findOne({ email });
+
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      let updatedFields = {
+        ...(fullname && { fullname }), // Update fullname if provided
+        ...(typeof isNews !== 'undefined' && { isNews }), // Update isNews if provided
+      };
+
+      if (oldp && newp) {
+        const match = await bcrypt.compare(oldp, user.password);
+        if (!match) {
+          return res.status(401).json({ message: 'Incorrect password' });
+        }
+
+        const newPasswordHash = await bcrypt.hash(newp, saltRounds);
+        updatedFields.password = newPasswordHash;
+      }
+
+      // Perform the update operation
+      const updatedUser = await usersCollection.updateOne({ email }, { $set: updatedFields });
+
+      // Check if the operation was acknowledged, even if no documents were modified
+      if (updatedUser.matchedCount === 0) {
+        // If no documents matched the query, it's an error
+        return res.status(404).json({ message: 'User not found' });
+      } else {
+        // Operation was acknowledged, return success message
+        res.json({ message: 'Profile updated successfully' });
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+
+
+
 authRouter.route('/updateuser')
     .post(async (req, res) => {
         try {
@@ -165,16 +212,19 @@ authRouter.route('/updateuser')
 authRouter.post('/signin', async (req, res) => {
     try{
         const {email, password} = req.body;
+        lowEmail = email.toLowerCase();
+        console.log(lowEmail);
 
-        const validationError = validateInputSignIn(email, password);
+        const validationError = validateInputSignIn(lowEmail, password);
         if(validationError) {
             return res.status(400).send(validationError);
         }
 
         const user = await usersCollection.findOne({ email });
         if(user){
+         
             matching = await bcrypt.compare(password, user.password);
-            console.log(password + " user: "+ user.password + "result"+ (await bcrypt.compare(password, user.password)));
+            
         }
         
         if(!user || !matching){
@@ -197,31 +247,32 @@ authRouter.post('/signin', async (req, res) => {
 authRouter.post('/signup', async (req, res) => {
     try {
         const { fullname, password, email, role, isNews} = req.body;
+        lowEmail = email.toLowerCase();
 
         // Validate input
-        const validationError = validateInputSignUp(fullname, password, email, role, isNews);
+        const validationError = validateInputSignUp(fullname, password, lowEmail, role, isNews);
         if (validationError) {
             return res.status(400).send(validationError);
         }
 
         // Check for existing user
-        const userExists = await usersCollection.findOne({ email });
+        const userExists = await usersCollection.findOne({ lowEmail });
         if (userExists) {
             return res.status(409).send('This email is already in use');
         }
 
         // Create verification token
-        const token = jwt.sign({ email },process.env.JWT_SECRET_KEY , { expiresIn: '2h' });
+        const token = jwt.sign({ lowEmail },process.env.JWT_SECRET_KEY , { expiresIn: '2h' });
 
         // Send verification email
-        await sendVerificationEmail(email, token);
+        await sendVerificationEmail(lowEmail, token);
 
         // Hash password and create user
         const hashedPassword = await bcrypt.hash(password, 10);
         await usersCollection.insertOne({
             fullname,
             password: hashedPassword,
-            email,
+            lowEmail,
             isDeactivated: false,
             isVerified: false,
             verificationToken: token,
