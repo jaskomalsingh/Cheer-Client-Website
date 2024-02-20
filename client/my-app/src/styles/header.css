@@ -32,8 +32,7 @@
     align-items: center;
     backdrop-filter: blur(21px) brightness(100%);
     background-color: #464f34e8;
-    display: flex;
-    gap: 5%;
+    display: flex;;
     left: 0;
     position: absolute;
     top: 0;
@@ -105,20 +104,9 @@
     line-height: 28.4px;
     position: absolute;
     top: 0;
-    white-space: nowrap;
+    text-align: center;
 }
 
-.header .ellipse {
-    background-color: #d87d56;
-    border: 0.98px solid;
-    border-color: #e3ab9a;
-    border-radius: 4.33px;
-    height: 9px;
-    left: 0;
-    position: absolute;
-    top: 10px;
-    width: 9px;
-}
 
 .header .element-17 {
     height: 28px;
@@ -142,18 +130,7 @@
     line-height: 28.4px;
     position: absolute;
     top: 0;
-    white-space: nowrap;
-}
-
-.header .ellipse-2 {
-    border: 0.98px solid;
-    border-color: #505050;
-    border-radius: 4.33px;
-    height: 9px;
-    left: 0;
-    position: absolute;
-    top: 10px;
-    width: 9px;
+    text-align: center;
 }
 
 .header .element-18 {

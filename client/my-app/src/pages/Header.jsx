@@ -37,7 +37,7 @@ function Header() {
                     <HeaderPage pageTitle="CM3" to="/cm3" onClick={() => onClick("CM3")} selected={isPageHighlighted("/cm3")}></HeaderPage>
                     <HeaderPage pageTitle="Admin" to="/adminusercontrol" onClick={() => onClick("Admin")} selected={isPageHighlighted("/adminusercontrol")}></HeaderPage>
                     <HeaderPage pageTitle="Contact" to="/contact" onClick={() => onClick("Contact")} selected={isPageHighlighted("/contact")}></HeaderPage>
-                    <HeaderPage pageTitle="Clock in/Clock out" to="/clock" onClick={() => onClick("Clock")} selected={isPageHighlighted}></HeaderPage>
+                    <HeaderPage pageTitle="Clock in" to="/clock" onClick={() => onClick("Clock")} selected={isPageHighlighted("/clock")}></HeaderPage>
                 </div>
                 <Link to="/signin">
                     <button className="login-button">
