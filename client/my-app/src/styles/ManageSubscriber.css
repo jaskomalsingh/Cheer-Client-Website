@@ -12,9 +12,22 @@
     color: #333;
     margin-bottom: 20px;
   }
+ .manage-subscribers {
+    align-items: center;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 681px;
+    left: 0;
+    padding: 50px 0px 0px;
+    position: absolute;
+    top: 243px;
+    width: 100%;
+  }
   
   /* Styles for manage subscribers section */
-  .manage-subscribers {
+  .subscribers {
     width: 60%;
     background-color: #f9f9f9;
     padding: 20px;
@@ -62,4 +75,15 @@
       margin-top: 10px;
     }
   }
-  
+  .text-wrapper-heading {
+    color: #181818;
+    font-family: "Cabin-Bold", Helvetica;
+    font-size: 45px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 52.2px;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    width: 781.87px;
+  }

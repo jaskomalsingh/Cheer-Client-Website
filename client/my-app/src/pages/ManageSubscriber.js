@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/ManageSubscriber.css"; // Ensure this path matches your project structure
 import  Header  from './Header.jsx';
 import Footer from './Footer.jsx';
+import CMSideBar from "./CMSideBar.jsx";
 
 function ManageSubscriber() {
   const [subscribers, setSubscribers] = useState([]);
@@ -56,8 +57,12 @@ function ManageSubscriber() {
     
     <div className="content-management-page">
       <Header/>
-      <h1>Manage Subscribers</h1>
+      <h1 className="text-wrapper-heading">Manage Subscribers</h1>
+      
       <div className="manage-subscribers">
+      <CMSideBar currentTab="Subscribers"/>
+      <div className="subscribers">
+
         {subscribers.map(subscriber => (
           <div key={subscriber.email} className="subscriber-entry">
             <span>{subscriber.email}</span>
@@ -66,7 +71,7 @@ function ManageSubscriber() {
           </div>
         ))}
       </div>
-      
+      </div>
       <Footer height = "1024px"/>
     </div>
   );

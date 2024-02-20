@@ -1,63 +1,7 @@
-// import React, { useState } from 'react';
 
-// export const LoginForm = () => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const handleLogin = (e) => {
-//     e.preventDefault();
-//     console.log('Form values:', {
-//       email,
-//       password,
-//     });
-//     // Implement your logic for login here
-//   };
-
-//   return (
-//     <div className="login-form">
-//       <div className="form-title">
-//         <h2>Login</h2>
-//         <p className="bio">Login to your Account.</p>
-//       </div>
-//       <div className="login-form-content">
-//         <div className="form-wrapper">
-//           <div className="element-wrapper">
-//             <label htmlFor="loginEmail" className="input-label">
-//               Email
-//             </label>
-//             <input
-//               type="email"
-//               id="loginEmail"
-//               placeholder='example@email.com'
-//               value={email}
-//               onChange={(e) => setEmail(e.target.value)}
-//             />
-//           </div>
-//           <div className="element-wrapper">
-//             <label htmlFor="loginPassword" className="input-label">
-//               Password
-//             </label>
-//             <input
-//               type="password"
-//               id="loginPassword"
-//               value={password}
-//               onChange={(e) => setPassword(e.target.value)}
-//             />
-//           </div>
-//         </div>
-//         <button type="button" className="button" onClick={handleLogin}>
-//           <div className="button-text">Login</div>
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-
-// export default LoginForm;
 
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginForm = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -69,15 +13,13 @@ export const LoginForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const logInUser = async (event) => {
-    event.preventDefault();
-
+  const logInUser = async () => {
     const { email, password } = formData;
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
-
+    
     try {
       const response = await fetch(`http://localhost:3001/api/auth/signin`, {
         method: 'POST',
@@ -85,22 +27,30 @@ export const LoginForm = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
+        
       });
 
-      const errorData = await response.json();
-      console.log(errorData.status)
-      if (errorData.status === 'ok') {
-        localStorage.setItem('jwtToken', errorData.token);
-        localStorage.setItem('email', email);
+    
+    
+      if (response.ok) {
+        const userData = await response.json(); // Correctly extract JSON data from the response
+        localStorage.setItem('fullname', userData.fullname);
+        localStorage.setItem('email', userData.email);
+        localStorage.setItem('isDeactivated', userData.isDeactivated.toString()); // Convert boolean to string
+        localStorage.setItem('isVerified', userData.isVerified.toString()); // Convert boolean to string
+        localStorage.setItem('role', userData.role);
+        localStorage.setItem('isNews', userData.isNews.toString()); // Convert boolean to string
         alert('Log in successful');
-        navigate('/authhome');
+        navigate('/signedin');
       } else {
-        setError(errorData.message);
-        if (errorData.resendVerification) {
+        
+        setError(response.message);
+        if (response.resendVerification) {
           setResendVerification(true);
         }
       }
     } catch (error) {
+      
       setError('An error occurred during login');
     }
   };
@@ -127,6 +77,7 @@ export const LoginForm = () => {
       <div className="form-title">
         <h2>Login</h2>
         <p className="bio">Login to your Account.</p>
+        {error && <p className="error-msg">{error}</p>}
       </div>
       <div className="login-form-content">
         <div className="form-wrapper">
@@ -155,6 +106,12 @@ export const LoginForm = () => {
               name="password"
             />
           </div>
+          {resendVerification && (
+            <div className="resend-verification">
+              <p>Your account is not verified. Resend the verification email?</p>
+              <button onClick={resendVerificationEmail} className="resend-button">Resend Verification Email</button>
+            </div>
+          )}
         </div>
         <button type="button" className="button" onClick={logInUser}>
           <div className="button-text">Login</div>
@@ -163,6 +120,7 @@ export const LoginForm = () => {
     </div>
   );
 };
+
 
 // Remove TextInput and NavigationButtons components as they are not used in LoginForm component
 

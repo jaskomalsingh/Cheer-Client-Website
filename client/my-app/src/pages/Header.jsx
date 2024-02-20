@@ -39,7 +39,7 @@ function Header() {
                     <HeaderPage pageTitle="Contact" to="/contact" onClick={() => onClick("Contact")} selected={isPageHighlighted("/contact")}></HeaderPage>
                     <HeaderPage pageTitle="Clock in/Clock out" to="/clock" onClick={() => onClick("Clock")} selected={isPageHighlighted}></HeaderPage>
                 </div>
-                <Link to="/signin">
+                <Link to="/signup">
                     <button className="login-button">
                         <div className="content-12">
                             <div className="text-wrapper-24">Login</div>
