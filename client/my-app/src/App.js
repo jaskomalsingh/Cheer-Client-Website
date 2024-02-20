@@ -37,7 +37,6 @@ const App = () => {
           <Route path="/cm1" element={<ContentManagement1 />} />
           <Route path="/cm2" element={<ManageSubscriber />} />
           <Route path="/cm3" element={<ContentManagement3 />} />
-          <Route path="/signin" element={<SignIn />} /> 
           <Route path="/signup" element={<SignUp />} />    
           <Route path="/signedin" element={<SignedIn />} /> 
           <Route path="/edituser" element={<EditUserProfile />} />      
