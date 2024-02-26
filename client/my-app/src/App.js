@@ -12,7 +12,7 @@ import {SignUp} from './pages/SignUp';
 import {EditUserProfile} from './pages/EditUserProfile.jsx';
 import NewsletterPopup from './pages/NewsletterPopup'
 import SignedIn from './pages/SignedIn.jsx'
-
+import Container from 'react-bootstrap/esm/Container.js';
 
 import Header from './pages/Header';
 
@@ -27,7 +27,7 @@ import  ManageSubscriber  from './pages/ManageSubscriber.js';
 
 const App = () => {
   return (
-    <div>
+    <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
       <BrowserRouter>
         {/*<Header />*/}
         <Routes>
@@ -45,7 +45,7 @@ const App = () => {
           <Route path="/clock" element = {<Clock/>} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </Container>
   );
 }
 
