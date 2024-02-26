@@ -1,5 +1,5 @@
 .header .overlap {
-    height: 125px;
+    height: 7.8125rem;
     left: 0;
     position: absolute;
     top: 0;
@@ -11,19 +11,19 @@
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: space-around; /* This spreads out the nav items evenly */
-  }
-  
- .header nav li {
+    justify-content: space-around;
+}
+
+.header nav li {
     display: flex;
-  }
-  
- .header nav a {
+}
+
+.header nav a {
     text-decoration: none;
     color: white;
     padding: 10px;
     /* You can add more styling here to suit your design */
-  }
+}
 
 .header {
     display: flex;
@@ -32,7 +32,7 @@
     align-items: center;
     backdrop-filter: blur(21px) brightness(100%);
     background-color: #464f34e8;
-    display: flex;;
+    display: flex;
     left: 0;
     position: absolute;
     top: 0;
@@ -40,38 +40,43 @@
     margin: auto;
 }
 
-@media screen and (min-width: 1200px) and (max-width: 1920px) {
-    .header{
-        padding: 40px 0px;
-    }
-}
-
-@media screen and (min-width: 1921px) {
-    .header{
-        padding: 40px 360px;
-    }
-}
 
 .header .ongoing-living-wrapper {
     align-items: center;
     display: inline-flex;
     flex: 0 0 auto;
-    gap: 11px;
     position: relative;
 
+}
+
+@media screen and (max-width: 992px) {
+    .header .ongoing-living {
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 31.5px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .header .ongoing-living {
+        font-size: 1.875rem;
+        font-weight: 600;
+        line-height: 31.5px;
+    }
 }
 
 .header .ongoing-living {
     color: #ffffff;
     font-family: "Cabin-SemiBold", Helvetica;
-    font-size: 30px;
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: 31.5px;
-    margin-top: -1px;
     position: relative;
     white-space: nowrap;
     width: fit-content;
+    padding-left: 1vw;
+}
+.header .dropdown-menu { 
+    --bs-dropdown-bg: transparent;
+    --bs-dropdown-link-hover-bg: #464f34e8;
+    border:none;
 }
 
 .header .menu-bar {
@@ -123,13 +128,10 @@
 .header .text-wrapper-23 {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 17.7px;
     font-weight: 400;
-    left: 17px;
     letter-spacing: 0;
     line-height: 28.4px;
     position: absolute;
-    top: 0;
     text-align: center;
 }
 
@@ -194,20 +196,26 @@
 .header .text-wrapper-24 {
     color: #353535;
     font-family: "Lato-SemiBold", Helvetica;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 600;
     letter-spacing: 0;
-    line-height: 28.8px;
+    line-height: 1.8rem;
     margin-top: -1px;
     position: relative;
-    width: 139px;
+    width: 8.6875rem;
 }
 
-.header .image-4 {
-    height: 90px;
-    left: 248px;
-    object-fit: cover;
-    position: absolute;
-    top: 13px;
-    width: 90px;
+
+@media screen and (max-width: 992px) {
+    .header .image-4 {
+        height: 3rem;
+        width: 3rem;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .header .image-4 {
+        height: 6rem;
+        width: 6rem;
+    }
 }

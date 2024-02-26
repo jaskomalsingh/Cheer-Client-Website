@@ -1,5 +1,4 @@
   .footer-content {
-    height: 489px;
     left: 0;
     position: absolute;
     top: var(--top, 50px);
@@ -8,38 +7,40 @@
     flex-direction: column;
   }
   .footer-content .overlap-group {
-    height: 489px;
     position: relative;
   }
   .footer-content .background {
-    height: 489px;
     left: 0;
     position: absolute;
     top: 0;
     width: 100%;
   }
+
+  @media screen and (max-width: 992px) {
+    .footer-content .background, .footer-content .background-wrapper,
+    .footer-content .img, .footer-content .overlap-group, .footer-content{
+      height: 20rem;
+    }
+  }
+  
+  @media screen and (min-width: 992px) {
+    .footer-content .background, .footer-content .background-wrapper,
+    .footer-content .img, .footer-content .overlap-group, .footer-content{
+      height: 30.625rem;
+    }
+  }
+
   .footer-content .background-wrapper {
     background-color: #464f34;
-    height: 489px;
     left: 0;
     position: absolute;
     top: 0;
     width: 100%;
   }
   .footer-content .img {
-    height: 489px;
     position: absolute;
     top: 0;
     width: 100%;
-  }
-  .footer-content .copyright {
-    height: 44px;
-    left: 50%;
-    transform: translateX(-50%);
-    position: absolute;
-    top: 419px;
-    width: 100%;
-    max-width: 1200px;
   }
 
   .footer-content .line {
@@ -51,34 +52,78 @@
     width: 100%;
     max-width: 1200px;
   }
-  .footer-content .text-wrapper {
-    color: #ffffff;
-    font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
-    font-weight: 400;
-    left: 351px;
-    letter-spacing: 0;
-    line-height: 23.6px;
-    position: absolute;
-    top: 20px;
-    white-space: nowrap;
-  }
+
   .footer-content .content-2 {
     align-items: flex-start;
     display: flex;
-    gap: 290px;
     left: 50%;
     transform: translateX(-50%);
     position: absolute;
-    top: 118px;
+    top: 7.375rem;
     width: 100%;
     max-width: 1200px;
+  }
+
+  @media screen and (max-width: 992px) {
+    .footer-content .content-2 {
+      display: grid;
+      place-items: center;
+    }
+
+    .footer-content .content-2 .row {
+      padding: .625rem;
+    }
+
+    .footer-content .copyright {
+      height: 2.75rem;
+      display: grid;
+      place-items: center;
+    }
+    .footer-content .text-wrapper {
+      color: #ffffff;
+      font-family: "Lato-Regular", Helvetica;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.475rem;
+      position: absolute;
+      text-align: center;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .footer-content .content-2 {
+      gap: 290px;
+    }
+
+    .footer-content .copyright {
+      height: 2.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      position: absolute;
+      top: 26.1875rem;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .footer-content .text-wrapper {
+      color: #ffffff;
+      font-family: "Lato-Regular", Helvetica;
+      font-size: 1rem;
+      font-weight: 400;
+      left: 21.9375rem;
+      letter-spacing: 0;
+      line-height: 1.475rem;
+      position: absolute;
+      top: 1.25rem;
+      text-align: center;
+    }
   }
   .footer-content .logo {
     align-items: flex-start;
     display: inline-flex;
     flex: 0 0 auto;
-    gap: 171px;
+    gap: 10.6875rem;
     position: relative;
   }
   
@@ -88,12 +133,12 @@
     flex-direction: column;
     gap: 31px;
     position: relative;
-    width: 181.29px;
+    width: 11.3125rem;
   }
   
-  .footer-content .logo-2 {
+  .footer-content .logo-full {
     flex: 0 0 auto;
-    margin-right: -259.71px;
+    margin-right: -16.25rem;
     position: relative;
   }
   .footer-content .content-3 {
@@ -122,10 +167,10 @@
   .footer-content .text-wrapper-2 {
     color: #ffffff;
     font-family: "Cabin-SemiBold", Helvetica;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 600;
     letter-spacing: 0;
-    line-height: 23.2px;
+    line-height: 1.45rem;
     margin-top: -1px;
     position: relative;
     white-space: nowrap;
@@ -133,10 +178,10 @@
   }
   .footer-content .footer-rectangle {
     background-color: #d87d56;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     height: 3.1px;
     position: relative;
-    width: 31.95px;
+    width: 2rem;
   }
   .footer-content .text {
     align-items: flex-start;
@@ -148,10 +193,10 @@
   .footer-content .text-wrapper-3 {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
-    line-height: 23.6px;
+    line-height: 1.475rem;
     margin-top: -1px;
     position: relative;
     white-space: nowrap;
@@ -161,10 +206,10 @@
   .footer-content .text-wrapper-4 {
     color: #ffffff;
     font-family: "Lato-Regular", Helvetica;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
-    line-height: 23.6px;
+    line-height: 1.475rem;
     position: relative;
     white-space: nowrap;
     width: fit-content;
@@ -174,7 +219,7 @@
     display: inline-flex;
     flex: 0 0 auto;
     flex-direction: column;
-    gap: 10px;
+    gap: 0.625rem;
     position: relative;
   }
   .footer-content .div-3 {
@@ -182,30 +227,61 @@
     display: inline-flex;
     flex: 0 0 auto;
     flex-direction: column;
-    gap: 16px;
+    gap: 1rem;
     position: relative;
   }
   .footer-content .button {
     all: unset;
     align-items: flex-start;
     background-color: #ebebd3;
-    border-radius: 42px;
+    border-radius: 2.625rem;
     box-sizing: border-box;
     display: inline-flex;
     flex: 0 0 auto;
-    gap: 10px;
-    padding: 15px 23px;
+    gap: 0.625rem;
+    padding: 0.9375rem 1.4375rem;
     position: relative;
   }
+  
+  @media screen and (max-width: 992px) {
+    .footer-content .button {
+      display:inline-block
+    }
+  }
+
   .footer-content .text-wrapper-5 {
     color: #464f34;
     font-family: "Lato-SemiBold", Helvetica;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 600;
     letter-spacing: 0;
-    line-height: 28.8px;
+    line-height: 1.8rem;
     margin-top: -1px;
     position: relative;
     white-space: nowrap;
     width: fit-content;
   }
+
+  @media screen and (max-width: 992px) {
+    .footer-content .ongoing-living {
+      text-wrap: wrap
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    .footer-content .image-4 {
+      position: inline-block;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .footer-content .image-4 {
+      position: absolute;
+    }
+  }
+
+.footer-content .image-4 {
+  left: 25%;
+  height: 3rem;
+  width: 3rem;
+}
