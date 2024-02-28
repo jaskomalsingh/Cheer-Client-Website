@@ -1,12 +1,14 @@
  .mini-side-bar {
     background-color: #ebebd3;
     border-radius: 4px;
-    height: 681px;
     left: 0;
     position: absolute;
-    top: 0;
+    top: 135px;
+    bottom: 0;
     width: 108px;
   }
+  
+  
   
   .mini-side-bar .overlap-group-2 {
     height: 185px;

@@ -83,6 +83,7 @@ function ManageSubscriber() {
                     type="checkbox"
                     checked={subscriber.isDeactivated}
                     onChange={(e) => handleChange(index, { isDeactivated: e.target.checked })}
+                    
                   />
                 </div>
                 <div>
@@ -111,7 +112,7 @@ function ManageSubscriber() {
           ))}
         </div>
       </div>
-      <Footer height="1024px"/>
+      <Footer />
     </div>
   );
 }

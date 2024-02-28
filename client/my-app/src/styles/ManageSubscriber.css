@@ -1,89 +1,120 @@
 .content-management-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-    margin-top: 150px;/* Adjust this value to the height of your header */; /* New line added */
-    font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  margin-top: 150px; /* Adjust this value to the height of your header */
+  font-family: Arial, sans-serif;
 }
 
-  
-  h1 {
-    color: #333;
-    margin-bottom: 20px;
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.manage-subscribers {
+  align-items: center;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 50px 0px;
+  width: 100%;
+}
+
+.subscribers {
+  width: 60%;
+  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  gap: 20px; /* More space between subscriber entries */
+}
+
+.subscriber-entry {
+  display: grid;
+  grid-template-columns: 1fr auto; /* Subscriber info on the left, button on the right */
+  gap: 20px;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 2px solid #eee;
+}
+
+input[type="text"],
+input[type="checkbox"],
+select {
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Makes sure padding doesn't affect overall width */
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: #80bdff;
+  outline: none;
+}
+
+input[type="text"]:hover,
+select:hover {
+  border-color: #a0a0a0;
+}
+
+.subscriber-info strong {
+  display: block; /* Makes label go full width */
+  margin: 10px 0 5px;
+  color: #333;
+  font-weight: bold;
+}
+
+.subscriber-info {
+  display: grid;
+  grid-template-columns: auto 1fr; /* Icon/label in first column, input in second */
+  gap: 10px;
+  align-items: center;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  border: 1px solid #007bff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover, button:focus {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.text-wrapper-heading {
+  color: #181818;
+  font-family: "Cabin-Bold", Helvetica;
+  font-size: 45px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 52.2px;
+  margin-top: -1px;
+  text-align: center;
+  width: 781.87px;
+  margin-bottom: 30px; /* More space below the heading */
+}
+
+@media (max-width: 768px) {
+  .manage-subscribers {
+    width: 90%;
   }
- .manage-subscribers {
-    align-items: center;
-    background-color: #f5f5f5;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    height: 681px;
-    left: 0;
-    padding: 50px 0px 0px;
-    position: absolute;
-    top: 243px;
-    width: 100%;
-  }
-  
-  /* Styles for manage subscribers section */
-  .subscribers {
-    width: 60%;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-  }
-  
-  /* Styling for each subscriber entry */
+
   .subscriber-entry {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+    grid-template-columns: 1fr; /* Stack info and button on small screens */
+    gap: 10px;
   }
-  
-  /* Button styling */
+
   button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #ff4d4d;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    width: 100%; /* Full width button on small screens */
   }
-  
-  button:hover {
-    background-color: #cc0000;
-  }
-  
-  /* Responsive design adjustments */
-  @media (max-width: 768px) {
-    .manage-subscribers {
-      width: 90%;
-    }
-  
-    .subscriber-entry {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    button {
-      margin-top: 10px;
-    }
-  }
-  .text-wrapper-heading {
-    color: #181818;
-    font-family: "Cabin-Bold", Helvetica;
-    font-size: 45px;
-    font-weight: 700;
-    letter-spacing: 0;
-    line-height: 52.2px;
-    margin-top: -1px;
-    position: relative;
-    text-align: center;
-    width: 781.87px;
-  }
+}
