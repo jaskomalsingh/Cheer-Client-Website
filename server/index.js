@@ -181,12 +181,13 @@ authRouter.route('/editprofile')
 authRouter.route('/updateuser')
     .post(async (req, res) => {
         try {
-            const { email, isDeactivated, role, isNews} = req.body;  // Destructure the fields from the request body
+            const { fullname, email, isDeactivated, role, isNews} = req.body;  // Destructure the fields from the request body
 
             // Build the update object based on what's provided in the request
             const updateFields = {};
+            if (fullname) updateFields.fullname = fullname;
             if (isDeactivated !== undefined) updateFields.isDeactivated = isDeactivated;
-            if (isNews !== undefined) updateFields.isNews
+            if (isNews !== undefined) updateFields.isNews = isNews;
             if (role) updateFields.role = role;
 
             // Ensure we have at least one field to update

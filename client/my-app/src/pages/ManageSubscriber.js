@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../styles/ManageSubscriber.css"; // Ensure this path matches your project structure
-import  Header  from './Header.jsx';
+import "../styles/ManageSubscriber.css";
+import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import CMSideBar from "./CMSideBar.jsx";
 
@@ -10,12 +10,12 @@ function ManageSubscriber() {
   useEffect(() => {
     const fetchSubscribers = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/auth/newsletter-subscribers');
+        const response = await fetch('http://localhost:3001/api/auth/getallusers');
         if (response.ok) {
           const data = await response.json();
           setSubscribers(data);
         } else {
-          throw new Error('Failed to fetch subscribers');
+          throw new Error('Failed to fetch user details');
         }
       } catch (error) {
         console.error('Error:', error);
@@ -25,54 +25,93 @@ function ManageSubscriber() {
     fetchSubscribers();
   }, []);
 
-  const toggleSubscriber = async (email, isSubscribed) => {
+  const handleSave = async (userIndex) => {
+    const user = subscribers[userIndex];
     try {
-      const response = await fetch('http://localhost:3001/api/auth/toggle-newsletter-subscription', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // Updated to match the backend's expected input format
-        body: JSON.stringify({ email, isNews: isSubscribed }),
+      const response = await fetch('http://localhost:3001/api/auth/updateuser', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullname: user.fullname,
+          email: user.email,
+          isDeactivated: user.isDeactivated,
+          role: user.role,
+          isNews: user.isNews,
+          // Removed isVerified as it's not used in the backend update operation
+        }),
       });
-
       if (response.ok) {
-        // If toggling was successful, update state to reflect changes
-        if (isSubscribed) {
-          // Assuming this means re-subscribing or some form of status update, adjust logic as needed
-        } else {
-          // Remove the subscriber from the list if unsubscribed
-          setSubscribers(subscribers.filter(subscriber => subscriber.email !== email));
-        }
+        alert('User updated successfully');
       } else {
-        throw new Error('Failed to toggle subscription status');
+        alert('Failed to update user');
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error updating user:', error);
+      alert('Error updating user');
     }
   };
 
-  // Adjust button onClick to pass the correct isSubscribed status
+  const handleChange = (userIndex, changes) => {
+    const updatedSubscribers = [...subscribers];
+    updatedSubscribers[userIndex] = { ...updatedSubscribers[userIndex], ...changes };
+    setSubscribers(updatedSubscribers);
+  };
+
   return (
-    
     <div className="content-management-page">
-      <Header/>
+      <Header />
       <h1 className="text-wrapper-heading">Manage Subscribers</h1>
       
       <div className="manage-subscribers">
-      <CMSideBar currentTab="Subscribers"/>
-      <div className="subscribers">
-
-        {subscribers.map(subscriber => (
-          <div key={subscriber.email} className="subscriber-entry">
-            <span>{subscriber.email}</span>
-            {/* Updated to correctly toggle subscription status */}
-            <button onClick={() => toggleSubscriber(subscriber.email, false)}>Remove</button>
-          </div>
-        ))}
+        <CMSideBar currentTab="Subscribers"/>
+        <div className="subscribers">
+          {subscribers.map((subscriber, index) => (
+            <div key={index} className="subscriber-entry">
+              <div className="subscriber-info">
+                <div>
+                  <strong>Name:</strong>
+                  <input
+                    type="text"
+                    value={subscriber.fullname}
+                    onChange={(e) => handleChange(index, { fullname: e.target.value })}
+                  />
+                </div>
+                <div><strong>Email:</strong> {subscriber.email}</div>
+                <div>
+                  <strong>Deactivated:</strong>
+                  <input
+                    type="checkbox"
+                    checked={subscriber.isDeactivated}
+                    onChange={(e) => handleChange(index, { isDeactivated: e.target.checked })}
+                  />
+                </div>
+                <div>
+                  <strong>Newsletter:</strong>
+                  <input
+                    type="checkbox"
+                    checked={subscriber.isNews}
+                    onChange={(e) => handleChange(index, { isNews: e.target.checked })}
+                  />
+                </div>
+                <div>
+                  <strong>Role:</strong>
+                  <select
+                    value={subscriber.role}
+                    onChange={(e) => handleChange(index, { role: e.target.value })}
+                  >
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                    <option value="verifiedUser">Verified User</option>
+                    <option value="employee">Employee</option>
+                  </select>
+                </div>
+              </div>
+              <button onClick={() => handleSave(index)}>Save</button>
+            </div>
+          ))}
+        </div>
       </div>
-      </div>
-      <Footer height = "1024px"/>
+      <Footer height="1024px"/>
     </div>
   );
 }
