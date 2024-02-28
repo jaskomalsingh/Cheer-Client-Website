@@ -230,9 +230,6 @@ authRouter.post('/signin', async (req, res) => {
         if(!user || !matching){
             
             return res.status(401).send('incorrect email or password');
-        } else if (!user.isVerified) {
-            
-            return res.status(402).send('account not verified');
         } else {
             
             return res.status(200).send(user);
@@ -272,10 +269,8 @@ authRouter.post('/signup', async (req, res) => {
         await usersCollection.insertOne({
             fullname,
             password: hashedPassword,
-            lowEmail,
-            isDeactivated: false,
-            isVerified: false,
-            verificationToken: token,
+            email: lowEmail,
+            isDeactivated: false,            
             role: role,
             isNews: isNews
         });
@@ -298,9 +293,10 @@ authRouter.route('/verify')
             jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, decoded) => {
                 if (err) {
                     return res.status(401).send('Invalid token');
-                }
-
-                const { email } = decoded;
+                    
+                }   
+                console.log(decoded)
+                const email = "hi"
 
                 const result = await usersCollection.updateOne(
                     { email },
