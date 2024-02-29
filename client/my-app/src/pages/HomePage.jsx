@@ -12,7 +12,7 @@ export const HomePage = () => {
   return (
     <div className="home-page">
       <div className="div">
-        
+        <Footer height="3654px"/>
         <div className="values">
           <div className="history">
             <div className="text-2">
@@ -208,7 +208,6 @@ export const HomePage = () => {
               </div>
               <div className="element-16">
                 <p className="text-wrapper-20">
-                  <br></br>
                   OLLI is a registered not-for-profit caregiver driven company with four areas of focus: Cheer Group;
                   Cheer Works; Cheer Connections; and, Cheer Living
                 </p>
@@ -234,8 +233,8 @@ export const HomePage = () => {
           <img className="image-3" alt="Image" src="https://c.animaapp.com/lPCECV6H/img/image-6.png" />
         </div>
         <Header />
+        </div>
       </div>
-      <Footer  />
-    </div>
+    
   );
 };

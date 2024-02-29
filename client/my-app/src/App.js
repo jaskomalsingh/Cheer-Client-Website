@@ -42,7 +42,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />    
           <Route path="/signedin" element={<SignedIn />} /> 
           <Route path="/edituser" element={<EditUserProfile />} />   
-          <Route path="/adminusercontrol" element={<ManageSubscriber />} />   
+          <Route path="/adminusercontrol" element={<AdminUserControl />} />   
 
          
           <Route path="/clock" element = {<Clock/>} />
