@@ -19,7 +19,7 @@ export const LoginForm = () => {
       setError('Please fill in all fields');
       return;
     }
-    
+  
     try {
       const response = await fetch(`http://localhost:3001/api/auth/signin`, {
         method: 'POST',
@@ -27,50 +27,32 @@ export const LoginForm = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-        
       });
-
-    
-    
-      if (response.ok) {
-        const userData = await response.json(); // Correctly extract JSON data from the response
+  
+      if (response.status === 200) {
+        const userData = await response.json();
         localStorage.setItem('fullname', userData.fullname);
         localStorage.setItem('email', userData.email);
-        localStorage.setItem('isDeactivated', userData.isDeactivated.toString()); // Convert boolean to string
-        localStorage.setItem('isVerified', userData.isVerified.toString()); // Convert boolean to string
+        localStorage.setItem('isDeactivated', userData.isDeactivated.toString());
         localStorage.setItem('role', userData.role);
-        localStorage.setItem('isNews', userData.isNews.toString()); // Convert boolean to string
+        localStorage.setItem('isNews', userData.isNews.toString());
         alert('Log in successful');
         navigate('/signedin');
       } else {
-        
-        setError(response.message);
-        if (response.resendVerification) {
-          setResendVerification(true);
+        let errorMessage;
+        if (response.status === 401) {
+          errorMessage = 'Invalid email or password';
+        } else {
+          errorMessage = 'Failed to log in. Please try again later.';
         }
+        setError(errorMessage);
       }
     } catch (error) {
-      
-      setError('An error occurred during login');
+      alert(error)
+      setError('An error occurred during login. Please try again later.');
     }
   };
 
-  const resendVerificationEmail = async () => {
-    const response = await fetch(`http://localhost:3001/api/auth/resendVerification`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: formData.email }),
-    });
-
-    const responseData = await response.json();
-    if (responseData.status === 'ok') {
-      alert('Verification email resent successfully');
-    } else {
-      setError(responseData.message);
-    }
-  };
 
   return (
     <div className="login-form">
@@ -106,12 +88,7 @@ export const LoginForm = () => {
               name="password"
             />
           </div>
-          {resendVerification && (
-            <div className="resend-verification">
-              <p>Your account is not verified. Resend the verification email?</p>
-              <button onClick={resendVerificationEmail} className="resend-button">Resend Verification Email</button>
-            </div>
-          )}
+        
         </div>
         <button type="button" className="button" onClick={logInUser}>
           <div className="button-text">Login</div>

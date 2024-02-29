@@ -8,7 +8,7 @@ export const Clock = () => {
   return (
     <div className="clock-in-clock-out">
       <div className="div">
-      <Footer height="1501px"/>
+      <Footer/>
           <div className="manage-newsletters">
             <div className="text-wrapper-6">Welcome Employee name</div>
             <img className="group" alt="Group" src="group-1.png" />

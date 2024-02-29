@@ -1,8 +1,7 @@
-
-  .footer-content {
-    margin-top: auto; /* Pushes the footer to the bottom */
-    width: 100%;
-  }
+.edited-footer-content {
+  margin-top: auto; /* Pushes the footer to the bottom */
+  width: 100%;
+}
   .footer-content .overlap-group {
     position: relative;
   }

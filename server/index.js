@@ -231,8 +231,9 @@ authRouter.post('/signin', async (req, res) => {
         if(!user || !matching){
             
             return res.status(401).send('incorrect email or password');
+            console.log("pass");
         } else {
-            
+            console.log("pass");
             return res.status(200).send(user);
         }
 
