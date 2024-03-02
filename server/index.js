@@ -35,7 +35,7 @@ const newsletterSender = nodemailer.createTransport({
     },
 });
 
-const timesheetsCollection = client.db("dbName").collection("Timesheets");
+const timesheetsCollection = client.db(dbName).collection('Timesheets');
 
 
 async function run() {
@@ -448,49 +448,91 @@ authRouter.get('/view-newsletter/:title', async (req, res) => {
     }
 });
 
-authRouter.post('/timesheet', async (req, res) => {
-    const { email, selectedDate, fullname, startTime, endTime } = req.body;
-
-    // Convert dates and times to proper JavaScript Date objects
-    const startDate = new Date(`${selectedDate}T${startTime}`);
-    const endDate = new Date(`${selectedDate}T${endTime}`);
+// This function calculates the start date of the current biweekly period based on the provided date.
+const getBiweeklyStartDate = (inputDate) => {
+    const current = new Date(inputDate);
+    current.setHours(0, 0, 0, 0); // Normalize time to start of the day
     
-    // Calculate total hours worked
-    const hoursWorked = (endDate - startDate) / (1000 * 60 * 60); // Convert milliseconds to hours
+    // Assuming the biweekly period starts every other Monday (0 in getDay() is Sunday)
+    let day = current.getDay();
+    let diffToMonday = day === 0 ? -6 : 1 - day; // Calculate difference to last Monday
+    let lastMonday = new Date(current);
+    lastMonday.setDate(current.getDate() + diffToMonday); // Go back to the last Monday
 
-    // Define the two-week interval
-    const startDateInterval = new Date(selectedDate);
-    startDateInterval.setDate(startDateInterval.getDate() - startDateInterval.getDay() - 7); // Starting from the first day of the last two weeks
-    const endDateInterval = new Date(startDateInterval);
-    endDateInterval.setDate(endDateInterval.getDate() + 13); // Two weeks interval
+    // Calculate the week number since a fixed date (e.g., start of the year or another fixed date)
+    // Here, we use the start of the current year for simplicity; you might adjust based on your requirements.
+    let startOfYear = new Date(Date.UTC(current.getFullYear(), 0, 1)); // Start of the year
+    let weeksSinceStartOfYear = Math.ceil(((lastMonday - startOfYear) / (24 * 60 * 60 * 1000) + startOfYear.getDay() + 1) / 7);
 
-    // Check if there's an existing entry for the current two-week interval
-    const existingEntry = await timesheetsCollection.findOne({
-        email: email,
-        intervalStart: startDateInterval.toISOString().split('T')[0], // Store dates as strings in 'YYYY-MM-DD' format
-        intervalEnd: endDateInterval.toISOString().split('T')[0]
-    });
-
-    if (existingEntry) {
-        // Update the existing entry
-        const updatedHours = existingEntry.totalHours + hoursWorked;
-        await timesheetsCollection.updateOne({ _id: existingEntry._id }, {
-            $set: { totalHours: updatedHours },
-            $push: { logs: { date: selectedDate, startTime, endTime, hoursWorked } }
-        });
-    } else {
-        // Create a new entry
-        await timesheetsCollection.insertOne({
-            email,
-            fullname,
-            intervalStart: startDateInterval.toISOString().split('T')[0],
-            intervalEnd: endDateInterval.toISOString().split('T')[0],
-            totalHours: hoursWorked,
-            logs: [{ date: selectedDate, startTime, endTime, hoursWorked }]
-        });
+    // Adjust lastMonday back one more week if we are currently in an "odd" biweekly period
+    if (weeksSinceStartOfYear % 2 === 0) {
+        lastMonday.setDate(lastMonday.getDate() - 7);
     }
 
-    res.status(200).send('Timesheet updated successfully');
+    return lastMonday;
+};
+const getBiweeklyEndDate = (inputDate) => {
+    const startDate = getBiweeklyStartDate(inputDate);
+    let endDate = new Date(startDate); // Create a new Date instance to avoid mutating startDate
+    endDate.setDate(startDate.getDate() + 13); // Set to the last day of the biweekly period (14 days total, including the start date)
+    return endDate;
+};
+
+
+
+authRouter.post('/timesheet', async (req, res) => {
+    const { email, selectedDate, fullname, startTime, endTime } = req.body;
+    const startDate = new Date(`${selectedDate}T${startTime}`);
+    const endDate = new Date(`${selectedDate}T${endTime}`);
+    const hoursWorked = (endDate - startDate) / (1000 * 60 * 60); // Convert to hours
+    const biweeklyStart = getBiweeklyStartDate(selectedDate).toISOString().split('T')[0];
+    const biweeklyEnd = getBiweeklyEndDate(selectedDate).toISOString().split('T')[0]; // Implement this function based on your biweekly logic
+
+    try {
+        // Find the user's timesheet document
+        const timesheet = await timesheetsCollection.findOne({ email: email });
+
+        if (timesheet) {
+            // Check if there's already an entry for this biweekly period
+            let periodIndex = timesheet.biweeklyPeriods.findIndex(period =>
+                period.intervalStart === biweeklyStart && period.intervalEnd === biweeklyEnd);
+
+            if (periodIndex !== -1) {
+                // Update the existing biweekly period
+                let period = timesheet.biweeklyPeriods[periodIndex];
+                period.totalHours += hoursWorked;
+                period.logs.push({ date: selectedDate, startTime, endTime, hoursWorked });
+                await timesheetsCollection.updateOne({ _id: timesheet._id }, { $set: { [`biweeklyPeriods.${periodIndex}`]: period } });
+            } else {
+                // Add a new biweekly period
+                const newPeriod = {
+                    intervalStart: biweeklyStart,
+                    intervalEnd: biweeklyEnd,
+                    totalHours: hoursWorked,
+                    logs: [{ date: selectedDate, startTime, endTime, hoursWorked }]
+                };
+                await timesheetsCollection.updateOne({ _id: timesheet._id }, { $push: { biweeklyPeriods: newPeriod } });
+            }
+        } else {
+            // Create a new timesheet document for the user
+            const newTimesheet = {
+                email,
+                fullname,
+                biweeklyPeriods: [{
+                    intervalStart: biweeklyStart,
+                    intervalEnd: biweeklyEnd,
+                    totalHours: hoursWorked,
+                    logs: [{ date: selectedDate, startTime, endTime, hoursWorked }]
+                }]
+            };
+            await timesheetsCollection.insertOne(newTimesheet);
+        }
+
+        res.status(200).json({ message: 'Timesheet updated successfully' });
+    } catch (error) {
+        console.error('Error updating timesheet:', error);
+        res.status(500).send('Internal server error');
+    }
 });
 
 
