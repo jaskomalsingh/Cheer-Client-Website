@@ -35,6 +35,9 @@ const newsletterSender = nodemailer.createTransport({
     },
 });
 
+const timesheetsCollection = client.db("dbName").collection("Timesheets");
+
+
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
@@ -421,6 +424,73 @@ authRouter.patch('/toggle-newsletter-subscription', async (req, res) => {
         console.error('Error updating newsletter subscription status:', error);
         res.status(500).send('Internal server error');
     }
+});
+
+authRouter.get('/view-newsletter/:title', async (req, res) => {
+    try {
+        const title = req.params.title;
+        const newsletter = await newslettersCollection.findOne({ title: title });
+
+        if (!newsletter) {
+            return res.status(404).send('Newsletter not found');
+        }
+
+        // If the newsletter exists, return its details
+        res.status(200).json({
+            title: newsletter.title,
+            content: newsletter.content, // Assume 'content' field holds the body of the newsletter
+            createdAt: newsletter.createdAt
+        });
+
+    } catch (error) {
+        console.error('Error fetching newsletter:', error);
+        res.status(500).send('Internal server error');
+    }
+});
+
+authRouter.post('/timesheet', async (req, res) => {
+    const { email, selectedDate, fullname, startTime, endTime } = req.body;
+
+    // Convert dates and times to proper JavaScript Date objects
+    const startDate = new Date(`${selectedDate}T${startTime}`);
+    const endDate = new Date(`${selectedDate}T${endTime}`);
+    
+    // Calculate total hours worked
+    const hoursWorked = (endDate - startDate) / (1000 * 60 * 60); // Convert milliseconds to hours
+
+    // Define the two-week interval
+    const startDateInterval = new Date(selectedDate);
+    startDateInterval.setDate(startDateInterval.getDate() - startDateInterval.getDay() - 7); // Starting from the first day of the last two weeks
+    const endDateInterval = new Date(startDateInterval);
+    endDateInterval.setDate(endDateInterval.getDate() + 13); // Two weeks interval
+
+    // Check if there's an existing entry for the current two-week interval
+    const existingEntry = await timesheetsCollection.findOne({
+        email: email,
+        intervalStart: startDateInterval.toISOString().split('T')[0], // Store dates as strings in 'YYYY-MM-DD' format
+        intervalEnd: endDateInterval.toISOString().split('T')[0]
+    });
+
+    if (existingEntry) {
+        // Update the existing entry
+        const updatedHours = existingEntry.totalHours + hoursWorked;
+        await timesheetsCollection.updateOne({ _id: existingEntry._id }, {
+            $set: { totalHours: updatedHours },
+            $push: { logs: { date: selectedDate, startTime, endTime, hoursWorked } }
+        });
+    } else {
+        // Create a new entry
+        await timesheetsCollection.insertOne({
+            email,
+            fullname,
+            intervalStart: startDateInterval.toISOString().split('T')[0],
+            intervalEnd: endDateInterval.toISOString().split('T')[0],
+            totalHours: hoursWorked,
+            logs: [{ date: selectedDate, startTime, endTime, hoursWorked }]
+        });
+    }
+
+    res.status(200).send('Timesheet updated successfully');
 });
 
 

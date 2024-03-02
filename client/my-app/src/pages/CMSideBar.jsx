@@ -19,7 +19,7 @@ function CMSideBar(currentTab) {
                     <Link to="../cm1">
                         <div className="new-add-button" />
                     </Link>
-                    <Link  to="../cm2">
+                    <Link  to="../ManageSubscriber">
                         <div className="icon-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="#191D23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />

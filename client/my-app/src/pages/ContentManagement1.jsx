@@ -40,7 +40,7 @@ export const ContentManagement1 = () => {
   return (
     <div className="content-management">
       <div className="div-2">
-        <Footer height="1024px"/>
+       { /*<Footer height="1024px"/>*/}
         <div className="newsletter-builder">
           <div className="div-wrapper">
             <div className="text-wrapper-heading">Newsletter Builder</div>

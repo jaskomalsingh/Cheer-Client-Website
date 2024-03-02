@@ -76,7 +76,7 @@ function Header() {
                                             </div>
                                         </NavDropdown.Item>
                                     </NavDropdown>
-                                    <Nav.Link href="/adminusercontrol">Admin</Nav.Link>
+                                    <Nav.Link href="/edituser">Edit User</Nav.Link>
                                     <Nav.Link href="/contact">Contact</Nav.Link>
                                     <Nav.Link href="/clock">Clock in</Nav.Link>
                                     <Nav.Link href="/signup">
