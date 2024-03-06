@@ -117,3 +117,5 @@ export const Clock = () => {
     </div>
   );
 };
+
+export default Clock;
