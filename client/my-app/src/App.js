@@ -17,7 +17,7 @@ import Container from 'react-bootstrap/esm/Container.js';
 import Header from './pages/Header';
 
 
-import {Clock} from './pages/Clock.jsx'
+import Clock from './pages/Clock.jsx'
 
 //import Header from './pages/Header';
 //import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
