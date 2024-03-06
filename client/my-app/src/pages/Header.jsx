@@ -79,6 +79,7 @@ function Header() {
                                     <Nav.Link href="/edituser">Edit User</Nav.Link>
                                     <Nav.Link href="/contact">Contact</Nav.Link>
                                     <Nav.Link href="/clock">Clock in</Nav.Link>
+                                    <Nav.Link href="/calendar">Calendar</Nav.Link>
                                     <Nav.Link href="/signup">
                                         <Button className="login-button">
                                             <div className="content-12">
