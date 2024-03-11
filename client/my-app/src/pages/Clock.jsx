@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+
+
+
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import axios from "axios";
-import "../styles/clock.css";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./Header"; // Make sure the path matches your project structure
+import Footer from "./Footer"; // Make sure the path matches your project structure
+import "../styles/style.css"; // Adjust the path as necessary
 
 export const Clock = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -14,52 +17,22 @@ export const Clock = () => {
   const [fullName, setFullName] = useState('');
   const [userEmail, setUserEmail] = useState('');
 
-  // Fetch user details
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      try {
-        // Replace 'yourAuthTokenHere' with the actual token, usually stored in local storage or context
-        const { data } = await axios.get('http://localhost:3001/api/auth/getuser', {
-          headers: {
-            Authorization: `Bearer yourAuthTokenHere`
-          }
-        });
-        setFullName(data.fullname);
-        setUserEmail(data.email);
-      } catch (error) {
-        console.error('Error fetching user details:', error);
-      }
-    };
-
-    fetchUserDetails();
-  }, []);
-
-  const timeOptions = Array.from({ length: 48 }).map((_, index) => {
-    const time = moment().startOf('day').add(30 * index, 'minutes');
-    return time.format('HH:mm');
-  });
-
   const calculateHours = () => {
     if (!startTime || !endTime) return 0;
-    const duration = moment.duration(moment(endTime, "HH:mm").diff(moment(startTime, "HH:mm")));
-    return duration.asHours();
+    const start = moment(startTime, "HH:mm");
+    const end = moment(endTime, "HH:mm");
+    return end.diff(start, 'hours', true); // true for a floating-point result
   };
 
   const logHours = async () => {
-    const hoursData = {
-      email: userEmail,
-      selectedDate: moment(selectedDate).format("YYYY-MM-DD"),
-      fullname: fullName,
-      startTime,
-      endTime,
-      hoursWorked: calculateHours()
-    };
-
     try {
-      await axios.post('http://localhost:3001/api/auth/timesheet', hoursData, {
-        headers: {
-          Authorization: `Bearer yourAuthTokenHere`
-        }
+      await axios.post('http://localhost:3001/api/auth/timesheet', {
+        email: userEmail,
+        selectedDate: moment(selectedDate).format("YYYY-MM-DD"),
+        fullname: fullName,
+        startTime,
+        endTime,
+        hoursWorked: calculateHours()
       });
       alert('Hours logged successfully');
     } catch (error) {
@@ -68,52 +41,73 @@ export const Clock = () => {
     }
   };
 
+  const timeOptions = Array.from({ length: 48 }).map((_, index) => (
+    moment().startOf('day').add(30 * index, 'minutes').format('HH:mm')
+  ));
+
   return (
-    <div className="clock-in-clock-out">
-      <Footer />
-      <div className="manage-newsletters">
-        <div className="text-wrapper-6">Welcome {fullName}</div>
-        <div className="element-4">
-          <div className="text-wrapper-8">Selected Date</div>
-          <DatePicker 
-            selected={selectedDate} 
-            onChange={date => setSelectedDate(date)} 
-            dateFormat="MMMM d, yyyy" 
-          />
-        </div>
-        <div className="element-5">
-          <div className="text-wrapper-8">Full Name</div>
-          <div className="div-wrapper">
-            <div className="text-wrapper-9">{fullName}</div>
-          </div>
-        </div>
-        <div className="element-6">
-          <div className="text-wrapper-8">Time Worked</div>
-          <div className="div-wrapper">
-            <div className="text-wrapper-9">{calculateHours()} hours</div>
-          </div>
-        </div>
-        <div className="element-7">
-          <div className="text-wrapper-8">End Time</div>
-          <select value={endTime} onChange={e => setEndTime(e.target.value)}>
-            {timeOptions.map(time => (
-              <option key={time} value={time}>{time}</option>
-            ))}
-          </select>
-        </div>
-        <div className="element-8">
-          <div className="text-wrapper-8">Start Time</div>
-          <select value={startTime} onChange={e => setStartTime(e.target.value)}>
-            {timeOptions.map(time => (
-              <option key={time} value={time}>{time}</option>
-            ))}
-          </select>
-        </div>
-        <button className="button-2" onClick={logHours}>
-          <div className="text-wrapper-10">Log Hours</div>
-        </button>
-      </div>
+    <div className="sign-up">
       <Header />
+      <div className="div">
+        <div className="sign-up-form">
+          <div className="form-title">
+            <h2>Log Hours</h2>
+            <p className="bio">Enter your details and log your hours.</p>
+          </div>
+          <div className="sign-up-form-content">
+            <div className="form-wrapper">
+              <div className="element-wrapper">
+                <label htmlFor="email" className="input-label">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
+                  placeholder="your@email.com"
+                />
+              </div>
+              <div className="element-wrapper">
+                <label htmlFor="fullName" className="input-label">Full Name</label>
+                <input
+                  type="text"
+                  id="fullName"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="John Doe"
+                />
+              </div>
+            </div>
+            <div className="form-wrapper">
+              <div className="element-wrapper">
+                <label htmlFor="selectedDate" className="input-label">Selected Date</label>
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={date => setSelectedDate(date)}
+                  dateFormat="MMMM d, yyyy"
+                />
+              </div>
+            </div>
+            <div className="form-wrapper">
+              <div className="element-wrapper">
+                <label htmlFor="startTime" className="input-label">Start Time</label>
+                <select value={startTime} onChange={e => setStartTime(e.target.value)} id="startTime">
+                  {timeOptions.map(time => <option key={time} value={time}>{time}</option>)}
+                </select>
+              </div>
+              <div className="element-wrapper">
+                <label htmlFor="endTime" className="input-label">End Time</label>
+                <select value={endTime} onChange={e => setEndTime(e.target.value)} id="endTime">
+                  {timeOptions.map(time => <option key={time} value={time}>{time}</option>)}
+                </select>
+              </div>
+            </div>
+            <button type="button" className="button" onClick={logHours}>
+              Log Hours
+            </button>
+          </div>
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 };
