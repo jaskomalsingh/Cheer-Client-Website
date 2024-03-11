@@ -16,6 +16,19 @@ const port = 3001
 app.use(cors())
 app.use(express.json())
 app.use('/api/auth', authRouter);
+const multer = require('multer');
+const {Storage} = require('@google-cloud/storage');
+const storage = new Storage();
+const bucketName = process.env.GCS_BUCKET_NAME;
+console.log('Bucket Name: ', process.env.GCS_BUCKET_NAME);
+const bucket = storage.bucket(bucketName);
+const upload = multer({dest: 'uploads/', fileFilter: (req,file,cb) => {
+    //Accept Pdfs only
+    if(!file.originalname.match(/\.(pdf)$/)) {
+        return cb(new Error('Only PDF Files are allowed!'), false);
+    }
+    cb(null, true);
+}});
 
 const uri = process.env.MONGO_URI;
 const dbName = '3350';
@@ -334,73 +347,199 @@ authRouter.get('/newsletter-subscribers', async (req, res) => {
 async function getNewsletterSubscribers() {
     return await usersCollection.find({ isNews: true }, { projection: { fullname: 1, email: 1 } }).toArray();
 }
-//creating a newsletter
-authRouter.post('/create-newsletter', async(req, res)=>{
+// //creating a newsletter
+// authRouter.post('/create-newsletter', async(req, res)=>{
+//     try {
+//         const { title, content} = req.body;
+//         //basic validation
+//         if(!title || !content){
+//             return res.status(400).send('Title and content both are required!');
+//         }
+//         //Insert the newsletter into cthe collection
+//         await newslettersCollection.insertOne({title, content, createdAt: new Date() });
+
+//         //send the newsletter to all subscribers
+//         await sendNewsletterToSubscribers(title, content);
+//         res.status(201).send('Newsletter created and sent to all subscribers successfully!');
+
+//     }catch (error){
+//         console.error('Error creating or sending newsletter: ', error);
+//         res.status(500).send('Internal server error');
+//     }
+// });
+
+// //fetching all newsletters
+// authRouter.get('/get-newsletters', async(req, res) => {
+//     try{
+//         const { title } = req.query;//retrieve the title from query parameters
+//         //if  a title is provided, fetch the specific newsletter including its content 
+//         //otheriwse fetch all the newsletters without their content to simplify the list
+//         if (title){
+//             const newsletter = await newslettersCollection.findOne({ title: title });
+//         if (!newsletter) {
+//             return res.status(404).send('Newsletter not found');
+//         }
+//         return res.status(200).json(newsletter);
+//     } else {
+//         // If no title is provided, fetch all newsletters without their content
+//         const newsletters = await newslettersCollection.find({}, { projection: { content: 0 } }).toArray();
+//         return res.status(200).json(newsletters);
+//     }
+// } catch (error) {
+//     console.error('Error fetching newsletters:', error);
+//     res.status(500).send('Internal server error');
+// }
+// });
+
+// async function sendNewsletterToSubscribers(title, content) {
+//     try{
+// //fetch subscribed users
+//         const subscribers = await getNewsletterSubscribers();
+
+//         //email sending promises
+//         const sendEmailPromises = subscribers.map(subscriber => {
+//             return newsletterSender.sendMail({
+//                 from:  '3316lab4@gmail.com',
+//                 to: subscriber.email,
+//                 subject: title, 
+//                 html: content,//assuming the content is HTML formatted
+//             });
+//         });
+//         //wait for all emails to be sent
+//         await Promise.all(sendEmailPromises);
+
+//         console.log('Newsletter sent to all subscribers sucessfully.');
+
+//     } catch (error) {
+//         console.error('Failed to send newsletter:', error);
+//     }
+// }
+
+authRouter.post('/create-newsletter', upload.single('newsletter'), async (req, res) => {
+    const { title, makePublic } = req.body; // `makePublic` should be a boolean value sent from the client
+    const file = req.file;
+
+    if (!title || !file) {
+        return res.status(400).send('Title and PDF file are required!');
+    }
+
+    const gcsFileName = `${Date.now()}-${title.replace(/ /g, '_')}.pdf`;
+    const gcsFile = bucket.file(gcsFileName);
+    
+    // Set visibility based on user choice
+    const options = {
+        destination: gcsFileName,
+        metadata: {
+            contentType: 'application/pdf',
+            metadata: {
+                custom: 'metadata',
+            },
+        },
+        public: makePublic === 'true', // Convert string to boolean
+    };
+
+    // Upload the file to GCS
     try {
-        const { title, content} = req.body;
-        //basic validation
-        if(!title || !content){
-            return res.status(400).send('Title and content both are required!');
-        }
-        //Insert the newsletter into cthe collection
-        await newslettersCollection.insertOne({title, content, createdAt: new Date() });
+        await bucket.upload(file.path, options);
+        const visibility = makePublic === 'true' ? 'public' : 'private';
+        const url = makePublic === 'true' ? gcsFile.publicUrl() : 'Private - Access controlled by GCS bucket settings';
 
-        //send the newsletter to all subscribers
-        await sendNewsletterToSubscribers(title, content);
-        res.status(201).send('Newsletter created and sent to all subscribers successfully!');
-
-    }catch (error){
-        console.error('Error creating or sending newsletter: ', error);
-        res.status(500).send('Internal server error');
-    }
-});
-
-//fetching all newsletters
-authRouter.get('/get-newsletters', async(req, res) => {
-    try{
-        const { title } = req.query;//retrieve the title from query parameters
-        //if  a title is provided, fetch the specific newsletter including its content 
-        //otheriwse fetch all the newsletters without their content to simplify the list
-        if (title){
-            const newsletter = await newslettersCollection.findOne({ title: title });
-        if (!newsletter) {
-            return res.status(404).send('Newsletter not found');
-        }
-        return res.status(200).json(newsletter);
-    } else {
-        // If no title is provided, fetch all newsletters without their content
-        const newsletters = await newslettersCollection.find({}, { projection: { content: 0 } }).toArray();
-        return res.status(200).json(newsletters);
-    }
-} catch (error) {
-    console.error('Error fetching newsletters:', error);
-    res.status(500).send('Internal server error');
-}
-});
-
-async function sendNewsletterToSubscribers(title, content) {
-    try{
-//fetch subscribed users
-        const subscribers = await getNewsletterSubscribers();
-
-        //email sending promises
-        const sendEmailPromises = subscribers.map(subscriber => {
-            return newsletterSender.sendMail({
-                from:  '3316lab4@gmail.com',
-                to: subscriber.email,
-                subject: title, 
-                html: content,//assuming the content is HTML formatted
-            });
+        // Insert metadata into your database
+        await newslettersCollection.insertOne({
+            title,
+            pdfUrl: url,
+            visibility,
+            createdAt: new Date(),
         });
-        //wait for all emails to be sent
-        await Promise.all(sendEmailPromises);
 
-        console.log('Newsletter sent to all subscribers sucessfully.');
-
+        res.status(200).send({ message: 'Newsletter uploaded successfully', url });
     } catch (error) {
-        console.error('Failed to send newsletter:', error);
+        console.error('Upload Error:', error);
+        res.status(500).send('Failed to upload PDF: ${error.message');
+    }
+});
+
+
+
+
+authRouter.get('/list-newsletters', async (req, res) => {
+    // Assuming role is determined by your auth system
+    const { role } = req.query; // This could be replaced with your actual authentication logic
+
+    try {
+        // Fetch all newsletters for an admin, only public ones for others
+        const query = role === 'admin' ? {} : { visibility: 'public' };
+        const newsletters = await newslettersCollection.find(query).toArray();
+
+        res.status(200).json(newsletters);
+    } catch (error) {
+        console.error('Error fetching newsletters:', error);
+        res.status(500).send('Failed to fetch newsletters');
+    }
+});
+
+
+async function sendNewsletter(emailSubject, pdfBuffer, subscribers){
+    //configure Nodemailer with your SMTP server
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth:{
+            user: '3316lab4@gmail.com',
+            pass: 'tedo qnsn iwun lzqt',
+        },
+    });
+
+    let mailOptions = {
+        from: '3316lab4@gmail.com',//sender address
+        to: subscribers.join(','),//list of recipients
+        subject: emailSubject,//subject line
+        text:'Please find the attached newsletter. ', //text message
+        attachments: [{
+            filename: 'newsletterSender.pdf',
+            content: pdfBuffer,
+            contentType: 'application/pdf'
+        }]
+    };
+
+    //send the email to all subscribers
+    try{
+        let info = await transporter.sendMail(mailOptions);
+        console.log('Message Send: %s', info.messageId);
+    
+    }catch(error){
+        console.error('Failed to send newsletter: ', error);
+        
     }
 }
+
+//This function would be called after a PDF is made public, passing the PDF data and subject
+async function onNewsletterPublished( newsletterTitle, pdfPath, makePublic){
+    if(makePublic==='true'){
+        //await gcsFile.makePublic();
+        //fetch all subscribed users email to send the email 
+        const subscribers = await getSubscribersEmails();
+
+        //read the pdf file into a buffer
+        const fs = require('fs');
+        const pdfBuffer = fs.readFileSync(pdfPath);
+
+        //send the newsletter finally
+        await sendNewsletter('New Newsletter: ${newsletterTitle}', pdfBuffer, subscribers);
+
+    }
+
+}
+
+
+//utility function to ger subscribers emails .implement according to the database
+
+async function getSubscribersEmails(){
+    const subscribers = await usersCollection.find({isNews: true}).toArray();
+    console.log(subscribers); // Add this line to check the subscriber list
+    return subscribers.map(subscriber => subscriber.email);
+}
+
+
 
 authRouter.patch('/toggle-newsletter-subscription', async (req, res) => {
     try {
@@ -426,27 +565,27 @@ authRouter.patch('/toggle-newsletter-subscription', async (req, res) => {
     }
 });
 
-authRouter.get('/view-newsletter/:title', async (req, res) => {
-    try {
-        const title = req.params.title;
-        const newsletter = await newslettersCollection.findOne({ title: title });
+// authRouter.get('/view-newsletter/:title', async (req, res) => {
+//     try {
+//         const title = req.params.title;
+//         const newsletter = await newslettersCollection.findOne({ title: title });
 
-        if (!newsletter) {
-            return res.status(404).send('Newsletter not found');
-        }
+//         if (!newsletter) {
+//             return res.status(404).send('Newsletter not found');
+//         }
 
-        // If the newsletter exists, return its details
-        res.status(200).json({
-            title: newsletter.title,
-            content: newsletter.content, // Assume 'content' field holds the body of the newsletter
-            createdAt: newsletter.createdAt
-        });
+//         // If the newsletter exists, return its details
+//         res.status(200).json({
+//             title: newsletter.title,
+//             content: newsletter.content, // Assume 'content' field holds the body of the newsletter
+//             createdAt: newsletter.createdAt
+//         });
 
-    } catch (error) {
-        console.error('Error fetching newsletter:', error);
-        res.status(500).send('Internal server error');
-    }
-});
+//     } catch (error) {
+//         console.error('Error fetching newsletter:', error);
+//         res.status(500).send('Internal server error');
+//     }
+// });
 
 // This function calculates the start date of the current biweekly period based on the provided date.
 const getBiweeklyStartDate = (inputDate) => {
