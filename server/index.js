@@ -314,7 +314,7 @@ authRouter.route('/verify')
                     return res.status(401).send('Invalid token');
                     
                 }   
-                console.log(decoded)
+               
                 const email = "hi"
 
                 const result = await usersCollection.updateOne(
@@ -329,7 +329,7 @@ authRouter.route('/verify')
                 }
             });
         } catch (error) {
-            console.log(error)
+            
             res.status(500).send('Internal error');
         }
     });
@@ -348,73 +348,52 @@ authRouter.get('/newsletter-subscribers', async (req, res) => {
 async function getNewsletterSubscribers() {
     return await usersCollection.find({ isNews: true }, { projection: { fullname: 1, email: 1 } }).toArray();
 }
-// //creating a newsletter
-// authRouter.post('/create-newsletter', async(req, res)=>{
-//     try {
-//         const { title, content} = req.body;
-//         //basic validation
-//         if(!title || !content){
-//             return res.status(400).send('Title and content both are required!');
-//         }
-//         //Insert the newsletter into cthe collection
-//         await newslettersCollection.insertOne({title, content, createdAt: new Date() });
 
-//         //send the newsletter to all subscribers
-//         await sendNewsletterToSubscribers(title, content);
-//         res.status(201).send('Newsletter created and sent to all subscribers successfully!');
+// Add this route to your authRouter to handle sending newsletters
+authRouter.post('/send-newsletter', async (req, res) => {
+    // Extract necessary information from the request body
+    const { emailSubject, newsletterId } = req.body;
 
-//     }catch (error){
-//         console.error('Error creating or sending newsletter: ', error);
-//         res.status(500).send('Internal server error');
-//     }
-// });
+    if (!emailSubject || !newsletterId) {
+        return res.status(400).send('Email subject and newsletter ID are required.');
+    }
 
-// //fetching all newsletters
-// authRouter.get('/get-newsletters', async(req, res) => {
-//     try{
-//         const { title } = req.query;//retrieve the title from query parameters
-//         //if  a title is provided, fetch the specific newsletter including its content 
-//         //otheriwse fetch all the newsletters without their content to simplify the list
-//         if (title){
-//             const newsletter = await newslettersCollection.findOne({ title: title });
-//         if (!newsletter) {
-//             return res.status(404).send('Newsletter not found');
-//         }
-//         return res.status(200).json(newsletter);
-//     } else {
-//         // If no title is provided, fetch all newsletters without their content
-//         const newsletters = await newslettersCollection.find({}, { projection: { content: 0 } }).toArray();
-//         return res.status(200).json(newsletters);
-//     }
-// } catch (error) {
-//     console.error('Error fetching newsletters:', error);
-//     res.status(500).send('Internal server error');
-// }
-// });
+    // Convert the string ID to MongoDB ObjectId
+    const _id = new ObjectId(newsletterId);
 
-// async function sendNewsletterToSubscribers(title, content) {
-//     try{
-// //fetch subscribed users
-//         const subscribers = await getNewsletterSubscribers();
+    // Retrieve the newsletter document from the collection
+    const newsletter = await newslettersCollection.findOne({_id});
 
-//         //email sending promises
-//         const sendEmailPromises = subscribers.map(subscriber => {
-//             return newsletterSender.sendMail({
-//                 from:  '3316lab4@gmail.com',
-//                 to: subscriber.email,
-//                 subject: title, 
-//                 html: content,//assuming the content is HTML formatted
-//             });
-//         });
-//         //wait for all emails to be sent
-//         await Promise.all(sendEmailPromises);
+    if (!newsletter) {
+        return res.status(404).send('Newsletter not found.');
+    }
 
-//         console.log('Newsletter sent to all subscribers sucessfully.');
+    // Extract the PDF URL from the newsletter document
+    const pdfPathOrUrl = newsletter.pdfUrl;
 
-//     } catch (error) {
-//         console.error('Failed to send newsletter:', error);
-//     }
-// }
+    // Fetch the list of subscribers' emails
+    const subscribersEmails = await getNewsletterSubscribers();
+    
+            
+
+    // Check if there are subscribers
+    if (subscribersEmails.length === 0) {
+        return res.status(404).send('No subscribers found.');
+    }
+
+    try {
+        // Send the newsletter using the sendNewsletter function
+        await sendNewsletter(emailSubject, pdfPathOrUrl, subscribersEmails.map(sub => sub.email));
+        
+
+        // Respond with a success message
+        res.status(200).send('Newsletter sent successfully to all subscribers.');
+    } catch (error) {
+        console.error('Failed to send newsletter:', error);
+        res.status(500).send('Internal server error occurred while sending the newsletter.');
+    }
+});
+
 
 
 
@@ -610,27 +589,7 @@ authRouter.patch('/toggle-newsletter-subscription', async (req, res) => {
     }
 });
 
-// authRouter.get('/view-newsletter/:title', async (req, res) => {
-//     try {
-//         const title = req.params.title;
-//         const newsletter = await newslettersCollection.findOne({ title: title });
 
-//         if (!newsletter) {
-//             return res.status(404).send('Newsletter not found');
-//         }
-
-//         // If the newsletter exists, return its details
-//         res.status(200).json({
-//             title: newsletter.title,
-//             content: newsletter.content, // Assume 'content' field holds the body of the newsletter
-//             createdAt: newsletter.createdAt
-//         });
-
-//     } catch (error) {
-//         console.error('Error fetching newsletter:', error);
-//         res.status(500).send('Internal server error');
-//     }
-// });
 
 // This function calculates the start date of the current biweekly period based on the provided date.
 const getBiweeklyStartDate = (inputDate) => {
