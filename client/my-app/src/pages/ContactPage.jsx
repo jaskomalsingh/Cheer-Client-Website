@@ -129,7 +129,7 @@ export const ContactPage = () => {
                 </div>
               </div>
               <form className="form" ref={refForm}>
-                <div className="element-6">
+                
                   <div className="div-2">
                     <div className="text-wrapper-10">Full Name</div>
                     <input type="text" name="name" className="text-4" placeholder="John Doe" />
@@ -138,8 +138,8 @@ export const ContactPage = () => {
                     <div className="text-wrapper-10">Email</div>
                     <input type="email" name="email" className="text-5" placeholder="email@email.com" />
                   </div>
-                </div>
-                <div className="element-6">
+
+
                   <div className="div-2">
                     <div className="text-wrapper-10">Phone</div>
                     <input type="tel" className="text-4" placeholder="111-111-1111" />
@@ -148,7 +148,7 @@ export const ContactPage = () => {
                     <div className="text-wrapper-10">Service Inquiry (Optional)</div>
                     <input type="text" name='subject' className="text-5" placeholder="C.H.E.E.R. Work for example" />
                   </div>
-                </div>
+                
                 <div className="element">
                   <div className="div-2">
                     <div className="text-wrapper-10">Message</div>
