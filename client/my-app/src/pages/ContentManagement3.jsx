@@ -6,13 +6,14 @@ import "../styles/cm3.css"; // Ensure this matches your file structure
 
 export const ContentManagement3 = () => {
   const [newsletters, setNewsletters] = useState([]);
-  const [selectedNewsletter, setSelectedNewsletter] = useState(null);
+  const [selectedPdf, setSelectedPdf] = useState(null);
+  const [pdfVisibility, setPdfVisibility] = useState('');
 
   useEffect(() => {
-    // Fetch the list of newsletter titles
+    // Fetch the list of all newsletters
     const fetchNewsletters = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/auth/get-newsletters');
+        const response = await fetch('http://localhost:3001/api/auth/list-newsletters?role=admin'); // Adjust role as necessary
         if (response.ok) {
           const data = await response.json();
           setNewsletters(data);
@@ -27,16 +28,23 @@ export const ContentManagement3 = () => {
     fetchNewsletters();
   }, []);
 
-  const viewNewsletterDetails = async (title) => {
+  const changePdfVisibility = async (newsletterId, newVisibility) => {
     try {
-      // Replace spaces with %20 for URL encoding
-      const encodedTitle = encodeURIComponent(title);
-      const response = await fetch(`http://localhost:3001/api/auth/view-newsletter/${encodedTitle}`);
+      const response = await fetch('http://localhost:3001/api/auth/change-newsletter-visibility', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ newsletterId, makePublic: newVisibility === 'private' }) // toggle visibility
+      });
       if (response.ok) {
-        const data = await response.json();
-        setSelectedNewsletter(data);
+        const updatedList = newsletters.map(newsletter =>
+          newsletter._id === newsletterId ? { ...newsletter, visibility: newVisibility } : newsletter
+        );
+        setNewsletters(updatedList);
+        alert('Visibility updated successfully');
       } else {
-        throw new Error('Failed to fetch newsletter details');
+        throw new Error('Failed to change PDF visibility');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -45,7 +53,6 @@ export const ContentManagement3 = () => {
 
   return (
     <div className="content-management">
-      {/*<Footer height="924px" />*/}
       <div className="manage-newsletters">
         <div className="div-wrapper">
           <div className="text-wrapper-6">Manage Newsletters</div>
@@ -56,25 +63,33 @@ export const ContentManagement3 = () => {
             <div
               key={newsletter._id}
               className="newsletter-item"
-              onClick={() => viewNewsletterDetails(newsletter.title)}
+              onClick={() => setSelectedPdf(newsletter)}
             >
               {newsletter.title}
             </div>
           ))}
         </div>
-        {selectedNewsletter && (
+        {selectedPdf && (
           <>
-            <div className="overlay" onClick={() => setSelectedNewsletter(null)}></div>
+            <div className="overlay" onClick={() => setSelectedPdf(null)}></div>
             <div className="newsletter-modal">
-              <h2>{selectedNewsletter.title}</h2>
-              <div dangerouslySetInnerHTML={{ __html: selectedNewsletter.content }}></div>
-              <p>Created At: {new Date(selectedNewsletter.createdAt).toLocaleDateString()}</p>
-              <button onClick={() => setSelectedNewsletter(null)}>Close</button>
+              <h2>{selectedPdf.title}</h2>
+              {selectedPdf.pdfUrl && (
+                <p><a href={selectedPdf.pdfUrl} target="_blank" rel="noopener noreferrer">View Newsletter</a></p>
+              )}
+              <p>Visibility: {selectedPdf.visibility}</p>
+              <p>Created At: {new Date(selectedPdf.createdAt).toLocaleDateString()}</p>
+              <button onClick={() => changePdfVisibility(selectedPdf._id, selectedPdf.visibility === 'private' ? 'public' : 'private')}>
+                Make {selectedPdf.visibility === 'private' ? 'Public' : 'Private'}
+              </button>
+              <button onClick={() => setSelectedPdf(null)}>Close</button>
             </div>
           </>
         )}
       </div>
       <Header />
+      {/* Uncomment if you use Footer */}
+      {/* <Footer /> */}
     </div>
   );
 };

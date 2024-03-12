@@ -416,7 +416,7 @@ async function getNewsletterSubscribers() {
 // }
 
 authRouter.post('/create-newsletter', upload.single('newsletter'), async (req, res) => {
-    const { title, makePublic } = req.body; // `makePublic` should be a boolean value sent from the client
+    const { title, makePublic } = req.body; // makePublic should be received as a boolean ('true' or 'false')
     const file = req.file;
 
     if (!title || !file) {
@@ -426,38 +426,42 @@ authRouter.post('/create-newsletter', upload.single('newsletter'), async (req, r
     const gcsFileName = `${Date.now()}-${title.replace(/ /g, '_')}.pdf`;
     const gcsFile = bucket.file(gcsFileName);
     
-    // Set visibility based on user choice
     const options = {
         destination: gcsFileName,
         metadata: {
             contentType: 'application/pdf',
-            metadata: {
-                custom: 'metadata',
-            },
         },
-        public: makePublic === 'true', // Convert string to boolean
+        public: makePublic === 'true',
     };
 
-    // Upload the file to GCS
     try {
         await bucket.upload(file.path, options);
         const visibility = makePublic === 'true' ? 'public' : 'private';
         const url = makePublic === 'true' ? gcsFile.publicUrl() : 'Private - Access controlled by GCS bucket settings';
 
-        // Insert metadata into your database
-        await newslettersCollection.insertOne({
+        const newsletterData = {
             title,
             pdfUrl: url,
             visibility,
             createdAt: new Date(),
-        });
+        };
+
+        // Insert metadata into your database
+        await newslettersCollection.insertOne(newsletterData);
+
+        // Send emails to subscribed users if makePublic is true
+        if (makePublic === 'true') {
+            const subscribers = await getNewsletterSubscribers();
+            await sendNewsletter(title, file.path, subscribers.map(sub => sub.email));
+        }
 
         res.status(200).send({ message: 'Newsletter uploaded successfully', url });
     } catch (error) {
         console.error('Upload Error:', error);
-        res.status(500).send('Failed to upload PDF: ${error.message');
+        res.status(500).send('Failed to upload PDF');
     }
 });
+
 
 
 
@@ -479,56 +483,70 @@ authRouter.get('/list-newsletters', async (req, res) => {
 });
 
 
-async function sendNewsletter(emailSubject, pdfBuffer, subscribers){
-    //configure Nodemailer with your SMTP server
+async function sendNewsletter(emailSubject, pdfPathOrUrl, subscribers){
     let transporter = nodemailer.createTransport({
         service: 'gmail',
-        auth:{
+        auth: {
             user: '3316lab4@gmail.com',
             pass: 'tedo qnsn iwun lzqt',
         },
     });
 
+    // Decide if the newsletter is a local file or a hosted URL
+    let attachment = fs.existsSync(pdfPathOrUrl) 
+        ? {   // Local file
+            filename: 'newsletter.pdf',
+            path: pdfPathOrUrl 
+        } 
+        : {   // URL
+            filename: 'newsletter.pdf',
+            path: pdfPathOrUrl // Assuming this is a direct link to the file
+        };
+
     let mailOptions = {
-        from: '3316lab4@gmail.com',//sender address
-        to: subscribers.join(','),//list of recipients
-        subject: emailSubject,//subject line
-        text:'Please find the attached newsletter. ', //text message
-        attachments: [{
-            filename: 'newsletterSender.pdf',
-            content: pdfBuffer,
-            contentType: 'application/pdf'
-        }]
+        from: '3316lab4@gmail.com',
+        to: subscribers.join(','),
+        subject: emailSubject,
+        text: 'Please find the attached newsletter.',
+        attachments: [attachment]
     };
 
-    //send the email to all subscribers
-    try{
+    try {
         let info = await transporter.sendMail(mailOptions);
-        console.log('Message Send: %s', info.messageId);
-    
-    }catch(error){
-        console.error('Failed to send newsletter: ', error);
-        
+        console.log('Message Sent: %s', info.messageId);
+    } catch (error) {
+        console.error('Failed to send newsletter:', error);
     }
 }
 
-//This function would be called after a PDF is made public, passing the PDF data and subject
-async function onNewsletterPublished( newsletterTitle, pdfPath, makePublic){
-    if(makePublic==='true'){
-        //await gcsFile.makePublic();
-        //fetch all subscribed users email to send the email 
-        const subscribers = await getSubscribersEmails();
+authRouter.patch('/change-newsletter-visibility', async (req, res) => {
+    const { newsletterId, makePublic } = req.body;
 
-        //read the pdf file into a buffer
-        const fs = require('fs');
-        const pdfBuffer = fs.readFileSync(pdfPath);
+    try {
+        // Update newsletter visibility in the database
+        const updatedResult = await newslettersCollection.updateOne(
+            { _id: new ObjectId(newsletterId) },
+            { $set: { visibility: makePublic ? 'public' : 'private' } }
+        );
 
-        //send the newsletter finally
-        await sendNewsletter('New Newsletter: ${newsletterTitle}', pdfBuffer, subscribers);
+        if (updatedResult.modifiedCount === 0) {
+            return res.status(404).send('Newsletter not found or no changes made.');
+        }
 
+        // If the newsletter is made public, send it to all subscribed users
+        if (makePublic) {
+            const newsletter = await newslettersCollection.findOne({ _id: new ObjectId(newsletterId) });
+            const subscribers = await getNewsletterSubscribers();
+            await sendNewsletter(newsletter.title, newsletter.pdfUrl, subscribers.map(sub => sub.email));
+        }
+
+        res.status(200).send('Newsletter visibility updated successfully.');
+    } catch (error) {
+        console.error('Error updating newsletter visibility:', error);
+        res.status(500).send('Failed to update newsletter visibility');
     }
+});
 
-}
 
 
 //utility function to ger subscribers emails .implement according to the database
