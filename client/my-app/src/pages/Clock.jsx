@@ -9,6 +9,7 @@ import axios from "axios";
 import Header from "./Header"; // Make sure the path matches your project structure
 import Footer from "./Footer"; // Make sure the path matches your project structure
 import "../styles/style.css"; // Adjust the path as necessary
+import Container from 'react-bootstrap/Container';
 
 export const Clock = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -111,7 +112,7 @@ export const Clock = () => {
 
       </div>
       <Footer />
-    </div>
+    </Container>
   );
 };
 
