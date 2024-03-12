@@ -8,18 +8,9 @@
   
   .contact-page .div {
     background-color: #ffffff;
-    height: 1411px;
     overflow: hidden;
     position: relative;
-    width: 1919px;
-  }
-  
-  .contact-page .footer-content {
-    height: 489px;
-    left: 0;
-    position: absolute;
-    top: 922px;
-    width: 1920px;
+    width: 100%;
   }
   
   .contact-page .overlap-group {
@@ -337,12 +328,29 @@
   .contact-page .contact-form {
     align-items: flex-start;
     display: inline-flex;
-    gap: 91px;
-    left: 360px;
-    position: absolute;
-    top: 165px;
+    gap: 5.6875rem;
+    left: 50%;
+    transform: translateX(-50%);
+    position: relative;
+    top: 5%;
   }
   
+  @media screen and (max-width: 992px) {
+    .contact-page .content-2 {
+      flex-direction: column; /* Stack children vertically */
+      align-items: center; /* Center-align children */
+      gap: 20px; /* Adjust gap for vertical stacking */
+    }
+    .contact-page .contact-form {
+      align-items: flex-start;
+      display: inline-flex;
+      left: 50%;
+      transform: translateX(-50%);
+      position: relative;
+      top: 5%;
+    }
+  }
+
   .contact-page .proccess {
     align-items: flex-start;
     display: flex;

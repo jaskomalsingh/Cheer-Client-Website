@@ -597,7 +597,7 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 108px;
+    width: auto;
   }
   
   .content-management .overlap-group-2 {

@@ -19,7 +19,7 @@ import Clock from './pages/Clock.jsx'
 
 //import Header from './pages/Header';
 //import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
-import  ManageSubscriber  from './pages/ManageSubscriber.js';
+import  ManageSubscriber  from './pages/ManageSubscriber';
 import AdminUserControl from './pages/AdminUserControl.js';
 
 
@@ -30,7 +30,6 @@ const App = () => {
       <BrowserRouter>
         {/*<Header />*/}
         <Routes>
-          <Route path="/ManageSubscriber" element={<ManageSubscriber />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/cm1" element={<ContentManagement1 />} />

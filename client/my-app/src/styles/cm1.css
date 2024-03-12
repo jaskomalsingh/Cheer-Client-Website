@@ -1,16 +1,15 @@
 .content-management {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* This makes sure your main container fills at least the whole height of the viewport */
   justify-content: space-between; /* This pushes the footer to the bottom */
 }
 
 .content-management .div-2 {
   background-color: #ffffff;
-  min-height: 100vh;
+  /*height: 1513px;*/
   overflow: hidden;
   position: relative;
-  width: 1919px;
+  width: 100%;
 }
 
 
@@ -39,12 +38,11 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 681px;
+  /*height: 681px;*/
   left: 0;
-  padding: 50px 0px 50px;
-  position: absolute;
-  top: 243px;
-  width: 1919px;
+  position: relative;
+  /*top: 243px;*/
+  width: 100%;
 }
 
 .content-management .div-wrapper {
@@ -54,6 +52,7 @@
   flex-direction: column;
   gap: 8px;
   position: relative;
+  top: 1rem;
   width: 781.87px;
 }
 
@@ -163,14 +162,130 @@
 }
 
 
+
+@media screen and (max-width: 992px) {
+  .content-management .mini-side-bar {
+    background-color: #ebebd3;
+    height: fit-content;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+  }
+  .content-management .text-wrapper-heading {
+    width: auto !important;
+  }
+}
+
+.content-management .overlap-group-2 {
+  height: 185px;
+  left: 8px;
+  position: relative;
+  top: 48px;
+  width: 93px;
+}
+
+.content-management .nav {
+  align-items: flex-start;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 24px;
+  left: 22px;
+  position: absolute;
+  top: 0;
+}
+
+.content-management .new-button {
+  background-color: #464f34;
+  border-radius: 24px;
+  height: 48px;
+  position: relative;
+  width: 48px;
+}
+
+.content-management .icon-wrapper {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 8px;
+  padding: 8px 12px;
+  position: relative;
+}
+
+.content-management .icon {
+  height: 24px !important;
+  position: relative !important;
+  width: 24px !important;
+}
+
+.content-management .text-wrapper-10 {
+  color: #000000;
+  font-family: "Noto Sans-Regular", Helvetica;
+  font-size: 14px;
+  font-weight: 400;
+  left: 4px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 167px;
+  width: 84px;
+}
+
+.content-management .text-wrapper-11 {
+  color: #000000;
+  font-family: "Noto Sans-Regular", Helvetica;
+  font-size: 14px;
+  font-weight: 400;
+  left: 1px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 103px;
+  width: 92px;
+}
+
+.content-management .text-wrapper-12 {
+  color: #000000;
+  font-family: "Noto Sans-Regular", Helvetica;
+  font-size: 14px;
+  font-weight: 400;
+  left: 0;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 47px;
+  width: 92px;
+}
+
+.content-management .line-2 {
+  height: 16px;
+  left: 46px;
+  object-fit: cover;
+  position: absolute;
+  top: 16px;
+  width: 1px;
+}
+
+.content-management .line-3 {
+  height: 1px;
+  left: 38px;
+  object-fit: cover;
+  position: absolute;
+  top: 23px;
+  width: 16px;
+}
+
 .content-management .text-4 {
   align-items: center;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  left: 569px;
-  position: absolute;
-  top: 158px;
-  width: 782px;
+  /*left: 569px;*/
+  position: relative;
+  top: 1rem;
+  /*width: 782px;*/
 }
 

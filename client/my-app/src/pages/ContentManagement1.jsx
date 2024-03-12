@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import CMSideBar from "./CMSideBar";
+import Container from 'react-bootstrap/Container';
 import "../styles/cm1.css";
 import Footer from "./Footer";
 
@@ -23,22 +24,22 @@ export const ContentManagement1 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-  
+
     const formData = new FormData();
     formData.append('title', title);
-    
+
     // Convert newsletterType to boolean value
     const makePublic = newsletterType === 'public';
-  
+
     formData.append('makePublic', makePublic); // Append boolean newsletter type to FormData
     formData.append('newsletter', pdfFile); // Append PDF file to FormData
-  
+
     try {
       const response = await fetch('http://localhost:3001/api/auth/create-newsletter', {
         method: 'POST',
         body: formData,
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         alert(data.message);
@@ -54,47 +55,49 @@ export const ContentManagement1 = () => {
       alert('An error occurred. Please try again.');
     }
   };
-  
-  
-  
 
   return (
-    <div className="content-management">
-      <div className="div-2">
-        <div className="newsletter-builder">
-          <div className="div-wrapper">
-            <div className="text-wrapper-heading">Newsletter Builder</div>
+    <Container fluid>
+      <div className="content-management">
+        <div className="div-2">
+          <Header />
+          <div className="text-4">
+            <div className="text-wrapper-heading">Content Management</div>
           </div>
-          <div className="element-wrapper">
-            <div className="element-title">
-              <div className="text-3">
-                <div className="text-wrapper-subheading">Title</div>
+          <div className="newsletter-builder">
+            <CMSideBar currentTab="New..." />
+            <div className="div-wrapper">
+              <div className="text-wrapper-heading">Newsletter Builder</div>
+            </div>
+            <div className="element-wrapper">
+              <div className="element-title">
+                <div className="text-3">
+                  <div className="text-wrapper-subheading">Title</div>
+                </div>
               </div>
             </div>
-          </div>
-          <input
-            className="input-instance"
-            state="active"
-            text="ENTER A TITLE FOR YOUR NEWSLETTER"
-            type="text"
-            placeholder="Enter a title for your newsletter"
-            value={title}
-            onChange={handleTitleChange}
-          />
-          <div className="element-wrapper">
-            <div className="element-title">
-              <div className="text-3">
-                <div className="text-wrapper-subheading">PDF</div>
+            <input className="input-instance"
+              state="active"
+              text="ENTER A TITLE FOR YOUR NEWSLETTER"
+              type="text"
+              placeholder="Enter a title for your newsletter"
+              value={title}
+              onChange={handleTitleChange}
+            />
+            <div className="element-wrapper">
+              <div className="element-title">
+                <div className="text-3">
+                  <div className="text-wrapper-subheading">PDF</div>
+                </div>
               </div>
             </div>
-          </div>
-          {/* PDF upload input */}
+            {/* PDF upload input */}
           <input
             type="file"
             accept=".pdf"
             onChange={handlePdfChange}
           />
-          {/* Newsletter type selection */}
+            {/* Newsletter type selection */}
           <div>
             <label htmlFor="newsletterType">Select newsletter type:</label>
             <select id="newsletterType" value={newsletterType} onChange={handleNewsletterTypeChange}>
@@ -102,22 +105,17 @@ export const ContentManagement1 = () => {
               <option value="private">Private</option>
             </select>
           </div>
-          <button className="content-wrapper-create" onClick={handleSubmit}>
-            <div className="content-create">
-              <div className="text-wrapper-create">Create</div>
-            </div>
-          </button>
-          <CMSideBar currentTab="New..." />
+            <button className="content-wrapper-create" onClick={handleSubmit}>
+              <div className="content-create">
+                <div className="text-wrapper-create">Create</div>
+              </div>
+            </button>
+
+          </div>
+          <Footer />
         </div>
-        <div className="text-4">
-          <div className="text-wrapper-heading">Content Management</div>
-        </div>
-        <Header />
-       
-      
       </div>
-      <Footer/>
-    </div>
+    </Container>
   );
 
 };

@@ -3,7 +3,8 @@
     border-radius: 4px;
     left: 0;
     position: absolute;
-    top: 135px;
+    top: 0px;
+    height: auto;
     bottom: 0;
     width: 108px;
   }
@@ -93,6 +94,15 @@
     height: 48px;
     position: relative;
     width: 48px;
+  }
+
+  @media screen   and (max-width: 992px){
+    .mini-side-bar .new-add-button {
+      border-radius: 12px !important;
+      height: 24px !important;
+      width: 24px !important;
+      padding: 8px 12px !important;
+    }
   }
   .mini-side-bar .line-2 {
     height: 16px;

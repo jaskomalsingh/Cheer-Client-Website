@@ -1,3 +1,4 @@
+
 .home-page {
     background-color: #ffffff;
     display: flex;
@@ -8,7 +9,7 @@
   
   .home-page .div {
     background-color: #ffffff;
-    height: 3793px;
+    /*height: 3793px;*/
     position: relative;
     width: 100%;
   }
@@ -33,12 +34,12 @@
 
   .home-page .values {
     align-items: flex-start;
-    display: flex;
     gap: 117px;
     left: 50%;
     transform: translateX(-50%);
-    position: absolute;
-    top: 2740px;
+    position: relative;
+    top: 2rem;
+    /*top: 2740px;*/
     width: 1200px;
     max-width: 95%;
   }
@@ -49,7 +50,7 @@
     flex-direction: column;
     gap: 40px;
     position: relative;
-    width: 507.89px;
+    width: 31.75rem;
   }
   
   .home-page .text-2 {
@@ -65,7 +66,7 @@
   .home-page .history-wrapper {
     align-items: flex-start;
     background-color: #748459;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     display: flex;
     flex: 0 0 auto;
     gap: 10px;
@@ -200,9 +201,9 @@
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 0.4375rem;
     position: relative;
-    width: 573.72px;
+    width: 35.8125rem;
   }
   
   .home-page .text-3 {
@@ -218,7 +219,7 @@
   .home-page .core-wrapper {
     align-items: flex-start;
     background-color: #ebebd3;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     display: inline-flex;
     flex: 0 0 auto;
     gap: 10px;
@@ -287,7 +288,7 @@
     background-color: #f9f9f9;
     border: 1px solid;
     border-color: #eaeaea;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     display: inline-flex;
     flex: 0 0 auto;
     flex-direction: column;
@@ -317,19 +318,20 @@
   }
   
   .home-page .element-7 {
-    align-items: flex-start;
-    background-color: #f9f9f9;
-    border: 1px solid;
-    border-color: #eaeaea;
-    border-radius: 20px;
-    display: flex;
     flex-direction: column;
     gap: 10px;
-    height: 206px;
+    height: 257px;
     margin-right: -0.14px;
     padding: 33px 23px;
     position: relative;
     width: 280px;
+    align-items: flex-start;
+    background-color: #f9f9f9;
+    border: 1px solid;
+    border-color: #eaeaea;
+    border-radius: 1.25rem;
+    display: inline-flex;
+    flex: 0 0 auto;
   }
   
   .home-page .text-wrapper-12 {
@@ -349,7 +351,7 @@
     background-color: #f9f9f9;
     border: 1px solid;
     border-color: #eaeaea;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -364,7 +366,7 @@
     background-color: #f9f9f9;
     border: 1px solid;
     border-color: #eaeaea;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -394,8 +396,9 @@
     height: 1064px;
     left: 0;
     padding: 50px 0px 170px;
-    position: absolute;
-    top: 1362px;
+    position: relative;
+    top: 1rem;
+    /*top: 1362px;*/
     width: 100%;
   }
   
@@ -415,15 +418,15 @@
     display: flex;
     flex: 0 0 auto;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
     position: relative;
-    width: 781.87px;
+    width: 48.875rem;
   }
   
   .home-page .services-wrapper {
     align-items: center;
     background-color: #748459;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     display: inline-flex;
     flex: 0 0 auto;
     gap: 10px;
@@ -456,6 +459,7 @@
     position: relative;
     text-align: center;
     width: 781.87px;
+    width: fit-content;
   }
   
   .home-page .content-8 {
@@ -463,7 +467,7 @@
     display: flex;
     flex: 0 0 auto;
     flex-direction: column;
-    gap: 20px;
+    gap: 1.25rem;
     position: relative;
     width: 1200.99px;
   }
@@ -472,7 +476,7 @@
     align-items: flex-start;
     display: flex;
     flex: 0 0 auto;
-    gap: 20px;
+    gap: 1.25rem;
     position: relative;
     width: 794px;
   }
@@ -480,7 +484,7 @@
   .home-page .element-11 {
     align-items: flex-start;
     background-color: #eaeaea;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -527,7 +531,9 @@
     white-space: nowrap;
     width: fit-content;
   }
-  
+  .home-page .vstack {
+    align-self: auto !important;
+  }
   .home-page .text-wrapper-15 {
     color: #585566;
     font-family: "Lato-Regular", Helvetica;
@@ -542,16 +548,28 @@
   .home-page .element-13 {
     align-items: flex-start;
     background-color: #eaeaea;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    height: 350px;
-    padding: 49px 47px;
+    padding: 3.0625rem 2.9375rem;
     position: relative;
     width: 386px;
   }
-  
+
+  @media screen and (min-width: 992px) {
+    .home-page .values {
+      display: flex;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .home-page .about {
+      width:  1200px;
+      display: flex;
+    } 
+  }
+
   .home-page .img-2 {
     height: 150px;
     position: relative;
@@ -608,7 +626,7 @@
   .home-page .element-14 {
     align-items: flex-start;
     background-color: #eaeaea;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -640,12 +658,11 @@
   
   .home-page .about {
     align-items: flex-start;
-    display: flex;
-    gap: 65px;
+    gap: 4rem;
     left: 50%;
     transform: translateX(-50%);
-    position: absolute;
-    top: 747px;
+    position: relative;
+    top: 1rem;
     width: 1200px;
     max-width: 95%;
   }
@@ -682,7 +699,7 @@
   .home-page .about-us-wrapper {
     align-items: center;
     background-color: #ebebd3;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     display: inline-flex;
     flex: 0 0 auto;
     gap: 10px;
@@ -707,9 +724,10 @@
     display: flex;
     flex: 0 0 auto;
     flex-direction: column;
-    gap: 11px;
+    gap: 0.6875rem;
     position: relative;
-    width: 420px;
+    top: 1rem;
+    width: 26.25rem;
   }
   
   .home-page .text-wrapper-20 {
@@ -732,7 +750,7 @@
     letter-spacing: 0;
     line-height: 23.6px;
     position: relative;
-    width: 420px;
+    width: 26.25rem;
   }
   
   .home-page .image {
@@ -751,8 +769,60 @@
     height: 328px;
     left: 0;
     position: absolute;
-    top: 136px;
+    
     width: 328px;
+  }
+
+  @media screen and (min-width: 992px) {
+    .home-page .background-pattern{
+      top: 8.5rem;
+    }
+  }
+  
+  @media screen and (max-width: 992px) {
+    .home-page .image-2 {
+      height: 396px;
+      left: 50% !important;
+      transform: translateX(-50%);
+      width: 396px !important;
+      object-position: 73% 0%;
+      position: relative !important;
+    }
+    .home-page .content-11, .home-page .text-5, .home-page .element-15, 
+    .home-page .element-16, .home-page .text-wrapper-20, 
+    .home-page .text-wrapper-21, .home-page .about-ongoing-living, 
+    .home-page .content-7, .home-page .text-4, .home-page .text-wrapper-13,
+    .home-page .sub-text, .home-page .at-o-l-l-i-our{
+      width: fit-content !important;
+    }
+
+    .home-page .values-2 {
+      width: auto !important;
+    }
+    
+    .home-page .history {
+      left: 50% !important;
+      transform: translateX(-50%);
+      width:auto;
+    }
+    
+    .home-page .div-3 {
+      left: 50% !important;
+      transform: translateX(-50%);
+    }
+    .home-page .element-6 {
+      left: 50% !important;
+      transform: translateX(-50%);
+      height: auto !important;
+      width: auto !important;
+    }
+    .home-page .element-7, .home-page .element-8, .home-page .element-9, .home-page .content-6{
+      height: auto !important;
+      width: auto !important;
+    }
+    .home-page .element-ways {
+      height: auto !important;
+    }
   }
   
   .home-page .image-2 {
@@ -761,22 +831,24 @@
     position: absolute;
     top: 0;
     width: 634px;
+    object-fit: cover;
   }
   
   .home-page .banner {
-    height: 500px;
+    /*height: 500px;*/
     left: 0;
-    position: absolute;
-    top: 125px;
+    position: relative;
+    /*top: 125px;*/
     width: 100%;
+    max-height:500px;
   }
   
   .home-page .image-3 {
-    height: 500px;
+    height: fit-content;
     left: 0;
     object-fit: cover;
-    position: absolute;
-    top: 0;
+    position: relative;
+    /*top: 0;*/
     width: 100%;
   }
   

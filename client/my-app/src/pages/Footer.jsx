@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/footer.css";
 import { useMediaQuery } from 'react-responsive';
@@ -10,9 +10,9 @@ function Footer({ height }) {
   const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
   console.log(isMobile)
   return (
-    <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
-      <Row>
-        <div className="footer-content" style={{ '--top': height }}>
+    <div className="footer-content">
+      <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
+        <Row>
           <div className="overlap-group">
             <div className="background">
               <div className="overlap-group">
@@ -103,9 +103,9 @@ function Footer({ height }) {
               </div>
             }
           </div>
-        </div>
-      </Row>
-    </Container>
+        </Row>
+      </Container>
+    </div>
   )
 }
 

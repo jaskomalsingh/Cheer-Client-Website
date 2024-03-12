@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import CMSideBar from "./CMSideBar";
-import "../styles/cm3.css";
+import "../styles/cm3.css"; // Make sure this path matches your project structure
+import Container from 'react-bootstrap/Container';
 
 export const ContentManagement3 = () => {
   const [newsletters, setNewsletters] = useState([]);
@@ -58,7 +59,9 @@ export const ContentManagement3 = () => {
   };
 
   return (
-    <div className="content-management">
+    <Container fluid>
+      <Header />
+      <div className="content-management">
       <div className="manage-newsletters">
         <div className="div-wrapper">
           <div className="text-wrapper-6">Manage Newsletters</div>
@@ -97,9 +100,11 @@ export const ContentManagement3 = () => {
           </>
         )}
       </div>
-      <Header />
+      
       {/* Add Footer if needed */}
       {/* <Footer /> */}
     </div>
+    <Footer />
+    </Container>
   );
 };

@@ -28,7 +28,7 @@ function Header() {
     const onClick = (page) => {
         setActivePage(page);
     };
-    const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
+    const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
 
     return (
         <div className="overlap">
