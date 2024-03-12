@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import CMSideBar from "./CMSideBar";
-import "../styles/cm3.css"; // Make sure this path matches your project structure
-import Container from 'react-bootstrap/Container';
+import "../styles/cm3.css";
 
 export const ContentManagement3 = () => {
   const [newsletters, setNewsletters] = useState([]);
   const [selectedPdf, setSelectedPdf] = useState(null);
   const [newVisibility, setNewVisibility] = useState('');
+  const [showPublishPopup, setShowPublishPopup] = useState(false);
+  const [emailSubject, setEmailSubject] = useState('');
 
   useEffect(() => {
     const fetchNewsletters = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/auth/list-newsletters?role=admin'); // Add your role checking logic here
+        const response = await fetch('http://localhost:3001/api/auth/list-newsletters?role=admin');
         if (response.ok) {
           const data = await response.json();
           setNewsletters(data);
@@ -28,45 +29,68 @@ export const ContentManagement3 = () => {
     fetchNewsletters();
   }, []);
 
-  const handleVisibilityChange = () => {
-    // Toggle between 'public' and 'private'
-    setNewVisibility(newVisibility === 'private' ? 'public' : 'private');
-  };
-
-  const saveVisibilityChange = async () => {
+  const handleVisibilityChange = async (newsletterId, visibility) => {
     try {
       const response = await fetch('http://localhost:3001/api/auth/change-newsletter-visibility', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ newsletterId: selectedPdf._id, makePublic: newVisibility === 'public' })
+        body: JSON.stringify({ newsletterId, makePublic: visibility === 'public' })
       });
       if (response.ok) {
-        // Update local state to reflect the change
         const updatedList = newsletters.map(newsletter =>
-          newsletter._id === selectedPdf._id ? { ...newsletter, visibility: newVisibility } : newsletter
+          newsletter._id === newsletterId ? { ...newsletter, visibility } : newsletter
         );
         setNewsletters(updatedList);
-        setSelectedPdf({ ...selectedPdf, visibility: newVisibility });
+        setSelectedPdf({ ...selectedPdf, visibility }); // Update the selectedPdf's visibility as well
         alert('Visibility updated successfully');
       } else {
-        throw new Error('Failed to change PDF visibility');
+        throw new Error('Failed to change newsletter visibility');
       }
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
+  const sendNewsletter = async (newsletterId) => {
+    if (!emailSubject.trim()) {
+      alert('Please enter an email subject');
+      return;
+    }
+    try {
+      const response = await fetch('http://localhost:3001/api/auth/send-newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          emailSubject, 
+          newsletterId
+        }),
+      });
+
+      if (response.ok) {
+        alert('Newsletter sent successfully');
+        setShowPublishPopup(false);
+        setSelectedPdf(null);
+      } else {
+        throw new Error('Failed to send the newsletter');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to send the newsletter');
+    }
+  };
+
   return (
-    <Container fluid>
+    <div className="content-management">
       <Header />
-      <div className="content-management">
       <div className="manage-newsletters">
         <div className="div-wrapper">
           <div className="text-wrapper-6">Manage Newsletters</div>
         </div>
-        <CMSideBar currentTab="Newsletters"/>
+        <CMSideBar currentTab="Newsletters" />
         <div className="newsletter-grid">
           {newsletters.map(newsletter => (
             <div
@@ -75,15 +99,15 @@ export const ContentManagement3 = () => {
               onClick={() => {
                 setSelectedPdf(newsletter);
                 setNewVisibility(newsletter.visibility);
+                setShowPublishPopup(false);
               }}
             >
               {newsletter.title}
             </div>
           ))}
         </div>
-        {selectedPdf && (
-          <>
-            <div className="overlay" onClick={() => setSelectedPdf(null)}></div>
+        {selectedPdf && !showPublishPopup && (
+          <div className="overlay">
             <div className="newsletter-modal">
               <h2>{selectedPdf.title}</h2>
               {selectedPdf.pdfUrl && <p><a href={selectedPdf.pdfUrl} target="_blank" rel="noopener noreferrer">View Newsletter</a></p>}
@@ -93,18 +117,35 @@ export const ContentManagement3 = () => {
                   <option value="private">Private</option>
                 </select>
               </p>
-              <button onClick={saveVisibilityChange}>Save Changes</button>
+              <button onClick={() => handleVisibilityChange(selectedPdf._id, newVisibility)}>Save Changes</button>
+              <button onClick={() => setShowPublishPopup(true)}>Publish</button>
               <p>Created At: {new Date(selectedPdf.createdAt).toLocaleDateString()}</p>
               <button onClick={() => setSelectedPdf(null)}>Close</button>
             </div>
-          </>
+            
+          </div>
         )}
+        {showPublishPopup && (
+          <div className="overlay">
+            <div className="newsletter-modal">
+              <h2>Publish "{selectedPdf?.title}"</h2>
+              <input
+                type="text"
+                placeholder="Enter Email Subject"
+                value={emailSubject}
+                onChange={(e) => setEmailSubject(e.target.value)}
+              />
+              <div className="buttons">
+                <button onClick={() => setShowPublishPopup(false)}>Cancel</button>
+                <button onClick={() => sendNewsletter(selectedPdf._id)}>Confirm</button>
+              </div>
+            </div>
+          </div>
+        )}
+              
       </div>
       
-      {/* Add Footer if needed */}
-      {/* <Footer /> */}
+      <Footer />
     </div>
-    <Footer />
-    </Container>
   );
 };

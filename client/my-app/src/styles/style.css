@@ -134,15 +134,24 @@ h2 {
   width: fit-content;
 }
 
+@media screen and (max-width: 992px){
+  .sign-up-form {
+    display: grid !important;    
+  }
+}
 .sign-up-form {
   align-items: flex-start;
   display: flex;
-  gap: 91px;
-  height: 391px;
-  left: 360px;
-  position: absolute;
-  top: 443px;
-  width: 1200px;
+  gap: 5.6875;
+  height: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  position: relative;
+  top: 0px;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .sign-up-form-content {
@@ -152,7 +161,7 @@ h2 {
   gap: 28px;
   margin-right: -0.04px;
   position: relative;
-  width: 688.37px;
+  width: 100%;
 }
 
 .edit-profile-form {

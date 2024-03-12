@@ -8,7 +8,7 @@ import moment from "moment";
 import axios from "axios";
 import Header from "./Header"; // Make sure the path matches your project structure
 import Footer from "./Footer"; // Make sure the path matches your project structure
-import "../styles/clock.css"; // Adjust the path as necessary
+import "../styles/style.css"; // Adjust the path as necessary
 
 export const Clock = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -46,68 +46,71 @@ export const Clock = () => {
   ));
 
   return (
-    <div className="sign-up">
+    <Container fluid>
       <Header />
-      <div className="div">
-        <div className="sign-up-form">
-          <div className="form-title">
-            <h2>Log Hours</h2>
-            <p className="bio">Enter your details and log your hours.</p>
-          </div>
-          <div className="sign-up-form-content">
-            <div className="form-wrapper">
-              <div className="element-wrapper">
-                <label htmlFor="email" className="input-label">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  value={userEmail}
-                  onChange={(e) => setUserEmail(e.target.value)}
-                  placeholder="your@email.com"
-                />
-              </div>
-              <div className="element-wrapper">
-                <label htmlFor="fullName" className="input-label">Full Name</label>
-                <input
-                  type="text"
-                  id="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="John Doe"
-                />
-              </div>
+      <div className="sign-up">
+        <div className="div">
+          <div className="sign-up-form">
+            <div className="form-title">
+              <h2>Log Hours</h2>
+              <p className="bio">Enter your details and log your hours.</p>
             </div>
-            <div className="form-wrapper">
-              <div className="element-wrapper">
-                <label htmlFor="selectedDate" className="input-label">Selected Date</label>
-                <DatePicker
-                  selected={selectedDate}
-                  onChange={date => setSelectedDate(date)}
-                  dateFormat="MMMM d, yyyy"
-                />
+            <div className="sign-up-form-content">
+              <div className="form-wrapper">
+                <div className="element-wrapper">
+                  <label htmlFor="email" className="input-label">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={userEmail}
+                    onChange={(e) => setUserEmail(e.target.value)}
+                    placeholder="your@email.com"
+                  />
+                </div>
+                <div className="element-wrapper">
+                  <label htmlFor="fullName" className="input-label">Full Name</label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="John Doe"
+                  />
+                </div>
               </div>
+              <div className="form-wrapper">
+                <div className="element-wrapper">
+                  <label htmlFor="selectedDate" className="input-label">Selected Date</label>
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={date => setSelectedDate(date)}
+                    dateFormat="MMMM d, yyyy"
+                  />
+                </div>
+              </div>
+              <div className="form-wrapper">
+                <div className="element-wrapper">
+                  <label htmlFor="startTime" className="input-label">Start Time</label>
+                  <select value={startTime} onChange={e => setStartTime(e.target.value)} id="startTime">
+                    {timeOptions.map(time => <option key={time} value={time}>{time}</option>)}
+                  </select>
+                </div>
+                <div className="element-wrapper">
+                  <label htmlFor="endTime" className="input-label">End Time</label>
+                  <select value={endTime} onChange={e => setEndTime(e.target.value)} id="endTime">
+                    {timeOptions.map(time => <option key={time} value={time}>{time}</option>)}
+                  </select>
+                </div>
+              </div>
+              <button type="button" className="button" onClick={logHours}>
+                Log Hours
+              </button>
             </div>
-            <div className="form-wrapper">
-              <div className="element-wrapper">
-                <label htmlFor="startTime" className="input-label">Start Time</label>
-                <select value={startTime} onChange={e => setStartTime(e.target.value)} id="startTime">
-                  {timeOptions.map(time => <option key={time} value={time}>{time}</option>)}
-                </select>
-              </div>
-              <div className="element-wrapper">
-                <label htmlFor="endTime" className="input-label">End Time</label>
-                <select value={endTime} onChange={e => setEndTime(e.target.value)} id="endTime">
-                  {timeOptions.map(time => <option key={time} value={time}>{time}</option>)}
-                </select>
-              </div>
-            </div>
-            <button type="button" className="button" onClick={logHours}>
-              Log Hours
-            </button>
           </div>
         </div>
+
       </div>
-     {/* <Footer />*/}
+      <Footer />
     </div>
   );
 };

@@ -343,11 +343,35 @@
     }
     .contact-page .contact-form {
       align-items: flex-start;
-      display: inline-flex;
+      display: grid !important;
       left: 50%;
       transform: translateX(-50%);
       position: relative;
       top: 5%;
+    }
+    .contact-page .p {
+      color: #585566;
+      font-family: "Lato-Regular", Helvetica;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 23.6px;
+      position: relative;
+      width: fit-content !important;
+    }
+    .contact-page .proccess, .text-2, .text-3, .text-wrapper-9  {
+      width: fit-content !important;
+    }
+
+    .contact-page .text-6 {
+      width: 324px !important;
+    }
+
+    .contact-page form {
+      align-items: center !important;
+      left: 50%;
+      transform: translateX(-50%);
+      width: fit-content !important;
     }
   }
 
