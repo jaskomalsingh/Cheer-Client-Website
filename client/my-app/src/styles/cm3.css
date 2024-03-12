@@ -8,10 +8,10 @@
   
   .content-management .div {
     background-color: #ffffff;
-    height: 1413px;
+    /*height: 1413px;*/
     overflow: hidden;
     position: relative;
-    width: 1919px;
+    width: 100%;
   }
 
   .content-management .element-2 {
@@ -40,10 +40,9 @@
     gap: 10px;
     height: 681px;
     left: 0;
-    padding: 50px 0px 0px;
-    position: absolute;
-    top: 243px;
-    width: 1919px;
+    position: relative;
+    /*top: 243px;*/
+    width: 100%;
   }
   
   .content-management .div-wrapper {
@@ -69,10 +68,16 @@
     width: 781.87px;
   }
   
+  @media screen and (max-width: 992px) {
+    .content-management .text-wrapper-6, .content-management .content-title, .content-management .div-wrapper {
+      width: auto !important;
+    }
+  }
+
   .content-management .mini-side-bar {
     background-color: #ebebd3;
     border-radius: 4px;
-    height: 681px;
+    height: auto;
     left: 0;
     position: absolute;
     top: 0;
@@ -188,15 +193,15 @@
     width: 88px;
   }
   
-  .content-management .text-2 {
+  .content-management .content-title {
     align-items: center;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    left: 569px;
-    position: absolute;
-    top: 158px;
-    width: 782px;
+    /*left: 569px;*/
+    position: relative;
+    /*top: 158px;*/
+    width: auto;
   }
   
   .content-management .text-wrapper-10 {

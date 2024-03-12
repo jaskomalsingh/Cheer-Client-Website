@@ -8,10 +8,10 @@
 
 .content-management .div-2 {
   background-color: #ffffff;
-  height: 1513px;
+  /*height: 1513px;*/
   overflow: hidden;
   position: relative;
-  width: 1919px;
+  width: 100%;
 }
 
 .content-management .text-2 {
@@ -60,12 +60,11 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 681px;
+  /*height: 681px;*/
   left: 0;
-  padding: 50px 0px 50px;
-  position: absolute;
-  top: 243px;
-  width: 1919px;
+  position: relative;
+  /*top: 243px;*/
+  width: 100%;
 }
 
 .content-management .div-wrapper {
@@ -75,6 +74,7 @@
   flex-direction: column;
   gap: 8px;
   position: relative;
+  top: 1rem;
   width: 781.87px;
 }
 
@@ -152,7 +152,6 @@
   flex-direction: column;
   gap: 10px;
   justify-content: center;
-  margin-bottom: -89px;
   overflow: hidden;
   padding: 8px 41px 8px 10px;
   position: relative;
@@ -183,14 +182,20 @@
   width: 139px;
 }
 
-.content-management .mini-side-bar {
-  background-color: #ebebd3;
-  border-radius: 4px;
-  height: 631px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 108px;
+
+
+@media screen and (max-width: 992px) {
+  .content-management .mini-side-bar {
+    background-color: #ebebd3;
+    height: fit-content;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+  }
+  .content-management .text-wrapper-heading {
+    width: auto !important;
+  }
 }
 
 .content-management .overlap-group-2 {
@@ -299,10 +304,10 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  left: 569px;
-  position: absolute;
-  top: 158px;
-  width: 782px;
+  /*left: 569px;*/
+  position: relative;
+  top: 1rem;
+  /*width: 782px;*/
 }
 
 .content-management .text-wrapper-13 {
