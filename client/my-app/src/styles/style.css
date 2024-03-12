@@ -168,10 +168,12 @@ h2 {
   align-items: flex-start;
   display: flex;
   gap: 91px;
-  height: 391px;
-  left: 360px;
-  position: absolute;
-  top: 443px;
+  height: auto;
+  /*left: 360px;*/
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  /*top: 443px;*/
   width: 1200px;
 }
 
