@@ -1,44 +1,23 @@
 .content-management {
-  background-color: #ffffff;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
+  flex-direction: column;
+  min-height: 100vh; /* This makes sure your main container fills at least the whole height of the viewport */
+  justify-content: space-between; /* This pushes the footer to the bottom */
 }
 
 .content-management .div-2 {
   background-color: #ffffff;
-  height: 1513px;
+  min-height: 100vh;
   overflow: hidden;
   position: relative;
   width: 1919px;
 }
 
-.content-management .text-2 {
-  align-items: flex-start;
-  display: inline-flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  position: relative;
-}
 
-.content-management .element-2 {
-  align-items: center;
-  display: inline-flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  gap: 10px;
-  position: relative;
-}
 
-.content-management .element-3 {
-  align-items: flex-start;
-  display: inline-flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  gap: 16px;
-  position: relative;
-}
+
+
+
 
 .content-management .button {
   all: unset;
@@ -152,7 +131,7 @@
   flex-direction: column;
   gap: 10px;
   justify-content: center;
-  margin-bottom: -89px;
+  margin-bottom: 0px;
   overflow: hidden;
   padding: 8px 41px 8px 10px;
   position: relative;
@@ -183,116 +162,6 @@
   width: 139px;
 }
 
-.content-management .mini-side-bar {
-  background-color: #ebebd3;
-  border-radius: 4px;
-  height: 631px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 108px;
-}
-
-.content-management .overlap-group-2 {
-  height: 185px;
-  left: 8px;
-  position: relative;
-  top: 48px;
-  width: 93px;
-}
-
-.content-management .nav {
-  align-items: flex-start;
-  display: inline-flex;
-  flex-direction: column;
-  gap: 24px;
-  left: 22px;
-  position: absolute;
-  top: 0;
-}
-
-.content-management .new-button {
-  background-color: #464f34;
-  border-radius: 24px;
-  height: 48px;
-  position: relative;
-  width: 48px;
-}
-
-.content-management .icon-wrapper {
-  align-items: center;
-  display: inline-flex;
-  flex: 0 0 auto;
-  gap: 8px;
-  padding: 8px 12px;
-  position: relative;
-}
-
-.content-management .icon {
-  height: 24px !important;
-  position: relative !important;
-  width: 24px !important;
-}
-
-.content-management .text-wrapper-10 {
-  color: #000000;
-  font-family: "Noto Sans-Regular", Helvetica;
-  font-size: 14px;
-  font-weight: 400;
-  left: 4px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: center;
-  top: 167px;
-  width: 84px;
-}
-
-.content-management .text-wrapper-11 {
-  color: #000000;
-  font-family: "Noto Sans-Regular", Helvetica;
-  font-size: 14px;
-  font-weight: 400;
-  left: 1px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: center;
-  top: 103px;
-  width: 92px;
-}
-
-.content-management .text-wrapper-12 {
-  color: #000000;
-  font-family: "Noto Sans-Regular", Helvetica;
-  font-size: 14px;
-  font-weight: 400;
-  left: 0;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: center;
-  top: 47px;
-  width: 92px;
-}
-
-.content-management .line-2 {
-  height: 16px;
-  left: 46px;
-  object-fit: cover;
-  position: absolute;
-  top: 16px;
-  width: 1px;
-}
-
-.content-management .line-3 {
-  height: 1px;
-  left: 38px;
-  object-fit: cover;
-  position: absolute;
-  top: 23px;
-  width: 16px;
-}
 
 .content-management .text-4 {
   align-items: center;
@@ -303,91 +172,5 @@
   position: absolute;
   top: 158px;
   width: 782px;
-}
-
-.content-management .text-wrapper-13 {
-  color: #ffffff;
-  font-family: "Lato-Regular", Helvetica;
-  font-size: 17.7px;
-  font-weight: 400;
-  left: 17px;
-  letter-spacing: 0;
-  line-height: 28.4px;
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-}
-
-.content-management .element-5 {
-  height: 28px;
-  position: relative;
-  width: 102.89px;
-}
-
-.content-management .text-wrapper-14 {
-  color: #d87d56;
-  font-family: "Lato-Regular", Helvetica;
-  font-size: 17.7px;
-  font-weight: 400;
-  left: 17px;
-  letter-spacing: 0;
-  line-height: 28.4px;
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-}
-
-.content-management .element-6 {
-  height: 28px;
-  position: relative;
-  width: 69.89px;
-}
-
-.content-management .home-3 {
-  height: 28px;
-  position: relative;
-  width: 72px;
-}
-
-.content-management .element-7 {
-  height: 28px;
-  position: relative;
-  width: 71.89px;
-}
-
-.content-management .element-8 {
-  height: 28px;
-  margin-right: -2px;
-  position: relative;
-  width: 80.89px;
-}
-
-.content-management .content-5 {
-  align-items: center;
-  display: flex;
-  flex: 0 0 auto;
-  gap: 11px;
-  justify-content: flex-end;
-  margin-left: -93px;
-  margin-right: -93px;
-  position: relative;
-  width: 262px;
-}
-
-.content-management .image {
-  height: 90px;
-  left: 248px;
-  object-fit: cover;
-  position: absolute;
-  top: 13px;
-  width: 90px;
-}
-
-.content-management .new-add-button {
-  background-color: #464f34;
-  border-radius: 24px;
-  height: 48px;
-  position: relative;
-  width: 48px;
 }
 
