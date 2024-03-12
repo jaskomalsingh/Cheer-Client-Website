@@ -8,7 +8,7 @@ import moment from "moment";
 import axios from "axios";
 import Header from "./Header"; // Make sure the path matches your project structure
 import Footer from "./Footer"; // Make sure the path matches your project structure
-import "../styles/style.css"; // Adjust the path as necessary
+import "../styles/clock.css"; // Adjust the path as necessary
 
 export const Clock = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -107,7 +107,7 @@ export const Clock = () => {
           </div>
         </div>
       </div>
-      <Footer />
+     {/* <Footer />*/}
     </div>
   );
 };
