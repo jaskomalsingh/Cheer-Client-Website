@@ -1,13 +1,11 @@
 .content-management {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* This makes sure your main container fills at least the whole height of the viewport */
   justify-content: space-between; /* This pushes the footer to the bottom */
 }
 
 .content-management .div-2 {
   background-color: #ffffff;
-  min-height: 100vh;
   /*height: 1513px;*/
   overflow: hidden;
   position: relative;

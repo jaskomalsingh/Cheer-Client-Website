@@ -60,44 +60,8 @@ export const ContentManagement3 = () => {
 
   return (
     <Container fluid>
+      <Header />
       <div className="content-management">
-        <div className="div">
-
-          <Header />
-          <div className="content-title">
-            <div className="text-wrapper-6">Content Management</div>
-          </div>
-          <div className="manage-newsletters">
-            <CMSideBar currentTab="Newsletters" />
-            <div className="div-wrapper">
-              <div className="text-wrapper-6">Manage Newsletters</div>
-            </div>
-
-            {/* New Newsletter Grid Section Starts Here */}
-            <div className="newsletter-grid">
-              {newsletters.map((newsletter) => (
-                <div
-                  key={newsletter._id}
-                  className="newsletter-item"
-                  onClick={() => handleNewsletterClick(newsletter)}
-                >
-                  {newsletter.title}
-                </div>
-              ))}
-            </div>
-            {selectedNewsletter && (
-              <div className="newsletter-details">
-                <h2>{selectedNewsletter.title}</h2>
-                <p>{selectedNewsletter.content}</p>
-                <p>Created At: {new Date(selectedNewsletter.createdAt).toLocaleDateString()}</p>
-                <button onClick={() => setSelectedNewsletter(null)}>Close</button>
-              </div>
-            )}
-            {/* New Newsletter Grid Section Ends Here */}
-          </div>
-          <Footer />
-        </div>
-    <div className="content-management">
       <div className="manage-newsletters">
         <div className="div-wrapper">
           <div className="text-wrapper-6">Manage Newsletters</div>
@@ -136,6 +100,11 @@ export const ContentManagement3 = () => {
           </>
         )}
       </div>
+      
+      {/* Add Footer if needed */}
+      {/* <Footer /> */}
+    </div>
+    <Footer />
     </Container>
   );
 };
