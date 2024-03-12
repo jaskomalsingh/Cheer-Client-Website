@@ -343,7 +343,7 @@
     }
     .contact-page .contact-form {
       align-items: flex-start;
-      display: inline-flex;
+      display: grid !important;
       left: 50%;
       transform: translateX(-50%);
       position: relative;
