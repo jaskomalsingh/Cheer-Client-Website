@@ -26,9 +26,11 @@
   align-items: flex-start;
   display: inline-flex;
   gap: 91px;
-  left: 360px;
-  position: absolute;
-  top: 165px;
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  top: 1rem;
+  bottom: 1rem;
 }
 
 h2 {
