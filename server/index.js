@@ -20,7 +20,7 @@ const multer = require('multer');
 const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
 const bucketName = process.env.GCS_BUCKET_NAME;
-console.log('Bucket Name: ', process.env.GCS_BUCKET_NAME);
+
 const bucket = storage.bucket(bucketName);
 const upload = multer({dest: 'uploads/', fileFilter: (req,file,cb) => {
     //Accept Pdfs only
