@@ -13,11 +13,9 @@ import {EditUserProfile} from './pages/EditUserProfile.jsx';
 import NewsletterPopup from './pages/NewsletterPopup'
 import SignedIn from './pages/SignedIn.jsx'
 import Container from 'react-bootstrap/esm/Container.js';
-
+import Calendar from './pages/Calendar.jsx';
 import Header from './pages/Header';
-
-
-import {Clock} from './pages/Clock.jsx'
+import Clock from './pages/Clock.jsx'
 
 //import Header from './pages/Header';
 //import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
@@ -42,8 +40,7 @@ const App = () => {
           <Route path="/signedin" element={<SignedIn />} /> 
           <Route path="/edituser" element={<EditUserProfile />} />   
           <Route path="/adminusercontrol" element={<AdminUserControl />} />   
-
-         
+          <Route path="/calendar" element={<Calendar />} />   
           <Route path="/clock" element = {<Clock/>} />
         </Routes>
       </BrowserRouter>

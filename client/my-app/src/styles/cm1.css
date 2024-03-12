@@ -1,44 +1,24 @@
 .content-management {
-  background-color: #ffffff;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
+  flex-direction: column;
+  min-height: 100vh; /* This makes sure your main container fills at least the whole height of the viewport */
+  justify-content: space-between; /* This pushes the footer to the bottom */
 }
 
 .content-management .div-2 {
   background-color: #ffffff;
+  min-height: 100vh;
   /*height: 1513px;*/
   overflow: hidden;
   position: relative;
   width: 100%;
 }
 
-.content-management .text-2 {
-  align-items: flex-start;
-  display: inline-flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  position: relative;
-}
 
-.content-management .element-2 {
-  align-items: center;
-  display: inline-flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  gap: 10px;
-  position: relative;
-}
 
-.content-management .element-3 {
-  align-items: flex-start;
-  display: inline-flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  gap: 16px;
-  position: relative;
-}
+
+
+
 
 .content-management .button {
   all: unset;
@@ -152,6 +132,7 @@
   flex-direction: column;
   gap: 10px;
   justify-content: center;
+  margin-bottom: 0px;
   overflow: hidden;
   padding: 8px 41px 8px 10px;
   position: relative;
@@ -310,88 +291,3 @@
   /*width: 782px;*/
 }
 
-.content-management .text-wrapper-13 {
-  color: #ffffff;
-  font-family: "Lato-Regular", Helvetica;
-  font-size: 17.7px;
-  font-weight: 400;
-  left: 17px;
-  letter-spacing: 0;
-  line-height: 28.4px;
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-}
-
-.content-management .element-5 {
-  height: 28px;
-  position: relative;
-  width: 102.89px;
-}
-
-.content-management .text-wrapper-14 {
-  color: #d87d56;
-  font-family: "Lato-Regular", Helvetica;
-  font-size: 17.7px;
-  font-weight: 400;
-  left: 17px;
-  letter-spacing: 0;
-  line-height: 28.4px;
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-}
-
-.content-management .element-6 {
-  height: 28px;
-  position: relative;
-  width: 69.89px;
-}
-
-.content-management .home-3 {
-  height: 28px;
-  position: relative;
-  width: 72px;
-}
-
-.content-management .element-7 {
-  height: 28px;
-  position: relative;
-  width: 71.89px;
-}
-
-.content-management .element-8 {
-  height: 28px;
-  margin-right: -2px;
-  position: relative;
-  width: 80.89px;
-}
-
-.content-management .content-5 {
-  align-items: center;
-  display: flex;
-  flex: 0 0 auto;
-  gap: 11px;
-  justify-content: flex-end;
-  margin-left: -93px;
-  margin-right: -93px;
-  position: relative;
-  width: 262px;
-}
-
-.content-management .image {
-  height: 90px;
-  left: 248px;
-  object-fit: cover;
-  position: absolute;
-  top: 13px;
-  width: 90px;
-}
-
-.content-management .new-add-button {
-  background-color: #464f34;
-  border-radius: 24px;
-  height: 48px;
-  position: relative;
-  width: 48px;
-}

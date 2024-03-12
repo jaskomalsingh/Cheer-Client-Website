@@ -16,6 +16,20 @@ const port = 3001
 app.use(cors())
 app.use(express.json())
 app.use('/api/auth', authRouter);
+const multer = require('multer');
+const {Storage} = require('@google-cloud/storage');
+const storage = new Storage();
+const bucketName = process.env.GCS_BUCKET_NAME;
+const { ObjectId } = require('mongodb');
+
+const bucket = storage.bucket(bucketName);
+const upload = multer({dest: 'uploads/', fileFilter: (req,file,cb) => {
+    //Accept Pdfs only
+    if(!file.originalname.match(/\.(pdf)$/)) {
+        return cb(new Error('Only PDF Files are allowed!'), false);
+    }
+    cb(null, true);
+}});
 
 const uri = process.env.MONGO_URI;
 const dbName = '3350';
@@ -34,6 +48,9 @@ const newsletterSender = nodemailer.createTransport({
         pass: 'tedo qnsn iwun lzqt'
     },
 });
+
+const timesheetsCollection = client.db(dbName).collection('Timesheets');
+
 
 async function run() {
     try {
@@ -331,73 +348,243 @@ authRouter.get('/newsletter-subscribers', async (req, res) => {
 async function getNewsletterSubscribers() {
     return await usersCollection.find({ isNews: true }, { projection: { fullname: 1, email: 1 } }).toArray();
 }
-//creating a newsletter
-authRouter.post('/create-newsletter', async(req, res)=>{
+// //creating a newsletter
+// authRouter.post('/create-newsletter', async(req, res)=>{
+//     try {
+//         const { title, content} = req.body;
+//         //basic validation
+//         if(!title || !content){
+//             return res.status(400).send('Title and content both are required!');
+//         }
+//         //Insert the newsletter into cthe collection
+//         await newslettersCollection.insertOne({title, content, createdAt: new Date() });
+
+//         //send the newsletter to all subscribers
+//         await sendNewsletterToSubscribers(title, content);
+//         res.status(201).send('Newsletter created and sent to all subscribers successfully!');
+
+//     }catch (error){
+//         console.error('Error creating or sending newsletter: ', error);
+//         res.status(500).send('Internal server error');
+//     }
+// });
+
+// //fetching all newsletters
+// authRouter.get('/get-newsletters', async(req, res) => {
+//     try{
+//         const { title } = req.query;//retrieve the title from query parameters
+//         //if  a title is provided, fetch the specific newsletter including its content 
+//         //otheriwse fetch all the newsletters without their content to simplify the list
+//         if (title){
+//             const newsletter = await newslettersCollection.findOne({ title: title });
+//         if (!newsletter) {
+//             return res.status(404).send('Newsletter not found');
+//         }
+//         return res.status(200).json(newsletter);
+//     } else {
+//         // If no title is provided, fetch all newsletters without their content
+//         const newsletters = await newslettersCollection.find({}, { projection: { content: 0 } }).toArray();
+//         return res.status(200).json(newsletters);
+//     }
+// } catch (error) {
+//     console.error('Error fetching newsletters:', error);
+//     res.status(500).send('Internal server error');
+// }
+// });
+
+// async function sendNewsletterToSubscribers(title, content) {
+//     try{
+// //fetch subscribed users
+//         const subscribers = await getNewsletterSubscribers();
+
+//         //email sending promises
+//         const sendEmailPromises = subscribers.map(subscriber => {
+//             return newsletterSender.sendMail({
+//                 from:  '3316lab4@gmail.com',
+//                 to: subscriber.email,
+//                 subject: title, 
+//                 html: content,//assuming the content is HTML formatted
+//             });
+//         });
+//         //wait for all emails to be sent
+//         await Promise.all(sendEmailPromises);
+
+//         console.log('Newsletter sent to all subscribers sucessfully.');
+
+//     } catch (error) {
+//         console.error('Failed to send newsletter:', error);
+//     }
+// }
+
+
+
+// Endpoint to create a newsletter
+authRouter.post('/create-newsletter', upload.single('newsletter'), async (req, res) => {
+    const { title, makePublic } = req.body;
+    const file = req.file;
+
+    if (!title || !file) {
+        return res.status(400).send('Title and PDF file are required!');
+    }
+
+    // Generate file name for GCS
+    const gcsFileName = `${Date.now()}-${title.replace(/ /g, '_')}.pdf`;
+    const gcsFile = bucket.file(gcsFileName);
+    
+    // Set options for file upload
+    const options = {
+        destination: gcsFileName,
+        metadata: {
+            contentType: 'application/pdf',
+        },
+        // Convert string to boolean for public attribute
+        public: makePublic === 'true',
+    };
+
     try {
-        const { title, content} = req.body;
-        //basic validation
-        if(!title || !content){
-            return res.status(400).send('Title and content both are required!');
+        await bucket.upload(file.path, options);
+        const visibility = makePublic === 'true' ? 'public' : 'private';
+        const url = makePublic === 'true' ? `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${gcsFileName}` : 'Private - Access controlled by GCS bucket settings';
+
+        // Insert metadata into MongoDB, including GCS file name
+        const newsletterData = {
+            title,
+            pdfUrl: url,
+            visibility,
+            createdAt: new Date(),
+            gcsFileName, // Store the GCS file name for future reference
+        };
+        await newslettersCollection.insertOne(newsletterData);
+
+        // Send the newsletter to all subscribers if makePublic is true
+        if (makePublic === 'true') {
+            const subscribers = await getNewsletterSubscribers();
+            await sendNewsletter(title, file.path, subscribers.map(sub => sub.email));
         }
-        //Insert the newsletter into cthe collection
-        await newslettersCollection.insertOne({title, content, createdAt: new Date() });
 
-        //send the newsletter to all subscribers
-        await sendNewsletterToSubscribers(title, content);
-        res.status(201).send('Newsletter created and sent to all subscribers successfully!');
-
-    }catch (error){
-        console.error('Error creating or sending newsletter: ', error);
-        res.status(500).send('Internal server error');
+        res.status(200).send({ message: 'Newsletter uploaded successfully', url, visibility });
+    } catch (error) {
+        console.error('Upload Error:', error);
+        res.status(500).send('Failed to upload PDF');
     }
 });
 
-//fetching all newsletters
-authRouter.get('/get-newsletters', async(req, res) => {
-    try{
-        const { title } = req.query;//retrieve the title from query parameters
-        //if  a title is provided, fetch the specific newsletter including its content 
-        //otheriwse fetch all the newsletters without their content to simplify the list
-        if (title){
-            const newsletter = await newslettersCollection.findOne({ title: title });
-        if (!newsletter) {
-            return res.status(404).send('Newsletter not found');
+// Endpoint to change newsletter visibility
+authRouter.patch('/change-newsletter-visibility', async (req, res) => {
+    const { newsletterId, makePublic } = req.body;
+
+    try {
+        // Convert string ID to MongoDB ObjectId
+        const _id = new ObjectId(newsletterId);
+        const newsletter = await newslettersCollection.findOne({_id});
+
+        // Update visibility in MongoDB
+        const updatedResult = await newslettersCollection.updateOne(
+            { _id },
+            { $set: { visibility: makePublic ? 'public' : 'private' } }
+        );
+
+        if (updatedResult.modifiedCount === 0) {
+            return res.status(404).send('Newsletter not found or no changes made.');
         }
-        return res.status(200).json(newsletter);
-    } else {
-        // If no title is provided, fetch all newsletters without their content
-        const newsletters = await newslettersCollection.find({}, { projection: { content: 0 } }).toArray();
-        return res.status(200).json(newsletters);
+
+        // Update visibility in GCS
+        const gcsFile = bucket.file(newsletter.gcsFileName);
+        if (makePublic) {
+            await gcsFile.makePublic();
+        } else {
+            await gcsFile.makePrivate({ strict: true });
+        }
+
+        // Get updated URL if the file is public
+        const updatedUrl = makePublic ? `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${newsletter.gcsFileName}` : 'Private - Access controlled by GCS bucket settings';
+
+        // If the newsletter is made public, send it to all subscribed users
+        if (makePublic) {
+            const subscribers = await getNewsletterSubscribers();
+            await sendNewsletter(newsletter.title, updatedUrl, subscribers.map(sub => sub.email));
+        }
+
+        res.status(200).send({ message: 'Newsletter visibility updated successfully.', url: updatedUrl });
+    } catch (error) {
+        console.error('Error updating newsletter visibility:', error);
+        res.status(500).send('Failed to update newsletter visibility');
     }
-} catch (error) {
-    console.error('Error fetching newsletters:', error);
-    res.status(500).send('Internal server error');
-}
 });
 
-async function sendNewsletterToSubscribers(title, content) {
-    try{
-//fetch subscribed users
-        const subscribers = await getNewsletterSubscribers();
 
-        //email sending promises
-        const sendEmailPromises = subscribers.map(subscriber => {
-            return newsletterSender.sendMail({
-                from:  '3316lab4@gmail.com',
-                to: subscriber.email,
-                subject: title, 
-                html: content,//assuming the content is HTML formatted
-            });
-        });
-        //wait for all emails to be sent
-        await Promise.all(sendEmailPromises);
 
-        console.log('Newsletter sent to all subscribers sucessfully.');
 
+
+
+
+authRouter.get('/list-newsletters', async (req, res) => {
+    // Assuming role is determined by your auth system
+    const { role } = req.query; // This could be replaced with your actual authentication logic
+
+    try {
+        // Fetch all newsletters for an admin, only public ones for others
+        const query = role === 'admin' ? {} : { visibility: 'public' };
+        const newsletters = await newslettersCollection.find(query).toArray();
+
+        res.status(200).json(newsletters);
+    } catch (error) {
+        console.error('Error fetching newsletters:', error);
+        res.status(500).send('Failed to fetch newsletters');
+    }
+});
+
+
+async function sendNewsletter(emailSubject, pdfPathOrUrl, subscribers){
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: '3316lab4@gmail.com',
+            pass: 'tedo qnsn iwun lzqt',
+        },
+    });
+
+    // Decide if the newsletter is a local file or a hosted URL
+    let attachment = fs.existsSync(pdfPathOrUrl) 
+        ? {   // Local file
+            filename: 'newsletter.pdf',
+            path: pdfPathOrUrl 
+        } 
+        : {   // URL
+            filename: 'newsletter.pdf',
+            path: pdfPathOrUrl // Assuming this is a direct link to the file
+        };
+
+    let mailOptions = {
+        from: '3316lab4@gmail.com',
+        to: subscribers.join(','),
+        subject: emailSubject,
+        text: 'Please find the attached newsletter.',
+        attachments: [attachment]
+    };
+
+    try {
+        let info = await transporter.sendMail(mailOptions);
+        console.log('Message Sent: %s', info.messageId);
     } catch (error) {
         console.error('Failed to send newsletter:', error);
     }
 }
+
+
+
+
+
+
+//utility function to ger subscribers emails .implement according to the database
+
+async function getSubscribersEmails(){
+    const subscribers = await usersCollection.find({isNews: true}).toArray();
+    console.log(subscribers); // Add this line to check the subscriber list
+    return subscribers.map(subscriber => subscriber.email);
+}
+
+
 
 authRouter.patch('/toggle-newsletter-subscription', async (req, res) => {
     try {
@@ -419,6 +606,115 @@ authRouter.patch('/toggle-newsletter-subscription', async (req, res) => {
         res.status(200).send(`Newsletter subscription status updated to ${isNews} for ${email}`);
     } catch (error) {
         console.error('Error updating newsletter subscription status:', error);
+        res.status(500).send('Internal server error');
+    }
+});
+
+// authRouter.get('/view-newsletter/:title', async (req, res) => {
+//     try {
+//         const title = req.params.title;
+//         const newsletter = await newslettersCollection.findOne({ title: title });
+
+//         if (!newsletter) {
+//             return res.status(404).send('Newsletter not found');
+//         }
+
+//         // If the newsletter exists, return its details
+//         res.status(200).json({
+//             title: newsletter.title,
+//             content: newsletter.content, // Assume 'content' field holds the body of the newsletter
+//             createdAt: newsletter.createdAt
+//         });
+
+//     } catch (error) {
+//         console.error('Error fetching newsletter:', error);
+//         res.status(500).send('Internal server error');
+//     }
+// });
+
+// This function calculates the start date of the current biweekly period based on the provided date.
+const getBiweeklyStartDate = (inputDate) => {
+    const current = new Date(inputDate);
+    current.setHours(0, 0, 0, 0); // Normalize time to start of the day
+    
+    // Assuming the biweekly period starts every other Monday (0 in getDay() is Sunday)
+    let day = current.getDay();
+    let diffToMonday = day === 0 ? -6 : 1 - day; // Calculate difference to last Monday
+    let lastMonday = new Date(current);
+    lastMonday.setDate(current.getDate() + diffToMonday); // Go back to the last Monday
+
+    // Calculate the week number since a fixed date (e.g., start of the year or another fixed date)
+    // Here, we use the start of the current year for simplicity; you might adjust based on your requirements.
+    let startOfYear = new Date(Date.UTC(current.getFullYear(), 0, 1)); // Start of the year
+    let weeksSinceStartOfYear = Math.ceil(((lastMonday - startOfYear) / (24 * 60 * 60 * 1000) + startOfYear.getDay() + 1) / 7);
+
+    // Adjust lastMonday back one more week if we are currently in an "odd" biweekly period
+    if (weeksSinceStartOfYear % 2 === 0) {
+        lastMonday.setDate(lastMonday.getDate() - 7);
+    }
+
+    return lastMonday;
+};
+const getBiweeklyEndDate = (inputDate) => {
+    const startDate = getBiweeklyStartDate(inputDate);
+    let endDate = new Date(startDate); // Create a new Date instance to avoid mutating startDate
+    endDate.setDate(startDate.getDate() + 13); // Set to the last day of the biweekly period (14 days total, including the start date)
+    return endDate;
+};
+
+
+
+authRouter.post('/timesheet', async (req, res) => {
+    const { email, selectedDate, fullname, startTime, endTime } = req.body;
+    const startDate = new Date(`${selectedDate}T${startTime}`);
+    const endDate = new Date(`${selectedDate}T${endTime}`);
+    const hoursWorked = (endDate - startDate) / (1000 * 60 * 60); // Convert to hours
+    const biweeklyStart = getBiweeklyStartDate(selectedDate).toISOString().split('T')[0];
+    const biweeklyEnd = getBiweeklyEndDate(selectedDate).toISOString().split('T')[0]; // Implement this function based on your biweekly logic
+
+    try {
+        // Find the user's timesheet document
+        const timesheet = await timesheetsCollection.findOne({ email: email });
+
+        if (timesheet) {
+            // Check if there's already an entry for this biweekly period
+            let periodIndex = timesheet.biweeklyPeriods.findIndex(period =>
+                period.intervalStart === biweeklyStart && period.intervalEnd === biweeklyEnd);
+
+            if (periodIndex !== -1) {
+                // Update the existing biweekly period
+                let period = timesheet.biweeklyPeriods[periodIndex];
+                period.totalHours += hoursWorked;
+                period.logs.push({ date: selectedDate, startTime, endTime, hoursWorked });
+                await timesheetsCollection.updateOne({ _id: timesheet._id }, { $set: { [`biweeklyPeriods.${periodIndex}`]: period } });
+            } else {
+                // Add a new biweekly period
+                const newPeriod = {
+                    intervalStart: biweeklyStart,
+                    intervalEnd: biweeklyEnd,
+                    totalHours: hoursWorked,
+                    logs: [{ date: selectedDate, startTime, endTime, hoursWorked }]
+                };
+                await timesheetsCollection.updateOne({ _id: timesheet._id }, { $push: { biweeklyPeriods: newPeriod } });
+            }
+        } else {
+            // Create a new timesheet document for the user
+            const newTimesheet = {
+                email,
+                fullname,
+                biweeklyPeriods: [{
+                    intervalStart: biweeklyStart,
+                    intervalEnd: biweeklyEnd,
+                    totalHours: hoursWorked,
+                    logs: [{ date: selectedDate, startTime, endTime, hoursWorked }]
+                }]
+            };
+            await timesheetsCollection.insertOne(newTimesheet);
+        }
+
+        res.status(200).json({ message: 'Timesheet updated successfully' });
+    } catch (error) {
+        console.error('Error updating timesheet:', error);
         res.status(500).send('Internal server error');
     }
 });

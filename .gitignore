@@ -4,6 +4,8 @@ node_modules/
 # Environment variables
 .env
 
+sturdy-tine-416006-3011c272b41c.json
+
 # Logs
 logs/
 *.log
