@@ -21,7 +21,7 @@ function ManageSubscriber() {
   useEffect(() => {
     const fetchSubscribers = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/auth/getallusers');
+        const response = await fetch('/api/auth/getallusers');
         if (response.ok) {
           const data = await response.json();
           setSubscribers(data);
@@ -39,7 +39,7 @@ function ManageSubscriber() {
   const handleSave = async (userIndex) => {
     const user = subscribers[userIndex];
     try {
-      const response = await fetch('http://localhost:3001/api/auth/updateuser', {
+      const response = await fetch('/api/auth/updateuser', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

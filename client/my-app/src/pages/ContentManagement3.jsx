@@ -14,7 +14,7 @@ export const ContentManagement3 = () => {
   useEffect(() => {
     const fetchNewsletters = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/auth/list-newsletters?role=admin');
+        const response = await fetch('/api/auth/list-newsletters?role=admin');
         if (response.ok) {
           const data = await response.json();
           setNewsletters(data);
@@ -31,7 +31,7 @@ export const ContentManagement3 = () => {
 
   const handleVisibilityChange = async (newsletterId, visibility) => {
     try {
-      const response = await fetch('http://localhost:3001/api/auth/change-newsletter-visibility', {
+      const response = await fetch('/api/auth/change-newsletter-visibility', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ export const ContentManagement3 = () => {
       return;
     }
     try {
-      const response = await fetch('http://localhost:3001/api/auth/send-newsletter', {
+      const response = await fetch('/api/auth/send-newsletter', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
