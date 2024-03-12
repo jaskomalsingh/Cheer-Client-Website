@@ -1,33 +1,50 @@
 import React, { useState } from "react";
 import Header from "./Header";
-import Footer from "./Footer";
 import CMSideBar from "./CMSideBar";
-import { Editor } from "@tinymce/tinymce-react";
 import "../styles/cm1.css";
-
-
-
 
 export const ContentManagement1 = () => {
   const [title, setTitle] = useState("");
-  const[content, setContent]= useState("");
+  const [pdfFile, setPdfFile] = useState(null); // State for PDF file
+  const [newsletterType, setNewsletterType] = useState("public"); // State for newsletter type
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handlePdfChange = (e) => {
+    setPdfFile(e.target.files[0]);
+  };
+
+  const handleNewsletterTypeChange = (e) => {
+    setNewsletterType(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
+  
+    const formData = new FormData();
+    formData.append('title', title);
+    
+    // Convert newsletterType to boolean value
+    const makePublic = newsletterType === 'public';
+  
+    formData.append('makePublic', makePublic); // Append boolean newsletter type to FormData
+    formData.append('newsletter', pdfFile); // Append PDF file to FormData
   
     try {
       const response = await fetch('http://localhost:3001/api/auth/create-newsletter', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title, content }),
+        body: formData,
       });
   
       if (response.ok) {
-        alert('Newsletter created successfully!');
+        const data = await response.json();
+        alert(data.message);
         // Reset form
         setTitle('');
-        setContent('');
+        setPdfFile(null);
+        setNewsletterType('public'); // Reset newsletter type to default
       } else {
         alert('Failed to create newsletter. Please try again.');
       }
@@ -37,10 +54,12 @@ export const ContentManagement1 = () => {
     }
   };
   
+  
+  
+
   return (
     <div className="content-management">
       <div className="div-2">
-       { /*<Footer height="1024px"/>*/}
         <div className="newsletter-builder">
           <div className="div-wrapper">
             <div className="text-wrapper-heading">Newsletter Builder</div>
@@ -52,40 +71,42 @@ export const ContentManagement1 = () => {
               </div>
             </div>
           </div>
-          <input className="input-instance" state="active" text="ENTER A TITLE FOR YOUR NEWSLETTER" type="text" placeholder = "Enter a title for your newsletter"
-          onChange={(e) => setTitle(e.target.value)}/>
+          <input
+            className="input-instance"
+            state="active"
+            text="ENTER A TITLE FOR YOUR NEWSLETTER"
+            type="text"
+            placeholder="Enter a title for your newsletter"
+            value={title}
+            onChange={handleTitleChange}
+          />
           <div className="element-wrapper">
             <div className="element-title">
               <div className="text-3">
-                <div className="text-wrapper-subheading">Content</div>
+                <div className="text-wrapper-subheading">PDF</div>
               </div>
             </div>
           </div>
-          {/*<TextEditor className="text-editor-instance" /> add a third party text editor*/} 
-          <Editor
-            apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
-            value={content}
-  onEditorChange={(newContent) => setContent(newContent)}
-  init={{
-    height: 400,
-    menubar: false,
-    plugins: [
-      'advlist autolink lists link image charmap print preview anchor',
-      'searchreplace visualblocks code fullscreen',
-      'insertdatetime media table paste code help wordcount'
-    ],
-    toolbar: 'undo redo | formatselect | ' +
-    'bold italic backcolor | alignleft aligncenter ' +
-    'alignright alignjustify | bullist numlist outdent indent | ' +
-    'removeformat | help'
-  }}
-            />
+          {/* PDF upload input */}
+          <input
+            type="file"
+            accept=".pdf"
+            onChange={handlePdfChange}
+          />
+          {/* Newsletter type selection */}
+          <div>
+            <label htmlFor="newsletterType">Select newsletter type:</label>
+            <select id="newsletterType" value={newsletterType} onChange={handleNewsletterTypeChange}>
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+          </div>
           <button className="content-wrapper-create" onClick={handleSubmit}>
             <div className="content-create">
               <div className="text-wrapper-create">Create</div>
             </div>
           </button>
-          <CMSideBar currentTab="New..."/>
+          <CMSideBar currentTab="New..." />
         </div>
         <div className="text-4">
           <div className="text-wrapper-heading">Content Management</div>
