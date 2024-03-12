@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import CMSideBar from "./CMSideBar";
 import "../styles/cm1.css";
+import Footer from "./Footer";
 
 export const ContentManagement1 = () => {
   const [title, setTitle] = useState("");
@@ -112,7 +113,11 @@ export const ContentManagement1 = () => {
           <div className="text-wrapper-heading">Content Management</div>
         </div>
         <Header />
+       
+      
       </div>
+      <Footer/>
     </div>
   );
+
 };
