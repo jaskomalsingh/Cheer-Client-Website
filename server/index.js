@@ -20,6 +20,7 @@ const multer = require('multer');
 const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
 const bucketName = process.env.GCS_BUCKET_NAME;
+const { ObjectId } = require('mongodb');
 
 const bucket = storage.bucket(bucketName);
 const upload = multer({dest: 'uploads/', fileFilter: (req,file,cb) => {
@@ -415,52 +416,103 @@ async function getNewsletterSubscribers() {
 //     }
 // }
 
+
+
+// Endpoint to create a newsletter
 authRouter.post('/create-newsletter', upload.single('newsletter'), async (req, res) => {
-    const { title, makePublic } = req.body; // makePublic should be received as a boolean ('true' or 'false')
+    const { title, makePublic } = req.body;
     const file = req.file;
 
     if (!title || !file) {
         return res.status(400).send('Title and PDF file are required!');
     }
 
+    // Generate file name for GCS
     const gcsFileName = `${Date.now()}-${title.replace(/ /g, '_')}.pdf`;
     const gcsFile = bucket.file(gcsFileName);
     
+    // Set options for file upload
     const options = {
         destination: gcsFileName,
         metadata: {
             contentType: 'application/pdf',
         },
+        // Convert string to boolean for public attribute
         public: makePublic === 'true',
     };
 
     try {
         await bucket.upload(file.path, options);
         const visibility = makePublic === 'true' ? 'public' : 'private';
-        const url = makePublic === 'true' ? gcsFile.publicUrl() : 'Private - Access controlled by GCS bucket settings';
+        const url = makePublic === 'true' ? `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${gcsFileName}` : 'Private - Access controlled by GCS bucket settings';
 
+        // Insert metadata into MongoDB, including GCS file name
         const newsletterData = {
             title,
             pdfUrl: url,
             visibility,
             createdAt: new Date(),
+            gcsFileName, // Store the GCS file name for future reference
         };
-
-        // Insert metadata into your database
         await newslettersCollection.insertOne(newsletterData);
 
-        // Send emails to subscribed users if makePublic is true
+        // Send the newsletter to all subscribers if makePublic is true
         if (makePublic === 'true') {
             const subscribers = await getNewsletterSubscribers();
             await sendNewsletter(title, file.path, subscribers.map(sub => sub.email));
         }
 
-        res.status(200).send({ message: 'Newsletter uploaded successfully', url });
+        res.status(200).send({ message: 'Newsletter uploaded successfully', url, visibility });
     } catch (error) {
         console.error('Upload Error:', error);
         res.status(500).send('Failed to upload PDF');
     }
 });
+
+// Endpoint to change newsletter visibility
+authRouter.patch('/change-newsletter-visibility', async (req, res) => {
+    const { newsletterId, makePublic } = req.body;
+
+    try {
+        // Convert string ID to MongoDB ObjectId
+        const _id = new ObjectId(newsletterId);
+        const newsletter = await newslettersCollection.findOne({_id});
+
+        // Update visibility in MongoDB
+        const updatedResult = await newslettersCollection.updateOne(
+            { _id },
+            { $set: { visibility: makePublic ? 'public' : 'private' } }
+        );
+
+        if (updatedResult.modifiedCount === 0) {
+            return res.status(404).send('Newsletter not found or no changes made.');
+        }
+
+        // Update visibility in GCS
+        const gcsFile = bucket.file(newsletter.gcsFileName);
+        if (makePublic) {
+            await gcsFile.makePublic();
+        } else {
+            await gcsFile.makePrivate({ strict: true });
+        }
+
+        // Get updated URL if the file is public
+        const updatedUrl = makePublic ? `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${newsletter.gcsFileName}` : 'Private - Access controlled by GCS bucket settings';
+
+        // If the newsletter is made public, send it to all subscribed users
+        if (makePublic) {
+            const subscribers = await getNewsletterSubscribers();
+            await sendNewsletter(newsletter.title, updatedUrl, subscribers.map(sub => sub.email));
+        }
+
+        res.status(200).send({ message: 'Newsletter visibility updated successfully.', url: updatedUrl });
+    } catch (error) {
+        console.error('Error updating newsletter visibility:', error);
+        res.status(500).send('Failed to update newsletter visibility');
+    }
+});
+
+
 
 
 
@@ -519,33 +571,8 @@ async function sendNewsletter(emailSubject, pdfPathOrUrl, subscribers){
     }
 }
 
-authRouter.patch('/change-newsletter-visibility', async (req, res) => {
-    const { newsletterId, makePublic } = req.body;
 
-    try {
-        // Update newsletter visibility in the database
-        const updatedResult = await newslettersCollection.updateOne(
-            { _id: new ObjectId(newsletterId) },
-            { $set: { visibility: makePublic ? 'public' : 'private' } }
-        );
 
-        if (updatedResult.modifiedCount === 0) {
-            return res.status(404).send('Newsletter not found or no changes made.');
-        }
-
-        // If the newsletter is made public, send it to all subscribed users
-        if (makePublic) {
-            const newsletter = await newslettersCollection.findOne({ _id: new ObjectId(newsletterId) });
-            const subscribers = await getNewsletterSubscribers();
-            await sendNewsletter(newsletter.title, newsletter.pdfUrl, subscribers.map(sub => sub.email));
-        }
-
-        res.status(200).send('Newsletter visibility updated successfully.');
-    } catch (error) {
-        console.error('Error updating newsletter visibility:', error);
-        res.status(500).send('Failed to update newsletter visibility');
-    }
-});
 
 
 

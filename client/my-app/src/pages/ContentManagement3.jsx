@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import CMSideBar from "./CMSideBar";
-import "../styles/cm3.css"; // Ensure this matches your file structure
+import "../styles/cm3.css";
 
 export const ContentManagement3 = () => {
   const [newsletters, setNewsletters] = useState([]);
   const [selectedPdf, setSelectedPdf] = useState(null);
-  const [pdfVisibility, setPdfVisibility] = useState('');
+  const [newVisibility, setNewVisibility] = useState('');
 
   useEffect(() => {
-    // Fetch the list of all newsletters
     const fetchNewsletters = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/auth/list-newsletters?role=admin'); // Adjust role as necessary
+        const response = await fetch('http://localhost:3001/api/auth/list-newsletters?role=admin'); // Add your role checking logic here
         if (response.ok) {
           const data = await response.json();
           setNewsletters(data);
@@ -28,20 +27,27 @@ export const ContentManagement3 = () => {
     fetchNewsletters();
   }, []);
 
-  const changePdfVisibility = async (newsletterId, newVisibility) => {
+  const handleVisibilityChange = () => {
+    // Toggle between 'public' and 'private'
+    setNewVisibility(newVisibility === 'private' ? 'public' : 'private');
+  };
+
+  const saveVisibilityChange = async () => {
     try {
       const response = await fetch('http://localhost:3001/api/auth/change-newsletter-visibility', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ newsletterId, makePublic: newVisibility === 'private' }) // toggle visibility
+        body: JSON.stringify({ newsletterId: selectedPdf._id, makePublic: newVisibility === 'public' })
       });
       if (response.ok) {
+        // Update local state to reflect the change
         const updatedList = newsletters.map(newsletter =>
-          newsletter._id === newsletterId ? { ...newsletter, visibility: newVisibility } : newsletter
+          newsletter._id === selectedPdf._id ? { ...newsletter, visibility: newVisibility } : newsletter
         );
         setNewsletters(updatedList);
+        setSelectedPdf({ ...selectedPdf, visibility: newVisibility });
         alert('Visibility updated successfully');
       } else {
         throw new Error('Failed to change PDF visibility');
@@ -59,11 +65,14 @@ export const ContentManagement3 = () => {
         </div>
         <CMSideBar currentTab="Newsletters"/>
         <div className="newsletter-grid">
-          {newsletters.map((newsletter) => (
+          {newsletters.map(newsletter => (
             <div
               key={newsletter._id}
               className="newsletter-item"
-              onClick={() => setSelectedPdf(newsletter)}
+              onClick={() => {
+                setSelectedPdf(newsletter);
+                setNewVisibility(newsletter.visibility);
+              }}
             >
               {newsletter.title}
             </div>
@@ -74,21 +83,22 @@ export const ContentManagement3 = () => {
             <div className="overlay" onClick={() => setSelectedPdf(null)}></div>
             <div className="newsletter-modal">
               <h2>{selectedPdf.title}</h2>
-              {selectedPdf.pdfUrl && (
-                <p><a href={selectedPdf.pdfUrl} target="_blank" rel="noopener noreferrer">View Newsletter</a></p>
-              )}
-              <p>Visibility: {selectedPdf.visibility}</p>
+              {selectedPdf.pdfUrl && <p><a href={selectedPdf.pdfUrl} target="_blank" rel="noopener noreferrer">View Newsletter</a></p>}
+              <p>Visibility: 
+                <select value={newVisibility} onChange={(e) => setNewVisibility(e.target.value)}>
+                  <option value="public">Public</option>
+                  <option value="private">Private</option>
+                </select>
+              </p>
+              <button onClick={saveVisibilityChange}>Save Changes</button>
               <p>Created At: {new Date(selectedPdf.createdAt).toLocaleDateString()}</p>
-              <button onClick={() => changePdfVisibility(selectedPdf._id, selectedPdf.visibility === 'private' ? 'public' : 'private')}>
-                Make {selectedPdf.visibility === 'private' ? 'Public' : 'Private'}
-              </button>
               <button onClick={() => setSelectedPdf(null)}>Close</button>
             </div>
           </>
         )}
       </div>
       <Header />
-      {/* Uncomment if you use Footer */}
+      {/* Add Footer if needed */}
       {/* <Footer /> */}
     </div>
   );
