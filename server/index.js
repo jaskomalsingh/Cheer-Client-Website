@@ -29,6 +29,7 @@ const upload = multer({dest: 'uploads/', fileFilter: (req,file,cb) => {
         return cb(new Error('Only PDF Files are allowed!'), false);
     }
     cb(null, true);
+    
 }});
 
 const uri = process.env.MONGO_URI;
@@ -457,29 +458,30 @@ authRouter.patch('/change-newsletter-visibility', async (req, res) => {
         const _id = new ObjectId(newsletterId);
         const newsletter = await newslettersCollection.findOne({_id});
 
-        // Update visibility in MongoDB
-        const updatedResult = await newslettersCollection.updateOne(
-            { _id },
-            { $set: { visibility: makePublic ? 'public' : 'private' } }
-        );
-
-        if (updatedResult.modifiedCount === 0) {
-            return res.status(404).send('Newsletter not found or no changes made.');
+        if (!newsletter) {
+            return res.status(404).send('Newsletter not found.');
         }
 
         // Update visibility in GCS
         const gcsFile = bucket.file(newsletter.gcsFileName);
+        let updatedUrl;
+
         if (makePublic) {
             await gcsFile.makePublic();
+            updatedUrl = `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${newsletter.gcsFileName}`;
         } else {
             await gcsFile.makePrivate({ strict: true });
+            updatedUrl = 'Private - Access controlled by GCS bucket settings'; // Or maintain the old private URL if you have one.
         }
 
-        // Get updated URL if the file is public
-        const updatedUrl = makePublic ? `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${newsletter.gcsFileName}` : 'Private - Access controlled by GCS bucket settings';
+        // Update visibility and URL in MongoDB
+        await newslettersCollection.updateOne(
+            { _id },
+            { $set: { visibility: makePublic ? 'public' : 'private', pdfUrl: updatedUrl } }
+        );
 
         // If the newsletter is made public, send it to all subscribed users
-        if (makePublic) {
+        if (makePublic && updatedUrl) {
             const subscribers = await getNewsletterSubscribers();
             await sendNewsletter(newsletter.title, updatedUrl, subscribers.map(sub => sub.email));
         }
@@ -490,6 +492,7 @@ authRouter.patch('/change-newsletter-visibility', async (req, res) => {
         res.status(500).send('Failed to update newsletter visibility');
     }
 });
+
 
 
 
