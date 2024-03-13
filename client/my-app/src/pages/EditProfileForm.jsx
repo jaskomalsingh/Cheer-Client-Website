@@ -40,7 +40,7 @@ const EditProfileForm = () => {
     }
 
     try {
-      const response = await fetch('/api/auth/editprofile', {
+      const response = await fetch('http://localhost:3001/api/auth/editprofile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: body,

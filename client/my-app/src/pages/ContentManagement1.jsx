@@ -35,7 +35,7 @@ export const ContentManagement1 = () => {
     formData.append('newsletter', pdfFile); // Append PDF file to FormData
 
     try {
-      const response = await fetch('/api/auth/create-newsletter', {
+      const response = await fetch('http://localhost:3001/api/auth/create-newsletter', {
         method: 'POST',
         body: formData,
       });

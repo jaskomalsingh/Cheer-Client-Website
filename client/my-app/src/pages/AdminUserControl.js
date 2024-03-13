@@ -10,7 +10,7 @@ function ManageSubscriber() {
   useEffect(() => {
     const fetchSubscribers = async () => {
       try {
-        const response = await fetch('/api/auth/getallusers');
+        const response = await fetch('http://localhost:3001/api/auth/getallusers');
         if (response.ok) {
           const data = await response.json();
           setSubscribers(data);
