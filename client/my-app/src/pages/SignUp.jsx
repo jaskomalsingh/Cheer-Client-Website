@@ -62,6 +62,7 @@ export const SignUp = () => {
       <div className="sign-up">
         <div className="div">
           <LoginForm className="login-form-instance" />
+          <hr className="line" />
           <div className="sign-up-form">
             <div className="form-title">
               <h2>Sign-Up</h2>
@@ -76,6 +77,7 @@ export const SignUp = () => {
                   <input
                     type="text"
                     id="fullName"
+                    className="text-input"
                     value={fullName}
                     placeholder='John Doe'
                     onChange={(e) => setFullName(e.target.value)}
@@ -88,6 +90,7 @@ export const SignUp = () => {
                   <input
                     type="email"
                     id="email"
+                    className="text-input"
                     value={email}
                     placeholder='example@email.com'
                     onChange={(e) => setEmail(e.target.value)}
@@ -102,6 +105,7 @@ export const SignUp = () => {
                   <input
                     type="password"
                     id="password"
+                    className="text-input"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -113,6 +117,7 @@ export const SignUp = () => {
                   <input
                     type="password"
                     id="confirmPassword"
+                    className="text-input"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />
@@ -132,12 +137,12 @@ export const SignUp = () => {
                   </label>
                 </div>
               </div>
-              <button type="button" className="button" onClick={handleSignUp}>
+              <button type="button" className="sign-up-button" onClick={handleSignUp}>
                 <div className="button-text">Sign Up</div>
               </button>
             </div>
           </div>
-          <hr className="line" />
+
         </div>
 
       </div>
