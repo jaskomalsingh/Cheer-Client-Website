@@ -76,8 +76,8 @@ function Header() {
                                     {role && <Nav.Link href="/edituser">Edit User</Nav.Link>}
                                     <Nav.Link href="/contact">Contact</Nav.Link>
                                     <NavDropdown title="Employee" id="clock-in-dropdown" style={{ 'backdrop-filter': 'blur(21px) brightness(100%);'}} variant="dark">
-                                        <NavDropdown.Item href="/Payrollcalculator">Payroll Calculator</NavDropdown.Item>
-                                        <NavDropdown.Item href="/clock">Clock In</NavDropdown.Item>
+                                        <NavDropdown.Item href="/Payrollcalculator" style={{'background-color': '#464f34e8',}} >Payroll Calculator</NavDropdown.Item>
+                                        <NavDropdown.Item href="/clock" style={{'background-color': '#464f34e8',}} >Clock In</NavDropdown.Item>
                                     </NavDropdown>
                                     
                                     {['admin', 'employee'].includes(role) && <Nav.Link href="/clock">Clock in</Nav.Link>}
