@@ -14,23 +14,44 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config();
 const port = 3001
 app.use(cors())
-app.use(express.json())
+app.use(express.json({limit: '50mb'}))
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use('/api/auth', authRouter);
 const multer = require('multer');
 const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
 const bucketName = process.env.GCS_BUCKET_NAME;
 const { ObjectId } = require('mongodb');
-
+const imageBucketName = process.env.IMAGES_BUCKET_NAME;
+const imageBucket = storage.bucket(imageBucketName);
 const bucket = storage.bucket(bucketName);
-const upload = multer({dest: 'uploads/', fileFilter: (req,file,cb) => {
+//const imageCollection = 'photos';
+//console.log(imageBucketName);
+
+
+
+
+run();
+const upload = multer({
+    limits: {fileSize: 50 * 1024 *1024},//50 mb files
+    dest: 'uploads/', fileFilter: (req,file,cb) => {
     //Accept Pdfs only
     if(!file.originalname.match(/\.(pdf)$/)) {
         return cb(new Error('Only PDF Files are allowed!'), false);
     }
     cb(null, true);
-    
+
 }});
+
+const imageUpload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 10* 1024 * 1024 }, // For example, 5MB limit.
+    fileFilter: (req, file, cb) => {
+        
+        cb(null, true);
+    },
+});
+
 
 const uri = process.env.MONGO_URI;
 const dbName = '3350';
@@ -68,7 +89,7 @@ async function run() {
 run();
 const usersCollection = client.db(dbName).collection('Users');
 const newslettersCollection = client.db(dbName).collection('Newsletters');
-
+const photosCollection = client.db(dbName).collection('Photos');
 
 function validateInputSignUp(fullname, password, email, role, isNews) {
 
@@ -439,7 +460,7 @@ authRouter.post('/create-newsletter', upload.single('newsletter'), async (req, r
         // Send the newsletter to all subscribers if makePublic is true
         if (makePublic === 'true') {
             const subscribers = await getNewsletterSubscribers();
-            await sendNewsletter(title, file.path, subscribers.map(sub => sub.email));
+            //await sendNewsletter(title, file.path, subscribers.map(sub => sub.email));
         }
 
         res.status(200).send({ message: 'Newsletter uploaded successfully', url, visibility });
@@ -678,6 +699,65 @@ authRouter.post('/timesheet', async (req, res) => {
     } catch (error) {
         console.error('Error updating timesheet:', error);
         res.status(500).send('Internal server error');
+    }
+});
+
+
+
+//images endpoints
+
+authRouter.post('/upload', imageUpload.single('image'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No image uploaded.');
+    }
+
+    // Create a unique file name for the image to avoid naming conflicts
+    const timestamp = Date.now();
+    const blob = imageBucket.file(`${timestamp}_${req.file.originalname}`);
+
+    // Create a stream to upload the image to Google Cloud Storage
+    const blobStream = blob.createWriteStream({
+        metadata: {
+            contentType: req.file.mimetype,
+        },
+    });
+
+    blobStream.on('error', (err) => {
+        console.error('Blob stream error:', err);
+        res.status(500).send('Error uploading to cloud storage.');
+    });
+
+    blobStream.on('finish', async () => {
+        // The image is uploaded, now we save the metadata in MongoDB
+        const publicUrl = `https://storage.googleapis.com/${imageBucketName}/${blob.name}`;
+        try {
+            const photoDoc = {
+                url: publicUrl,
+                description: req.body.description || 'No description',
+                uploaded: new Date(),
+            };
+            await photosCollection.insertOne(photoDoc);
+            res.status(200).send({ message: 'Image uploaded successfully', url: publicUrl });
+        } catch (error) {
+            console.error('MongoDB insertion error:', error);
+            res.status(500).send('Error saving image information.');
+        }
+    });
+
+    // Pipe the 'file' data to the blobStream
+    blobStream.end(req.file.buffer);
+});
+
+
+
+//fetch list of images
+authRouter.get('/photos', async (req, res) => {
+    try {
+        const photos = await photosCollection.find({}).toArray();
+        res.status(200).json(photos);
+    } catch (error) {
+        console.error('Error fetching photos:', error);
+        res.status(500).send('Error fetching photos from database.');
     }
 });
 
