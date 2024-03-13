@@ -21,7 +21,7 @@ export const LoginForm = () => {
     }
   
     try {
-      const response = await fetch(`/api/auth/signin`, {
+      const response = await fetch(`http://localhost:3001/api/auth/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export const LoginForm = () => {
         localStorage.setItem('fullname', userData.fullname);
         localStorage.setItem('email', userData.email);
         localStorage.setItem('isDeactivated', userData.isDeactivated.toString());
-        localStorage.setItem('role', userData.role);
+        localStorage.setItem('role', userData.role);//'Admin', 'User', 'Employee', 'VerifiedUser'
         localStorage.setItem('isNews', userData.isNews.toString());
         alert('Log in successful');
         navigate('/signedin');

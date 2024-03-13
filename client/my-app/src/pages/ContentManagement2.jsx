@@ -12,7 +12,7 @@
 //     // Function to fetch subscribers
 //     const fetchSubscribers = async () => {
 //       try {
-//         const response = await fetch('/api/auth/newsletter-subscribers');
+//         const response = await fetch('http://localhost:3001/api/auth/newsletter-subscribers');
 //         if (response.ok) {
 //           const data = await response.json();
 //           setSubscribers(data);
@@ -30,7 +30,7 @@
 //   // Function to handle removal of subscriber
 //   const removeSubscriber = async (email) => {
 //     try {
-//       const response = await fetch('/api/auth/toggle-newsletter-subscription', {
+//       const response = await fetch('http://localhost:3001/api/auth/toggle-newsletter-subscription', {
 //         method: 'PATCH',
 //         headers: {
 //           'Content-Type': 'application/json',
