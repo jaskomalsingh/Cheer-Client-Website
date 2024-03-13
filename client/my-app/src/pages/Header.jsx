@@ -82,13 +82,20 @@ function Header() {
                                     
                                     {['admin', 'employee'].includes(role) && <Nav.Link href="/clock">Clock in</Nav.Link>}
                                     <Nav.Link href="/calendar">Calendar</Nav.Link>
-                                    <Nav.Link href="/signup">
+                                    {!role && <Nav.Link href="/signup">
                                         <Button className="login-button">
                                             <div className="content-12">
                                                 <div className="text-wrapper-24">Login</div>
                                             </div>
                                         </Button>
-                                    </Nav.Link>
+                                    </Nav.Link>}
+                                    {role && <Nav.Link href="/signout">
+                                        <Button className="login-button">
+                                            <div className="content-12">
+                                                <div className="text-wrapper-24">Logout</div>
+                                            </div>
+                                        </Button>
+                                    </Nav.Link>}
                                 </Nav>
                             </Navbar.Collapse>
                         </Container>
