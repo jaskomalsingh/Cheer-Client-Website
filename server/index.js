@@ -21,10 +21,8 @@ const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
 const bucketName = process.env.GCS_BUCKET_NAME;
 const { ObjectId } = require('mongodb');
-<<<<<<< Updated upstream
 const imageBucketName = process.env.IMAGES_BUCKET_NAME;
 const imageBucket = storage.bucket(imageBucketName);
-=======
 
 // Chatroom Stuff
 const http = require('http');
@@ -52,7 +50,6 @@ io.on('connection', (socket) => {
 });
 
 
->>>>>>> Stashed changes
 const bucket = storage.bucket(bucketName);
 //const imageCollection = 'photos';
 //console.log(imageBucketName);
@@ -69,7 +66,7 @@ const upload = multer({
         return cb(new Error('Only PDF Files are allowed!'), false);
     }
     cb(null, true);
-
+    
 }});
 
 const imageUpload = multer({
@@ -118,12 +115,8 @@ async function run() {
 run();
 const usersCollection = client.db(dbName).collection('Users');
 const newslettersCollection = client.db(dbName).collection('Newsletters');
-<<<<<<< Updated upstream
-const photosCollection = client.db(dbName).collection('Photos');
-=======
-const chatroomsCollection = client.db(dbName).collection('Chatrooms')
+const photosCollection = client.db(dbName).collection('Photos');const chatroomsCollection = client.db(dbName).collection('Chatrooms')
 
->>>>>>> Stashed changes
 
 function validateInputSignUp(fullname, password, email, role, isNews) {
 
@@ -734,20 +727,6 @@ authRouter.post('/timesheet', async (req, res) => {
         res.status(500).send('Internal server error');
     }
 });
-authRouter.get('/getchatrooms', async (req, res) => {
-    try {
-        const chatroomList = await chatroomsCollection.find({}).toArray(); // Find all documents in the collection
-        res.status(200).json(chatroomList); // Send the list of chatrooms back to the client
-    } catch (error) {
-        console.error('Failed to fetch chatrooms:', error);
-        res.status(500).send('Internal Server Error');
-    } 
-});
-
-
-<<<<<<< Updated upstream
-
-//images endpoints
 
 authRouter.post('/upload', imageUpload.single('image'), async (req, res) => {
     if (!req.file) {
@@ -803,12 +782,17 @@ authRouter.get('/photos', async (req, res) => {
         res.status(500).send('Error fetching photos from database.');
     }
 });
-
-
-app.listen(port, () => {
-=======
-server.listen(port, () => {
->>>>>>> Stashed changes
-    console.log(`Listening on port ${port}`);
+authRouter.get('/getchatrooms', async (req, res) => {
+    try {
+        const chatroomList = await chatroomsCollection.find({}).toArray(); // Find all documents in the collection
+        res.status(200).json(chatroomList); // Send the list of chatrooms back to the client
+    } catch (error) {
+        console.error('Failed to fetch chatrooms:', error);
+        res.status(500).send('Internal Server Error');
+    } 
 });
 
+
+server.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+});
