@@ -70,6 +70,7 @@ export const LoginForm = () => {
             <input
               type="email"
               id="loginEmail"
+              className="text-input"
               placeholder='example@email.com'
               value={formData.email}
               onChange={handleChange}
@@ -83,6 +84,7 @@ export const LoginForm = () => {
             <input
               type="password"
               id="loginPassword"
+              className="text-input"
               value={formData.password}
               onChange={handleChange}
               name="password"

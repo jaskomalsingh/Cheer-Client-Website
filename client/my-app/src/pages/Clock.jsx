@@ -63,6 +63,7 @@ export const Clock = () => {
                   <input
                     type="email"
                     id="email"
+                    className="text-input"
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
                     placeholder="your@email.com"

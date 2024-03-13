@@ -78,6 +78,7 @@ const EditProfileForm = () => {
             <input
               type="text"
               id="fullName"
+              className="text-input"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
             />
@@ -91,6 +92,7 @@ const EditProfileForm = () => {
             <input
               type="password"
               id="oldPassword"
+              className="text-input"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
             />
@@ -104,6 +106,7 @@ const EditProfileForm = () => {
             <input
               type="password"
               id="newPassword"
+              className="text-input"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
@@ -115,6 +118,7 @@ const EditProfileForm = () => {
             <input
               type="password"
               id="confirmPassword"
+              className="text-input"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
