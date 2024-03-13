@@ -19,6 +19,7 @@ function Header() {
     //};
 
     const location = useLocation();
+    const role = localStorage.getItem('role');
 
     const isPageHighlighted = (path) => {
         // Assuming `to` is the path you pass to each HeaderPage component
@@ -29,6 +30,11 @@ function Header() {
         setActivePage(page);
     };
     const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
+
+    // Check if user has access to a specific feature
+    const hasAccess = (requiredRoles) => {
+        return requiredRoles.includes(role);
+    };
 
     return (
         <div className="overlap">
@@ -53,6 +59,7 @@ function Header() {
                                                 </div>
                                             </div>
                                     </Nav.Link>
+                                    {role === 'admin' && (
                                     <NavDropdown title="Manage" id="basic-nav-dropdown"  style={{ 'backdrop-filter': 'blur(21px) brightness(100%);'}} variant="dark">
                                         <NavDropdown.Item href="/cm1"  style={{'background-color': '#464f34e8',}} >
                                             <div className="home-wrapper">
@@ -76,9 +83,10 @@ function Header() {
                                             </div>
                                         </NavDropdown.Item>
                                     </NavDropdown>
-                                    <Nav.Link href="/edituser">Edit User</Nav.Link>
+                                    )}
+                                    {role && <Nav.Link href="/edituser">Edit User</Nav.Link>}
                                     <Nav.Link href="/contact">Contact</Nav.Link>
-                                    <Nav.Link href="/clock">Clock in</Nav.Link>
+                                    {['admin', 'employee'].includes(role) && <Nav.Link href="/clock">Clock in</Nav.Link>}
                                     <Nav.Link href="/calendar">Calendar</Nav.Link>
                                     <Nav.Link href="/signup">
                                         <Button className="login-button">
