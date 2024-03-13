@@ -81,9 +81,6 @@ function Footer({ height }) {
                       </div>
                       <div className="text">
                         <Link to="/"><div className="text-wrapper-3">About</div></Link>
-                        <Link to="/cm1"><div className="text-wrapper-4">CM1</div></Link>
-                        <Link to="/cm2"><div className="text-wrapper-4">CM2</div></Link>
-                        <Link to="/cm3"><div className="text-wrapper-4">CM3</div></Link>
                         <Link to="/edituser"><div className="text-wrapper-4">Edit User</div></Link>
                         <Link to="/contact"><div className="text-wrapper-4">Contact Us</div></Link>
                       </div>

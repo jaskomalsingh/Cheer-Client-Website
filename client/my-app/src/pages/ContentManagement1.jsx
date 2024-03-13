@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import CMSideBar from "./CMSideBar";
 import Container from 'react-bootstrap/Container';
 import "../styles/cm1.css";
 import Footer from "./Footer";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export const ContentManagement1 = () => {
   const [title, setTitle] = useState("");
   const [pdfFile, setPdfFile] = useState(null); // State for PDF file
   const [newsletterType, setNewsletterType] = useState("public"); // State for newsletter type
+  const navigate = useNavigate(); // Initialize useNavigate
+  
+  useEffect(() => {
+    const role = localStorage.getItem('role'); // Get role from localStorage
+
+    // Redirect if not admin
+    if (role !== 'admin') {
+      navigate('/'); // Redirect to home page or a designated "not authorized" page
+    }});
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);

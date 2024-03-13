@@ -1,34 +1,24 @@
-import React, { useState, useEffect, Component } from "react";
+
+
+import React, { useState, useEffect } from "react";
 import "../styles/header.css";
-import HeaderPage from "./HeaderPage";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { useMediaQuery } from 'react-responsive';
 
 function Header() {
     const [activePage, setActivePage] = useState("About");
-
-    //const isPageHighlighted = (page) => {
-    //    return activePage === page; 
-    //};
-
     const location = useLocation();
     const role = localStorage.getItem('role');
 
     const isPageHighlighted = (path) => {
-        // Assuming `to` is the path you pass to each HeaderPage component
         return location.pathname === path;
     };
 
-    const onClick = (page) => {
-        setActivePage(page);
-    };
     const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
 
     // Check if user has access to a specific feature
@@ -40,13 +30,12 @@ function Header() {
         <div className="overlap">
             <header className="header">
                 <div className="menu-bar">
-                    
-                    <Navbar collapseOnSelect expand="md" sticky="top" className="navbar" bg="transparent"  variant="dark">
+                    <Navbar collapseOnSelect expand="md" sticky="top" className="navbar" bg="transparent" variant="dark">
                         <Container>
                             <Navbar.Brand href="/">
                                 <img className="image-4" alt="Image" src="https://c.animaapp.com/lPCECV6H/img/image-8@2x.png" />
                                 <div className="ongoing-living-wrapper">
-                                    {isMobile ? <p className="ongoing-living">O.L.L.I.</p> : <p className="ongoing-living">Ongoing Living &amp; Learning Inc.</p>}
+                                    {isMobile ? <p className="ongoing-living">O.L.L.I.</p> : <p className="ongoing-living">Ongoing Living & Learning Inc.</p>}
                                 </div>
                             </Navbar.Brand>
                             <Navbar.Toggle aria-controls="basic-navbar-nav" style={{'background-color': '#464f34e8', 'backdrop-filter': 'blur(21px) brightness(100%);'}}/>
@@ -86,6 +75,11 @@ function Header() {
                                     )}
                                     {role && <Nav.Link href="/edituser">Edit User</Nav.Link>}
                                     <Nav.Link href="/contact">Contact</Nav.Link>
+                                    <NavDropdown title="Employee" id="clock-in-dropdown" style={{ 'backdrop-filter': 'blur(21px) brightness(100%);'}} variant="dark">
+                                        <NavDropdown.Item href="/Payrollcalculator" style={{'background-color': '#464f34e8',}} >Payroll Calculator</NavDropdown.Item>
+                                        <NavDropdown.Item href="/clock" style={{'background-color': '#464f34e8',}} >Clock In</NavDropdown.Item>
+                                    </NavDropdown>
+                                    
                                     {['admin', 'employee'].includes(role) && <Nav.Link href="/clock">Clock in</Nav.Link>}
                                     <Nav.Link href="/calendar">Calendar</Nav.Link>
                                     {!role && <Nav.Link href="/signup">
@@ -109,8 +103,7 @@ function Header() {
                 </div>
             </header>
         </div>
-    )
+    );
 }
-
 
 export default Header;

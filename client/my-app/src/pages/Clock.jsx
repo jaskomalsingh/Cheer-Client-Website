@@ -1,7 +1,7 @@
 
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
@@ -10,12 +10,14 @@ import Header from "./Header"; // Make sure the path matches your project struct
 import Footer from "./Footer"; // Make sure the path matches your project structure
 import "../styles/style.css"; // Adjust the path as necessary
 import Container from 'react-bootstrap/Container';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export const Clock = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [fullName, setFullName] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
   const [userEmail, setUserEmail] = useState('');
 
   const calculateHours = () => {
@@ -24,6 +26,14 @@ export const Clock = () => {
     const end = moment(endTime, "HH:mm");
     return end.diff(start, 'hours', true); // true for a floating-point result
   };
+
+  useEffect(() => {
+    const role = localStorage.getItem('role'); // Get role from localStorage
+    
+        // Redirect if not admin
+        if (role !== 'admin' && role !== 'employee') {
+          navigate('/'); // Redirect to home page or a designated "not authorized" page
+        }});
 
   const logHours = async () => {
     try {

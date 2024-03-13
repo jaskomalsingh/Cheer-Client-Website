@@ -12,13 +12,22 @@ import Col from 'react-bootstrap/Col';
 
 import "../styles/cmsidebar.css";
 import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function ManageSubscriber() {
   const [subscribers, setSubscribers] = useState([]);
 
   const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
 
+  const navigate = useNavigate(); // Initialize useNavigate
+
   useEffect(() => {
+    const role = localStorage.getItem('role'); // Get role from localStorage
+
+    // Redirect if not admin
+    if (role !== 'admin') {
+      navigate('/'); // Redirect to home page or a designated "not authorized" page
+    }
     const fetchSubscribers = async () => {
       try {
         const response = await fetch('http://localhost:3001/api/auth/getallusers');

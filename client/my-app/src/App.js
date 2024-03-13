@@ -16,7 +16,7 @@ import Calendar from './pages/Calendar.jsx';
 import Header from './pages/Header';
 import Clock from './pages/Clock.jsx';
 import SignOut from './pages/SignOut.jsx';
-
+import Payrollcalculator from './pages/Payrollcalculator'; // Make sure this path matches where you save PayrollCalculator.jsx
 
 //import Header from './pages/Header';
 //import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
@@ -43,6 +43,8 @@ const App = () => {
           <Route path="/calendar" element={<Calendar />} />   
           <Route path="/clock" element = {<Clock/>} />
           <Route path='/signout' element = {<SignOut/>}/>
+          <Route path="/Payrollcalculator" element={<Payrollcalculator />} />
+          
         </Routes>
       </BrowserRouter>
     </Container>
