@@ -1,9 +1,8 @@
 const express = require('express');
 const app = express();
-const path = require('path');
+
 const cors = require('cors');
-const router = express.Router();
-const powersRouter = express.Router();
+
 const authRouter = express.Router();
 const fs = require('fs');
 const fsPromises = require('fs').promises;
@@ -22,8 +21,38 @@ const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
 const bucketName = process.env.GCS_BUCKET_NAME;
 const { ObjectId } = require('mongodb');
+<<<<<<< Updated upstream
 const imageBucketName = process.env.IMAGES_BUCKET_NAME;
 const imageBucket = storage.bucket(imageBucketName);
+=======
+
+// Chatroom Stuff
+const http = require('http');
+const socketIo = require('socket.io');
+// Create an HTTP server from the Express app
+const server = http.createServer(app);
+const io = socketIo(server); // Integrate Socket.IO with the HTTP server
+
+// Socket.IO setup
+io.on('connection', (socket) => {
+    console.log('New WebSocket connection');
+
+    socket.on('joinRoom', ({ chatroomId }) => {
+        socket.join(chatroomId);
+        console.log(`A user joined chatroom: ${chatroomId}`);
+    });
+
+    socket.on('sendMessage', ({ chatroomId, message }) => {
+        io.to(chatroomId).emit('message', { message });
+    });
+
+    socket.on('disconnect', () => {
+        console.log('User has disconnected');
+    });
+});
+
+
+>>>>>>> Stashed changes
 const bucket = storage.bucket(bucketName);
 //const imageCollection = 'photos';
 //console.log(imageBucketName);
@@ -89,7 +118,12 @@ async function run() {
 run();
 const usersCollection = client.db(dbName).collection('Users');
 const newslettersCollection = client.db(dbName).collection('Newsletters');
+<<<<<<< Updated upstream
 const photosCollection = client.db(dbName).collection('Photos');
+=======
+const chatroomsCollection = client.db(dbName).collection('Chatrooms')
+
+>>>>>>> Stashed changes
 
 function validateInputSignUp(fullname, password, email, role, isNews) {
 
@@ -256,23 +290,22 @@ authRouter.post('/signin', async (req, res) => {
         console.log(lowEmail);
 
         const validationError = validateInputSignIn(lowEmail, password);
+        
         if(validationError) {
+
             return res.status(400).send(validationError);
         }
 
-        const user = await usersCollection.findOne({ email });
+        const user = await usersCollection.findOne({ email: lowEmail });
         if(user){
-         
             matching = await bcrypt.compare(password, user.password);
             
         }
-        
         if(!user || !matching){
-            
             return res.status(401).send('incorrect email or password');
-            console.log("pass");
+            
         } else {
-            console.log("pass");
+   
             return res.status(200).send(user);
         }
 
@@ -701,8 +734,18 @@ authRouter.post('/timesheet', async (req, res) => {
         res.status(500).send('Internal server error');
     }
 });
+authRouter.get('/getchatrooms', async (req, res) => {
+    try {
+        const chatroomList = await chatroomsCollection.find({}).toArray(); // Find all documents in the collection
+        res.status(200).json(chatroomList); // Send the list of chatrooms back to the client
+    } catch (error) {
+        console.error('Failed to fetch chatrooms:', error);
+        res.status(500).send('Internal Server Error');
+    } 
+});
 
 
+<<<<<<< Updated upstream
 
 //images endpoints
 
@@ -763,6 +806,9 @@ authRouter.get('/photos', async (req, res) => {
 
 
 app.listen(port, () => {
+=======
+server.listen(port, () => {
+>>>>>>> Stashed changes
     console.log(`Listening on port ${port}`);
 });
 

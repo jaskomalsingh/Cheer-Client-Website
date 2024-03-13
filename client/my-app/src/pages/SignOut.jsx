@@ -6,7 +6,7 @@ const SignOut = () => {
 
     useEffect(() => {
         // Clear the user's role or authentication token from local storage
-        localStorage.removeItem('role');
+        localStorage.clear();
         // Or if using a token
         // localStorage.removeItem('authToken');
 
