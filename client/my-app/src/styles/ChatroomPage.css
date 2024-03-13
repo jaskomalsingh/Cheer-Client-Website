@@ -57,6 +57,10 @@
     flex-direction: column;
     padding: 10px; /* Add padding to prevent messages from sticking to edges */
     gap: 10px;
+    border: 1px solid #ccc; /* A subtle border around the message box */
+    border-radius: 8px; /* Rounded corners for the message box */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Optional: adds a slight shadow for depth */
+    background: #ffffff;
   }
   
   .message {
@@ -74,15 +78,15 @@
     display: inline; /* Inline display for children elements like span */
     white-space: pre-wrap; /* Wraps the text and preserves spaces */
   }
-  
+
   .message.sent {
-    justify-content: flex-end;
+    align-self: flex-end;
     background-color: #65a833; /* Adjust color as needed */
   }
   
   .message.received {
     justify-content: flex-start;
-    background-color: #ada8a8; /* Adjust color as needed */
+    background-color: #c5c1c1; /* Adjust color as needed */
   }
   
   .message-author {
@@ -96,17 +100,28 @@
   .message-input {
     display: flex;
     padding: 10px;
-    background: #ddd;
+    background: #eaeaea;
+    
   }
   
   .message-input input {
     flex: 1;
     margin-right: 10px;
     padding: 5px;
+    min-width: 80%;
+    
   }
   
   .message-input button {
     padding: 5px 10px;
+    border-radius: 16px;
+    min-width: 15%;
+    background: #65a833;
+    outline: none;
+    border: none;
+  }
+  .message-input button:hover {
+    background-color:#647249
   }
   
   .chat-prompt {
@@ -116,5 +131,6 @@
     justify-content: center;
     font-size: 1.5rem; /* Adjust as needed */
     color: #666; /* Adjust as needed */
+    
   }
   

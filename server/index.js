@@ -792,6 +792,58 @@ authRouter.get('/getchatrooms', async (req, res) => {
     } 
 });
 
+// Inside your server-side code (e.g., index.js or a dedicated routes file)
+
+// ... (other requires and setup code)
+
+// This is a simplified example. You'll need to adjust it to fit your auth and DB setup.
+
+authRouter.post('/chatrooms/:chatroomId/send', async (req, res) => {
+    try {
+      const { chatroomId } = req.params;
+      const { content, senderEmail, name } = req.body;
+      
+      // TODO: Authentication and validation logic here
+      
+      // Retrieve the chatroom and find the highest messageId
+      const chatroom = await chatroomsCollection.findOne({ _id: chatroomId });
+      if (!chatroom) {
+        return res.status(404).json({ message: 'Chatroom not found' });
+      }
+  
+      const lastMessageId = chatroom.messages.length > 0
+        ? chatroom.messages[chatroom.messages.length - 1].messageId
+        : 0;
+      const newMessageId = lastMessageId + 1;
+  
+      const newMessage = {
+        messageId: newMessageId, // Use the newly calculated messageId
+        content,
+        senderEmail,
+        name,
+        timestamp: new Date(),
+      };
+  
+      const result = await chatroomsCollection.updateOne(
+        { _id: chatroomId },
+        { $push: { messages: newMessage } }
+      );
+  
+      if (result.modifiedCount === 1) {
+        res.status(200).json({ message: 'Message sent successfully', data: newMessage });
+      } else {
+        res.status(500).json({ message: 'Error updating chatroom with new message' });
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
+  
+  // ... (rest of your server code)
+  
+
 
 server.listen(port, () => {
     console.log(`Listening on port ${port}`);

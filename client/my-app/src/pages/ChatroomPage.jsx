@@ -6,6 +6,7 @@ import '../styles/ChatroomPage.css'; // Ensure you create and link the CSS file 
 function ChatroomPage() {
     const [chatrooms, setChatrooms] = useState([]); // State to hold the list of chatrooms
     const [currentRoom, setCurrentRoom] = useState(null); // State to track the current room
+    const [messageText, setMessageText] = useState(''); // State to track messaged typed
 
     useEffect(() => {
         // Call the backend API to fetch chatrooms when the component mounts
@@ -23,6 +24,34 @@ function ChatroomPage() {
                 console.error('Error fetching chatrooms:', error);
             });
     }, []);
+
+    const sendMessage = async () => {
+        if (!currentRoom || messageText.trim() === '') return;
+
+        try {
+            const response = await fetch(`http://localhost:3001/api/auth/chatrooms/${currentRoom.chatroomId}/send`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    content: messageText,
+                    senderEmail: localStorage.getItem('email'), // Assuming you store email in localStorage
+                    name: localStorage.getItem('name')
+                    // Add other required fields...
+                }),
+            });
+
+            if (!response.ok) throw new Error('Failed to send message');
+
+            const result = await response.json();
+            console.log('Message sent:', result);
+            setMessageText(''); // Clear the input after sending
+            // Optionally, fetch the updated messages for the currentRoom here
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    };
 
     return (
         <div className="chatroom-page">
@@ -45,21 +74,28 @@ function ChatroomPage() {
                             <div className="chat-messages">
                                 {/* Sort and map through currentRoom.messages to display messages */}
                                 {currentRoom.messages
-                                    .sort((a, b) => (a._id > b._id ? 1 : -1))
+                                    .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
                                     .map((message) => (
                                         <div
                                             key={message._id}
                                             className={`message ${message.senderEmail === localStorage.getItem('email') ? 'sent' : 'received'}`}
                                         >
-                                            <span className="message-author">{message.senderEmail === localStorage.getItem('email') ? 'You' : message.senderEmail}</span>: <span className="message-content">{message.content}</span>
+                                            <span className="message-author">{message.senderEmail === localStorage.getItem('email') ? 'You' : message.name}</span>: <span className="message-content">{message.content}</span>
                                         </div>
                                     ))}
+
                             </div>
                         </>
                     )}
                     <div className="message-input">
-                        <input type="text" placeholder="Type a message..." />
-                        <button>Send</button>
+                        <input 
+                        type="text" 
+                        placeholder="Type a message..." 
+                        value={messageText}
+                        onChange={(e) => setMessageText(e.target.value)}
+                        />
+                        <button onClick={sendMessage}>Send</button>
+                        
                     </div>
                 </main>
             </div>
