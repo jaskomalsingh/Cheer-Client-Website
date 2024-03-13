@@ -27,7 +27,7 @@ export const Clock = () => {
 
   const logHours = async () => {
     try {
-      await axios.post('/api/auth/timesheet', {
+      await axios.post('http://localhost:3001/api/auth/timesheet', {
         email: userEmail,
         selectedDate: moment(selectedDate).format("YYYY-MM-DD"),
         fullname: fullName,
@@ -63,6 +63,7 @@ export const Clock = () => {
                   <input
                     type="email"
                     id="email"
+                    className="text-input"
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
                     placeholder="your@email.com"

@@ -11,11 +11,11 @@ import SignIn from './pages/LoginForm.jsx';
 import {SignUp} from './pages/SignUp';
 import {EditUserProfile} from './pages/EditUserProfile.jsx';
 import NewsletterPopup from './pages/NewsletterPopup'
-import SignedIn from './pages/SignedIn.jsx'
 import Container from 'react-bootstrap/esm/Container.js';
 import Calendar from './pages/Calendar.jsx';
 import Header from './pages/Header';
-import Clock from './pages/Clock.jsx'
+import Clock from './pages/Clock.jsx';
+import SignOut from './pages/SignOut.jsx';
 import Payrollcalculator from './pages/Payrollcalculator'; // Make sure this path matches where you save PayrollCalculator.jsx
 
 //import Header from './pages/Header';
@@ -38,11 +38,11 @@ const App = () => {
           <Route path="/cm2" element={<ManageSubscriber />} />
           <Route path="/cm3" element={<ContentManagement3 />} />
           <Route path="/signup" element={<SignUp />} />    
-          <Route path="/signedin" element={<SignedIn />} /> 
           <Route path="/edituser" element={<EditUserProfile />} />   
           <Route path="/adminusercontrol" element={<AdminUserControl />} />   
           <Route path="/calendar" element={<Calendar />} />   
           <Route path="/clock" element = {<Clock/>} />
+          <Route path='/signout' element = {<SignOut/>}/>
           <Route path="/Payrollcalculator" element={<Payrollcalculator />} />
           
         </Routes>

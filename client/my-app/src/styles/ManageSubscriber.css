@@ -49,13 +49,22 @@ h1 {
 }
 
 input[type="text"],
-input[type="checkbox"],
 select {
-  padding: 8px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box; /* Makes sure padding doesn't affect overall width */
+  align-items: flex-start;
+  background-color: #ffffff;
+  border: 1px solid;
+  border-color: #c1c1c1;
+  border-radius: 3.375rem;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  padding: 1rem;
+  position: relative;
+  width: 17rem;
+}
+
+input[type="checkbox"] {
+  width:1.5rem;
 }
 
 input[type="text"]:focus,

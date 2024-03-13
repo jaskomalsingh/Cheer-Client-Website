@@ -13,12 +13,18 @@ import { useMediaQuery } from 'react-responsive';
 function Header() {
     const [activePage, setActivePage] = useState("About");
     const location = useLocation();
+    const role = localStorage.getItem('role');
 
     const isPageHighlighted = (path) => {
         return location.pathname === path;
     };
 
     const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
+
+    // Check if user has access to a specific feature
+    const hasAccess = (requiredRoles) => {
+        return requiredRoles.includes(role);
+    };
 
     return (
         <div className="overlap">
@@ -35,21 +41,53 @@ function Header() {
                             <Navbar.Toggle aria-controls="basic-navbar-nav" style={{'background-color': '#464f34e8', 'backdrop-filter': 'blur(21px) brightness(100%);'}}/>
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="me-auto">
-                                    <Nav.Link href="/">About</Nav.Link>
-                                    <NavDropdown title="Manage" id="basic-nav-dropdown" style={{ 'backdrop-filter': 'blur(21px) brightness(100%);'}} variant="dark">
-                                        <NavDropdown.Item href="/cm1">Newsletter Builder</NavDropdown.Item>
-                                        <NavDropdown.Item href="/ManageSubscriber">Manage Subscribers</NavDropdown.Item>
-                                        <NavDropdown.Item href="/cm3">Manage Newsletters</NavDropdown.Item>
+                                    <Nav.Link href="/">
+                                    <div className="home-wrapper">
+                                                <div className="home">
+                                                        <div className= "text-wrapper-23 fs-6">About</div>
+                                                </div>
+                                            </div>
+                                    </Nav.Link>
+                                    {role === 'admin' && (
+                                    <NavDropdown title="Manage" id="basic-nav-dropdown"  style={{ 'backdrop-filter': 'blur(21px) brightness(100%);'}} variant="dark">
+                                        <NavDropdown.Item href="/cm1"  style={{'background-color': '#464f34e8',}} >
+                                            <div className="home-wrapper">
+                                                <div className="home">
+                                                        <div className= "text-wrapper-23 fs-6">Newsletter Builder</div>
+                                                </div>
+                                            </div>
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item href="/ManageSubscriber" style={{'background-color': '#464f34e8', }}>
+                                        <div className="home-wrapper">
+                                                <div className="home">
+                                                        <div className= "text-wrapper-23 fs-6">Manage Subscribers</div>
+                                                </div>
+                                            </div>
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item href="/cm3" style={{'background-color': '#464f34e8',}}>
+                                        <div className="home-wrapper">
+                                                <div className="home">
+                                                        <div className= "text-wrapper-23 fs-6">Manage Newsletters</div>
+                                                </div>
+                                            </div>
+                                        </NavDropdown.Item>
                                     </NavDropdown>
-                                    <Nav.Link href="/edituser">Edit User</Nav.Link>
+                                    )}
+                                    {role && <Nav.Link href="/edituser">Edit User</Nav.Link>}
                                     <Nav.Link href="/contact">Contact</Nav.Link>
                                     <NavDropdown title="Employee" id="clock-in-dropdown" style={{ 'backdrop-filter': 'blur(21px) brightness(100%);'}} variant="dark">
                                         <NavDropdown.Item href="/Payrollcalculator">Payroll Calculator</NavDropdown.Item>
                                         <NavDropdown.Item href="/clock">Clock In</NavDropdown.Item>
                                     </NavDropdown>
+                                    
+                                    {['admin', 'employee'].includes(role) && <Nav.Link href="/clock">Clock in</Nav.Link>}
                                     <Nav.Link href="/calendar">Calendar</Nav.Link>
                                     <Nav.Link href="/signup">
-                                        <Button className="login-button">Login</Button>
+                                        <Button className="login-button">
+                                            <div className="content-12">
+                                                <div className="text-wrapper-24">Login</div>
+                                            </div>
+                                        </Button>
                                     </Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>

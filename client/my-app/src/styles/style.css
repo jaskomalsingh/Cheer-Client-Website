@@ -1,11 +1,18 @@
 
 
 
-.sign-up, .edit-user-profile, .edit-profile-form {
+ .edit-user-profile, .edit-profile-form {
   background-color: #ffffff;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  width: 100%;
+}
+
+.sign-up {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
   width: 100%;
 }
 
@@ -25,12 +32,11 @@
 .login-form {
   align-items: flex-start;
   display: inline-flex;
-  gap: 91px;
   left: 50%;
   transform: translateX(-50%);
   position: relative;
   top: 1rem;
-  bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 h2 {
@@ -65,10 +71,10 @@ h2 {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  height: 183px;
+  height: auto;
   justify-content: space-between;
   position: relative;
-  width: 688px;
+  width: fit-content;
 }
 
 .form-wrapper {
@@ -134,17 +140,78 @@ h2 {
   margin-top: -1px;
   white-space: nowrap;
   width: fit-content;
+  top: 1rem;
+}
+
+.sign-up-button {
+  all: unset;
+  align-items: flex-start;
+  background-color: #ebebd3;
+  border-radius: 42px;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  padding: 16px 27px;
+  position: relative;
+  color: #353535;
+  font-family: "Lato-SemiBold", Helvetica;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 28.8px;
+  margin-top: -1px;
+  white-space: nowrap;
+  width: fit-content;
 }
 
 @media screen and (max-width: 992px){
+  .sign-up {
+    display: grid !important;
+  }
   .sign-up-form {
     display: grid !important;    
   }
+
+  .login-form {
+    display: grid !important; 
+  }
+  
+  .form-wrapper {
+    display: grid !important;
+  }
+  
+  .bio, .h2 {
+    width: fit-content !important;
+  }
+  
+  .h2 {
+    width: fit-content !important;
+  }
+
+  .line {
+    margin: 2rem 0;
+  }  
+  
 }
+
+@media screen and (min-width: 992px){
+  .login-form {
+    gap: 5.6875rem;  
+  }
+  .sign-up-form {
+    gap: 5.6875rem;    
+  }
+
+  .sign-up {
+      justify-content: center;
+  }
+}
+
+
 .sign-up-form {
   align-items: flex-start;
   display: flex;
-  gap: 5.6875;
   height: auto;
   left: 50%;
   transform: translateX(-50%);
@@ -191,9 +258,28 @@ h2 {
 
 .line {
   height: 1px;
-  left: 115px;
+  left: 50%;
+  transform: translateX(-50%);
   object-fit: cover;
-  position: absolute;
-  top: 400px;
-  width: 1672px;
+  position: relative;
+  top: 1rem;
+  width: 100%;
+}
+
+.text-input {
+  align-items: flex-start;
+  background-color: #ffffff;
+  border: 1px solid;
+  border-color: #c1c1c1;
+  border-radius: 3.375rem;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  padding: 1rem;
+  position: relative;
+  width: 17rem;
+}
+
+.login-form-instance {
+  margin-bottom: 1rem;
 }
