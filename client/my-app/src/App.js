@@ -16,6 +16,7 @@ import Container from 'react-bootstrap/esm/Container.js';
 import Calendar from './pages/Calendar.jsx';
 import Header from './pages/Header';
 import Clock from './pages/Clock.jsx'
+import Payrollcalculator from './pages/Payrollcalculator'; // Make sure this path matches where you save PayrollCalculator.jsx
 
 //import Header from './pages/Header';
 //import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
@@ -42,6 +43,8 @@ const App = () => {
           <Route path="/adminusercontrol" element={<AdminUserControl />} />   
           <Route path="/calendar" element={<Calendar />} />   
           <Route path="/clock" element = {<Clock/>} />
+          <Route path="/Payrollcalculator" element={<Payrollcalculator />} />
+          
         </Routes>
       </BrowserRouter>
     </Container>
