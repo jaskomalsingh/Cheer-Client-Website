@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import CMSideBar from "./CMSideBar";
 import "../styles/cm3.css";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export const ContentManagement3 = () => {
   const [newsletters, setNewsletters] = useState([]);
@@ -10,8 +11,15 @@ export const ContentManagement3 = () => {
   const [newVisibility, setNewVisibility] = useState('');
   const [showPublishPopup, setShowPublishPopup] = useState(false);
   const [emailSubject, setEmailSubject] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
+    const role = localStorage.getItem('role'); // Get role from localStorage
+
+    // Redirect if not admin
+    if (role !== 'admin') {
+      navigate('/'); // Redirect to home page or a designated "not authorized" page
+    }
     const fetchNewsletters = async () => {
       try {
         const response = await fetch('http://localhost:3001/api/auth/list-newsletters?role=admin');
