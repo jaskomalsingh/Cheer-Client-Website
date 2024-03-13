@@ -37,7 +37,7 @@ export const LoginForm = () => {
         localStorage.setItem('role', userData.role);//'Admin', 'User', 'Employee', 'VerifiedUser'
         localStorage.setItem('isNews', userData.isNews.toString());
         alert('Log in successful');
-        navigate('/signedin');
+        navigate('/');
       } else {
         let errorMessage;
         if (response.status === 401) {
