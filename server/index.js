@@ -752,7 +752,7 @@ authRouter.post('/upload', imageUpload.single('image'), async (req, res) => {
 
     blobStream.on('finish', async () => {
         // The image is uploaded, now we save the metadata in MongoDB
-        const publicUrl = `https://storage.googleapis.com/${imageBucketName}/${blob.name}`;
+        const publicUrl = `https://storage.cloud.google.com/${imageBucketName}/${blob.name}`;
         try {
             const photoDoc = {
                 url: publicUrl,

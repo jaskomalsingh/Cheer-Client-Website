@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "../styles/PhotoUpload.css";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -6,6 +6,7 @@ import { useMediaQuery } from 'react-responsive';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useNavigate } from "react-router-dom";
 
 export const PhotoUpload = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
@@ -13,6 +14,8 @@ export const PhotoUpload = () => {
   const [description, setDescription] = useState('');
   const [previewUrl, setPreviewUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const navigate = useNavigate;
+  
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];

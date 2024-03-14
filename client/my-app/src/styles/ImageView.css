@@ -1,0 +1,39 @@
+.header_footer_div {
+    display: flex;
+    flex-direction: column;
+    height: 150vh;
+    background-color: #deafa1;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust based on your needs */
+    grid-gap: 15px; /* Space between images */
+    padding: 20px;
+    margin-top: 20px; /* Space below the header */
+    overflow-y: auto; /* Adds scrollbar if necessary */
+    max-height: calc(100vh - 160px); /* Adjust based on the header/footer size */
+}
+
+.image-item {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    overflow: hidden; /* Ensure images don't spill out of their 'boxes' */
+}
+
+.image-item:hover {
+    transform: scale(1.05); /* Slightly enlarge images on hover */
+}
+
+.image-item img {
+    width: 100%; /* Ensure images fill their 'boxes' */
+    height: 100%;
+    object-fit: cover; /* Ensure images cover the area nicely */
+}
+
+/* If necessary, add responsive adjustments */
+@media (max-width: 992px) {
+    .image-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
