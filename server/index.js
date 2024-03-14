@@ -12,7 +12,12 @@ const nodemailer = require('nodemailer');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config();
 const port = 3001
-app.use(cors())
+const corsOptions = {
+    origin: 'http://localhost:3000', // Allow only the React app to connect
+    credentials: true, // Allow cookies and authentication headers
+};
+
+app.use(cors(corsOptions));
 app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use('/api/auth', authRouter);
@@ -24,28 +29,70 @@ const { ObjectId } = require('mongodb');
 const imageBucketName = process.env.IMAGES_BUCKET_NAME;
 const imageBucket = storage.bucket(imageBucketName);
 
+
+
 // Chatroom Stuff
 const http = require('http');
 const socketIo = require('socket.io');
 // Create an HTTP server from the Express app
 const server = http.createServer(app);
-const io = socketIo(server); // Integrate Socket.IO with the HTTP server
+const io = socketIo(server, {
+    cors: {
+        origin: "http://localhost:3000", // Allow only the React app to connect
+        methods: ["GET", "POST"], // Allowed request methods
+        credentials: true, // Allow cookies and authentication headers
+    }
+});
 
 // Socket.IO setup
 io.on('connection', (socket) => {
-    console.log('New WebSocket connection');
+    console.log('A user connected');
 
-    socket.on('joinRoom', ({ chatroomId }) => {
-        socket.join(chatroomId);
-        console.log(`A user joined chatroom: ${chatroomId}`);
+    socket.on('getChatrooms', async () => {
+        const chatrooms = await chatroomsCollection.find({}).toArray();
+        socket.emit('chatrooms', chatrooms);
     });
 
-    socket.on('sendMessage', ({ chatroomId, message }) => {
-        io.to(chatroomId).emit('message', { message });
+    socket.on('sendMessage', async (chatroomId, message) => {
+        // You'd also want to include some validation and error handling here
+        console.log("sent")
+        const id = new ObjectId(chatroomId)
+        const result = await chatroomsCollection.updateOne(
+            { _id: id },
+            { $push: { messages: message } }
+            
+        );
+
+        if (result.modifiedCount === 1) {
+            console.log("yay")
+            
+        } else {
+            console.log("nay")
+            
+        }
+        io.to(id).emit('newMessage', message); // Emit the new message to all users in the chatroom
+    });
+
+    socket.on('joinRoom', (chatroomId) => {
+        console.log("joined chatroom")
+        const id = new ObjectId(chatroomId)
+        socket.join(id);
+    });
+
+    socket.on('leaveRoom', (chatroomId) => {
+        socket.leave(chatroomId);
     });
 
     socket.on('disconnect', () => {
-        console.log('User has disconnected');
+        console.log('User disconnected');
+    });
+
+    socket.on('connect_error', (error) => {
+        console.error('Connection Error:', error);
+    });
+    
+    socket.on('connect_timeout', (timeout) => {
+        console.error('Connection Timeout:', timeout);
     });
 });
 
