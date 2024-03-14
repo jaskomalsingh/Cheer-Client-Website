@@ -49,38 +49,42 @@ io.on('connection', (socket) => {
     console.log('A user connected');
 
     socket.on('getChatrooms', async () => {
-        const chatrooms = await chatroomsCollection.find({}).toArray();
-        socket.emit('chatrooms', chatrooms);
+        try {
+            const chatrooms = await chatroomsCollection.find({}).toArray();
+            socket.emit('chatrooms', chatrooms);
+        } catch (error) {
+            console.error('Error fetching chatrooms:', error);
+        }
     });
 
     socket.on('sendMessage', async (chatroomId, message) => {
-        // You'd also want to include some validation and error handling here
-        console.log("sent")
-        const id = new ObjectId(chatroomId)
-        const result = await chatroomsCollection.updateOne(
-            { _id: id },
-            { $push: { messages: message } }
-            
-        );
+        try {
+            const id = new ObjectId(chatroomId);
+            const result = await chatroomsCollection.updateOne(
+                { _id: id },
+                { $push: { messages: message } }
+            );
 
-        if (result.modifiedCount === 1) {
-            console.log("yay")
-            
-        } else {
-            console.log("nay")
-            
+            if (result.modifiedCount === 1) {
+                io.to(chatroomId).emit('newMessage', message); // Emit the new message to all users in the chatroom
+            } else {
+                console.log("Message update failed for chatroom:", chatroomId);
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
         }
-        io.to(id).emit('newMessage', message); // Emit the new message to all users in the chatroom
     });
 
     socket.on('joinRoom', (chatroomId) => {
-        console.log("joined chatroom")
-        const id = new ObjectId(chatroomId)
-        socket.join(id);
+        const id = new ObjectId(chatroomId);
+        socket.join(chatroomId);
+        console.log(`User joined chatroom: ${chatroomId}`);
     });
 
     socket.on('leaveRoom', (chatroomId) => {
-        socket.leave(chatroomId);
+        const id = new ObjectId(chatroomId);
+        socket.leave(id);
+        console.log(`User left chatroom: ${chatroomId}`);
     });
 
     socket.on('disconnect', () => {
@@ -90,7 +94,7 @@ io.on('connection', (socket) => {
     socket.on('connect_error', (error) => {
         console.error('Connection Error:', error);
     });
-    
+
     socket.on('connect_timeout', (timeout) => {
         console.error('Connection Timeout:', timeout);
     });
