@@ -18,6 +18,7 @@ import Clock from './pages/Clock.jsx';
 import SignOut from './pages/SignOut.jsx';
 import Payrollcalculator from './pages/Payrollcalculator'; // Make sure this path matches where you save PayrollCalculator.jsx
 import ChatroomPage from './pages/ChatroomPage.jsx';
+import{ PhotoUpload  } from './pages/PhotoUpload.jsx';
 
 //import Header from './pages/Header';
 //import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
@@ -46,6 +47,7 @@ const App = () => {
           <Route path='/signout' element = {<SignOut/>}/>
           <Route path="/Payrollcalculator" element={<Payrollcalculator />} />
           <Route path='/chatrooms' element = {<ChatroomPage/>}/>
+          <Route path='/PhotoUpload' element = {<PhotoUpload/>}/>
           
         </Routes>
       </BrowserRouter>
