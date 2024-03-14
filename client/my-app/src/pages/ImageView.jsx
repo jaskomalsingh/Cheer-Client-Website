@@ -3,9 +3,6 @@ import "../styles/ImageView.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Modal, Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Container from 'react-bootstrap/Container';
-
 
 export const ImageView = () => {
     const [photos, setPhotos] = useState([]);
@@ -25,35 +22,33 @@ export const ImageView = () => {
     };
 
     const handleClose = () => setShowModal(false);
-    
-    const navigateImage = (step) => {
-        const currentIndex = photos.findIndex(photo => photo.url === selectedImage.url);
-        const nextIndex = (currentIndex + step + photos.length) % photos.length;
-        setSelectedImage(photos[nextIndex]);
-    };
 
     return (
         <div className="header_footer_div">
             <Header />
-            <Container className="image-grid">
-                {photos.map(photo => (
-                    <div key={photo.url} className="image-item" onClick={() => handleSelectImage(photo)}>
-                        <img src={photo.url} alt="Uploaded" />
-                    </div>
-                ))}
-            </Container>
-            <Modal show={showModal} onHide={handleClose}>
+            <div className="gallery-title">Gallery of our Memories!</div>
+            <div className="horizontal-scroll-box">
+                <div className="scroll-container">
+                    {photos.map(photo => (
+                        <div key={photo.url} className="image-container" onClick={() => handleSelectImage(photo)}>
+                            <img src={photo.url} alt="Uploaded" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <Modal show={showModal} onHide={handleClose} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title>Image Preview</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <img src={selectedImage?.url} alt="Selected" style={{ width: '100%' }} />
-                    <p>{selectedImage?.description || 'No description'}</p>
+                    <img src={selectedImage?.url} alt="Selected" className="modal-image" />
+                    <p>Description: {selectedImage?.description || 'No description'}</p>
+                    <p>Uploaded: {new Date(selectedImage?.uploaded).toLocaleDateString()}</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => navigateImage(-1)}>Previous</Button>
-                    <Button variant="secondary" onClick={() => navigateImage(1)}>Next</Button>
-                    <Button variant="primary" onClick={handleClose}>Close</Button>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
                 </Modal.Footer>
             </Modal>
             <Footer />
