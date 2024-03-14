@@ -32,7 +32,7 @@ function ChatroomPage() {
         });
 
         newSocket.on('newMessage', (newMessage) => {
-            alert("new msg")
+
             const currentRoom = currentRoomRef.current; // Access the current room from the ref
             if (currentRoom && newMessage.chatroomId === currentRoom._id) {
                 setCurrentRoom((prevRoom) => {
@@ -75,7 +75,13 @@ function ChatroomPage() {
     };
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        // Assuming .chat-messages is the class for your chat messages container
+        const chatMessagesContainer = document.querySelector('.chat-messages');
+
+        if (chatMessagesContainer) {
+            // Scroll to the bottom of the chat messages container
+            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+        }
     };
 
     useEffect(scrollToBottom, [currentRoom?.messages]);
@@ -109,7 +115,17 @@ function ChatroomPage() {
                                 <div ref={messagesEndRef} />
                             </div>
                             <div className="message-input">
-                                <input type="text" placeholder="Type a message..." value={messageText} onChange={(e) => setMessageText(e.target.value)} />
+                                <input
+                                    type="text"
+                                    placeholder="Type a message..."
+                                    value={messageText}
+                                    onChange={(e) => setMessageText(e.target.value)}
+                                    onKeyPress={(e) => {
+                                        if (e.key === 'Enter' && messageText.trim()) {
+                                            sendMessage();
+                                        }
+                                    }}
+                                />
                                 <button onClick={sendMessage}>Send</button>
                             </div>
                         </>
