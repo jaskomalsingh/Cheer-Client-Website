@@ -7,6 +7,8 @@ function ChatroomPage() {
     const [chatrooms, setChatrooms] = useState([]); // State to hold the list of chatrooms
     const [currentRoom, setCurrentRoom] = useState(null); // State to track the current room
     const [messageText, setMessageText] = useState(''); // State to track messaged typed
+    const email = localStorage.getItem('email')
+    const name = localStorage.getItem('fullname')
 
     useEffect(() => {
         // Call the backend API to fetch chatrooms when the component mounts
@@ -29,20 +31,22 @@ function ChatroomPage() {
         if (!currentRoom || messageText.trim() === '') return;
 
         try {
-            const response = await fetch(`http://localhost:3001/api/auth/chatrooms/${currentRoom.chatroomId}/send`, {
+            const response = await fetch(`http://localhost:3001/api/auth/chatrooms/${currentRoom._id}/send`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     content: messageText,
-                    senderEmail: localStorage.getItem('email'), // Assuming you store email in localStorage
-                    name: localStorage.getItem('name')
+                    senderEmail: email, // Assuming you store email in localStorage
+                    name: name
+                    
                     // Add other required fields...
                 }),
             });
 
-            if (!response.ok) throw new Error('Failed to send message');
+            if (response.status != 200) alert("error");
+            // throw new Error('Failed to send message');
 
             const result = await response.json();
             console.log('Message sent:', result);
