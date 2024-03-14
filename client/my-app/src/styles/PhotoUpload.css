@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     height: 150vh;
+    background-color: #deafa1;
   }
 
 .upload-form {
@@ -22,6 +23,8 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     width: 80%;
     align-content: center;
+    background-color: #f4ecdc;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.8);
 }
 
 .upload-form label {
@@ -58,7 +61,7 @@
 }
 
 .upload-form button:hover {
-    background-color: #565e46;
+    background-color: #a4b385;
 }
 
 .upload-form button:disabled {
@@ -84,9 +87,9 @@
     overflow: hidden; /* This ensures the image does not overflow the container */
     margin-top: 20px; /* Adds some space above the preview */
     height: 80vh; /* Set a fixed height for the preview area */
-    background-color: #f0f0f0; /* Optional: adds a background color to the preview area */
-    border: 1px solid #ccc; /* Optional: adds a border around the preview area */
-    align-self: flex-end;
+    background-color: #deafa1;/* Optional: adds a background color to the preview area */
+     /* Optional: adds a border around the preview area */
+    /* align-self: flex-end; */
     width: 48%;
     
 
@@ -99,21 +102,23 @@
     overflow: hidden; /* This ensures the image does not overflow the container */
     margin-top: 20px; /* Adds some space above the preview */
     height: 80vh; /* Set a fixed height for the preview area */
-    background-color: #f0f0f0; /* Optional: adds a background color to the preview area */
-    border: 1px solid #ccc; /* Optional: adds a border around the preview area */
+    /* background-color: #deafa1; */
     align-self: flex-start;
     width: 48%;
+
 
 }
 
 .image-preview img {
     width: 100%; 
     height: 100%;
-
+    
     /* Centering image if it is smaller than container */
     margin: right;
     display: block;
     object-fit: contain;
+    
+    box-shadow: 100px 100px 104px rgba(0,0,0,0.8);
 }
 
 .side-by-side{
@@ -121,16 +126,18 @@
     justify-content: space-between; /* Adjust as needed */
     align-items: start; /* Adjust if you want the items to be aligned differently */
     width: 100%; /* Adjust as needed */
+    
   }
   .placeholder-text {
-    color: #999; /* Light grey text */
+    color: #565e46; /* Light grey text */
     text-align: center;
     align-self: center;
-    justify-content: center;
+    justify-content: left;
     justify-self: center;
     align-items: center; 
-
     line-height: 500px; /* Aligns text vertically; should match .image-preview height */
-    font-size: 50px;
+    font-size: 150px;
     
 }
+
+
