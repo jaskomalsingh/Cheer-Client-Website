@@ -6,11 +6,12 @@
 }z
 
 .image-grid {
+    
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust based on your needs */
     grid-gap: 15px; /* Space between images */
     padding: 20px;
-    margin-top: 20px; /* Space below the header */
+    margin-top: 50px; /* Space below the header */
     overflow-y: auto; /* Adds scrollbar if necessary */
     max-height: calc(100vh - 160px); /* Adjust based on the header/footer size */
 }
@@ -51,6 +52,8 @@
     margin: 20px auto;
     position: relative;
     max-width: 90%;
+    
+    box-shadow: 0 4px 8px rgba(0,0,0,0.8);
 }
 .scroll-container {
     display: flex;
@@ -81,6 +84,7 @@
 }
 
 .image-container {
+    
     display: inline-flex;
     margin-right: 20px; /* Increased spacing between images */
     cursor: pointer;
