@@ -13,7 +13,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config();
 const port = 3001
 const corsOptions = {
-    origin: 'http://localhost:3000', // Allow only the React app to connect
+    origin:  ["http://localhost:3000", "http://34.130.147.130"], // Allow only the React app to connect
     credentials: true, // Allow cookies and authentication headers
 };
 
@@ -60,10 +60,15 @@ io.on('connection', (socket) => {
     socket.on('sendMessage', async (chatroomId, message) => {
         try {
             const id = new ObjectId(chatroomId);
+            // Assign a server-side timestamp to ensure consistency
+            const timestamp = new Date();
+            const messageWithTimestamp = { ...message, timestamp };
+    
             const result = await chatroomsCollection.updateOne(
                 { _id: id },
-                { $push: { messages: message } }
+                { $push: { messages: messageWithTimestamp } }
             );
+
 
             if (result.modifiedCount === 1) {
                 io.to(chatroomId).emit('newMessage', message); // Emit the new message to all users in the chatroom
