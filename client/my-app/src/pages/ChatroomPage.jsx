@@ -19,9 +19,10 @@ function ChatroomPage() {
     }, [currentRoom]);
 
     useEffect(() => {
-        const newSocket = io('http://localhost:3001', {
+        const forceUpdate = () => setCurrentRoom((prevRoom) => ({ ...prevRoom }))
+        const newSocket = io('http://localhost3001:', {
             withCredentials: true,
-            path: '/socket.io',
+            path: '/socket.io/',
         });
         setSocket(newSocket);
 
@@ -32,17 +33,18 @@ function ChatroomPage() {
         });
 
         newSocket.on('newMessage', (newMessage) => {
-
-            const currentRoom = currentRoomRef.current; // Access the current room from the ref
-            if (currentRoom && newMessage.chatroomId === currentRoom._id) {
+            if (currentRoomRef.current && newMessage.chatroomId === currentRoomRef.current._id) {
                 setCurrentRoom((prevRoom) => {
-                    if (prevRoom._id === newMessage.chatroomId) {
-                        return {
-                            ...prevRoom,
-                            messages: [...prevRoom.messages, newMessage],
-                        };
+                    // If the message is for another room, ignore it
+                    if (newMessage.chatroomId !== prevRoom._id) {
+                        return prevRoom;
                     }
-                    return prevRoom;
+        
+                    // If it's for the current room, append and sort
+                    const newMessages = [...prevRoom.messages, newMessage];
+                    newMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        
+                    return { ...prevRoom, messages: newMessages };
                 });
             }
         });
@@ -58,7 +60,6 @@ function ChatroomPage() {
         const newMessage = {
             senderEmail: email,
             content: messageText,
-            timestamp: new Date(),
             name: name,
             chatroomId: currentRoom._id,
         };
