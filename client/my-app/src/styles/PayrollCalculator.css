@@ -1,0 +1,55 @@
+/* PayrollCalculator.css */
+
+.payroll-calculator-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .payroll-calculator-form {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+  }
+  
+  .payroll-calculator-title {
+    color: #181818;
+    font-family: "Cabin-Bold", Helvetica, sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 20px 0;
+  }
+  
+  .payroll-calculator-select, .payroll-calculator-input, select {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 20px;
+    border: 1px solid #c1c1c1;
+    font-size: 16px;
+  }
+  
+  .payroll-calculator-button {
+    background-color: #ebebd3;
+    color: #353535;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
+  .payroll-calculator-output {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #585566;
+  }
+  
