@@ -8,6 +8,7 @@ import moment from "moment";
 import axios from "axios";
 import Header from "./Header"; // Make sure the path matches your project structure
 import Footer from "./Footer"; // Make sure the path matches your project structure
+import ChatButton from './ChatButton';
 import "../styles/style.css"; // Adjust the path as necessary
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
@@ -120,7 +121,7 @@ export const Clock = () => {
             </div>
           </div>
         </div>
-
+        <ChatButton />
       </div>
       <Footer />
     </Container>

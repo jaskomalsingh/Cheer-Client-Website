@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from "./Header";
 import Footer from "./Footer";
+import ChatButton from './ChatButton';
 import LoginForm from "./LoginForm";
 import "../styles/style.css";
 import Container from 'react-bootstrap/Container';
@@ -146,6 +147,7 @@ export const SignUp = () => {
         </div>
 
       </div>
+      <ChatButton />
       <Footer />
     </Container>
   );

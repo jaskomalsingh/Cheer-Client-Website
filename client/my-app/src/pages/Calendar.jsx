@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from "./Header";
 import Footer from "./Footer";
+import ChatButton from './ChatButton';
 import "../styles/style.css";
 
 export const Calendar = () => {
@@ -23,7 +24,9 @@ export const Calendar = () => {
           frameborder="0" 
           scrolling="no"></iframe>
       </div>
+      <ChatButton />
       <Footer />
+      
     </div>
   );
 };

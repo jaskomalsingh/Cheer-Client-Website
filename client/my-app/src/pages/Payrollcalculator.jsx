@@ -1,10 +1,12 @@
 // PayrollCalculator.jsx
 import React from 'react';
+import ChatButton from './ChatButton';
 
 const payrollcalculator = () => {
   return (
     <div>
-      Hello World
+      Hello 
+      <ChatButton />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import CMSideBar from "./CMSideBar";
 import Container from 'react-bootstrap/Container';
 import "../styles/cm1.css";
 import Footer from "./Footer";
+import ChatButton from './ChatButton';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export const ContentManagement1 = () => {
@@ -124,6 +125,7 @@ export const ContentManagement1 = () => {
           </div>
           <Footer />
         </div>
+        <ChatButton />
       </div>
     </Container>
   );
