@@ -150,7 +150,7 @@ export const ContactPage = () => {
               
             </div>
           }
-          
+          <SpeechButton/>
           <Footer />
           
         </div>

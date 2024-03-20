@@ -1,22 +1,74 @@
-.speech-controls {
-    position: fixed; /* Change this from 'absolute' if needed */
-    top: 50%; /* Adjust this value to place it at the desired height on the page */
-    left: 0; 
-    /* Aligns the buttons to the left side of the page */
-    transform: translateY(-50%); /* Centers the controls vertically */
-    background: rgba(255, 255, 255, 0.8); /* Adds a semi-transparent white background */
-    padding: 10px; /* Adds some padding around the buttons */
-    border-radius: 0 10px 10px 0; /* Rounded corners on the right side */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow for better visibility */
-    display: flex;
-    flex-direction: column; /* Aligns buttons vertically */
-    gap: 1px; /* Ensures there is a 1 pixel gap between buttons */
+/* Main container for speech controls and toggle */
+.text-to-speech-sidebar {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
     z-index: 1000; /* High z-index to ensure it's above other elements */
+    padding: 10px;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: rgba(244, 236, 220, 0.5);
+ /* Semi-transparent background */
 }
 
+/* Styling for the speech control buttons */
+.speech-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between buttons */
+}
+
+/* Styling for each speech button */
 .speech-button {
-    width: auto; /* Adjust the width as needed */
-    margin-bottom: 1px; /* Ensures there is a 1 pixel difference between buttons */
+    background-color: #dc7c5c; /* Green background */
+    color: white; /* White text */
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%; /* Full width */
+    text-align: center; /* Center the text inside the button */
+    margin-bottom: 10px; /* Space below each button */
 }
 
-/* You can add more styles here to customize the buttons' appearance */
+/* Hover effect for speech buttons */
+.speech-button:hover {
+    background-color: #705c6c; /* Darker shade of green */
+}
+
+/* Disabled state for speech buttons */
+.speech-button:disabled {
+    background-color: #ccc; /* Gray out when disabled */
+    cursor: not-allowed; /* Change cursor to indicate action is not allowed */
+}
+
+/* Sidebar toggle button */
+.sidebar-toggle {
+    cursor: pointer;
+    background: #545c44; /* Light grey background */
+    border: none;
+    outline: none;
+    padding: 10px;
+    user-select: none; /* Prevent text selection */
+    font-size: 18px; /* Size of the arrow icons */
+    border-radius: 5px; /* Rounded corners */
+    margin-top: 10px; /* Space above the toggle button */
+    width: 100%; /* Match width of speech buttons */
+    text-align: center; /* Center the arrow icon */
+}
+
+.button-icon {
+    width: 24px;
+    height: 24px;
+    /* Add more styling as needed */
+  }
+  
+/* Styles for different sections and elements on the page might go here */
+/* This could include styles for headers, footers, body content, etc. */
+/* Make sure to maintain consistent design throughout the page */
+
+/* Add any additional styles below */
