@@ -54,6 +54,12 @@ export const ContactPage = () => {
                     <p className="p">
                       Let us know about any questions you may have and just submit the form. We will get back to you as soon as we can to help provide any more information.
                     </p>
+                    <p>
+                    Address: 8685 Rockglen Rd. Arkona ON, N0M 1B0
+                    </p>
+                    <p>
+                    Email: ongoinglivinglearning@gmail.com
+                    </p>
                   </div>
                 </div>
               </div>
@@ -100,6 +106,12 @@ export const ContactPage = () => {
                     <div className="text-wrapper-9">Have any concerns?</div>
                     <p className="p">
                       Let us know about any questions you may have and just submit the form. We will get back to you as soon as we can to help provide any more information.
+                    </p>
+                    <p>
+                    Address: 8685 Rockglen Rd. Arkona ON, N0M 1B0
+                    </p>
+                    <p>
+                    Email: ongoinglivinglearning@gmail.com
                     </p>
                   </div>
                 </div>

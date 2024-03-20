@@ -2,6 +2,7 @@
   margin-top: auto; /* Pushes the footer to the bottom */
   width: 100%;
   position: relative;
+  justify-content: space-between;
 }
   .footer-content .overlap-group {
     position: relative;

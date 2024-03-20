@@ -68,10 +68,15 @@ function Footer({ height }) {
                         <div className="footer-rectangle" />
                       </div>
                       <div className="text">
-                        <div className="text-wrapper-3">C.H.E.E.R. Works</div>
-                        <div className="text-wrapper-4">C.H.E.E.R. Group</div>
-                        <div className="text-wrapper-4">C.H.E.E.R. Living</div>
-                        <div className="text-wrapper-4">C.H.E.E.R. Connections</div>
+                        <div className="text-wrapper-4" >
+                          <a className="text-wrapper-4" href="https://www.facebook.com/cheer.2023?mibextid=PzaGJu" >C.H.E.E.R. Group</a>
+                        </div>
+                        <div className="text-wrapper-4" >
+                          <a className="text-wrapper-4" href="https://www.facebook.com/familyconnectionscheer?mibextid=ZbWKwL" >C.H.E.E.R. Connections</a>
+                        </div>
+                        <div className="text-wrapper-4" >
+                          <a className="text-wrapper-4" href="https://www.facebook.com/profile.php?id=100057044577232&mibextid=ZbWKwL" >C.H.E.E.R. Works</a>
+                        </div>
                       </div>
                     </div>
                     <div className="element">
@@ -83,6 +88,9 @@ function Footer({ height }) {
                         <Link to="/"><div className="text-wrapper-3">About</div></Link>
                         <Link to="/edituser"><div className="text-wrapper-4">Edit User</div></Link>
                         <Link to="/contact"><div className="text-wrapper-4">Contact Us</div></Link>
+                        <div className="text-wrapper-4" >
+                          <a className="text-wrapper-4" href="https://www.canadahelps.org/en/pages/olli-cheer/" >Donate</a>
+                        </div>
                       </div>
                     </div>
                     <div className="div-3">
