@@ -3,6 +3,7 @@ import Header from './Header'; // Adjust the path as necessary
 import Footer from './Footer'; // Adjust the path as necessary
 import '../styles/ChatroomPage.css'; // Ensure you create and link the CSS file for this page
 import io from 'socket.io-client';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function ChatroomPage() {
     const [socket, setSocket] = useState(null);
@@ -13,12 +14,19 @@ function ChatroomPage() {
     const name = localStorage.getItem('fullname');
     const messagesEndRef = useRef(null);
     const currentRoomRef = useRef(currentRoom); // Ref to track the current room
+    const navigate = useNavigate();
 
     useEffect(() => {
         currentRoomRef.current = currentRoom; // Update ref whenever currentRoom changes
     }, [currentRoom]);
 
     useEffect(() => {
+        const role = localStorage.getItem('role'); // Get role from localStorage
+
+        // Redirect if not admin
+        if (role == 'user' || !role) {
+          navigate('/'); // Redirect to home page or a designated "not authorized" page
+        }
         const forceUpdate = () => setCurrentRoom((prevRoom) => ({ ...prevRoom }))
         const newSocket = io('http://localhost:3001', {
             withCredentials: true,
