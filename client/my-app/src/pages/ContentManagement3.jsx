@@ -5,6 +5,7 @@ import ChatButton from './ChatButton';
 import CMSideBar from "./CMSideBar";
 import "../styles/cm3.css";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import SpeechButton from "./TextToSpeech";
 
 export const ContentManagement3 = () => {
   const [newsletters, setNewsletters] = useState([]);

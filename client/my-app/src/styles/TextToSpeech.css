@@ -1,0 +1,22 @@
+.speech-controls {
+    position: fixed; /* Change this from 'absolute' if needed */
+    top: 50%; /* Adjust this value to place it at the desired height on the page */
+    left: 0; 
+    /* Aligns the buttons to the left side of the page */
+    transform: translateY(-50%); /* Centers the controls vertically */
+    background: rgba(255, 255, 255, 0.8); /* Adds a semi-transparent white background */
+    padding: 10px; /* Adds some padding around the buttons */
+    border-radius: 0 10px 10px 0; /* Rounded corners on the right side */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow for better visibility */
+    display: flex;
+    flex-direction: column; /* Aligns buttons vertically */
+    gap: 1px; /* Ensures there is a 1 pixel gap between buttons */
+    z-index: 1000; /* High z-index to ensure it's above other elements */
+}
+
+.speech-button {
+    width: auto; /* Adjust the width as needed */
+    margin-bottom: 1px; /* Ensures there is a 1 pixel difference between buttons */
+}
+
+/* You can add more styles here to customize the buttons' appearance */

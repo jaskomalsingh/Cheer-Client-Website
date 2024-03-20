@@ -6,6 +6,7 @@ import ChatButton from './ChatButton';
 import  Footer  from "./Footer";
 import EditProfileForm from "./EditProfileForm";
 import Container from 'react-bootstrap/Container';
+import SpeechButton from "./TextToSpeech";
 
 export const EditUserProfile = () => {
   return (
@@ -16,6 +17,7 @@ export const EditUserProfile = () => {
         <EditProfileForm className="login-form-instance" />
       </div>
     </div>
+    <SpeechButton/>
     <ChatButton />
     <Footer />
     </Container>

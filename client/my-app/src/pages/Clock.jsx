@@ -12,6 +12,7 @@ import ChatButton from './ChatButton';
 import "../styles/style.css"; // Adjust the path as necessary
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import SpeechButton from "./TextToSpeech";
 
 export const Clock = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());

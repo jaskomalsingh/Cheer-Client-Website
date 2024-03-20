@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import "../styles/ManageSubscriber.css"; // Ensure this path matches your project structure
+import Header from './Header.jsx';
+import Footer from './Footer.jsx';
+import CMSideBar from "./CMSideBar.jsx";
+import SpeechButton from "./TextToSpeech";
 
 function AdminUserControl() {
   const [users, setUsers] = useState([]);
   const [expandedUserId, setExpandedUserId] = useState(null);
+import React, { useState, useEffect } from "react";
+
+function ManageSubscriber() {
+  const [subscribers, setSubscribers] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:3001/api/auth/getallusers')

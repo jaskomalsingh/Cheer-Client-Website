@@ -8,6 +8,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from "react-router-dom";
+import SpeechButton from "./TextToSpeech";
 
 export const PhotoUpload = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
