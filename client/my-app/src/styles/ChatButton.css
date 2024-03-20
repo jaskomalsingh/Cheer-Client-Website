@@ -1,0 +1,25 @@
+.chat-fab {
+    position: fixed; /* Fixed position */
+    bottom: 20px; /* 20px from the bottom */
+    right: 20px; /* 20px from the right */
+    border-radius: 50%; /* Circular button */
+    width: 80px; /* Width of the button */
+    height: 80px; /* Height of the button */
+    background-color: #007bff; /* Background color */
+    border: none; /* No border */
+    outline: none; /* No outline */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for aesthetics */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex; /* Flexbox to center the icon */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    z-index: 1000; /* High z-index to ensure it's above other elements */
+  }
+  
+  .chat-fab img {
+    width: 100%; /* Size of the chat icon */
+    height: 100%; /* Maintain aspect ratio */
+    border-radius: 50%;
+    background: white;
+  }
+  

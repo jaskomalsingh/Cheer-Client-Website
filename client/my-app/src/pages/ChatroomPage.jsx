@@ -20,7 +20,7 @@ function ChatroomPage() {
 
     useEffect(() => {
         const forceUpdate = () => setCurrentRoom((prevRoom) => ({ ...prevRoom }))
-        const newSocket = io('http://localhost3001:', {
+        const newSocket = io('http://localhost:3001', {
             withCredentials: true,
             path: '/socket.io/',
         });
@@ -35,15 +35,20 @@ function ChatroomPage() {
         newSocket.on('newMessage', (newMessage) => {
             if (currentRoomRef.current && newMessage.chatroomId === currentRoomRef.current._id) {
                 setCurrentRoom((prevRoom) => {
+                    // Check if the incoming message lacks a timestamp
+                    if (!newMessage.timestamp) {
+                        // Assign a client-side temporary timestamp
+                        newMessage.timestamp = new Date().toISOString();
+                    }
                     // If the message is for another room, ignore it
                     if (newMessage.chatroomId !== prevRoom._id) {
                         return prevRoom;
                     }
-        
+
                     // If it's for the current room, append and sort
                     const newMessages = [...prevRoom.messages, newMessage];
                     newMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-        
+
                     return { ...prevRoom, messages: newMessages };
                 });
             }
@@ -85,6 +90,12 @@ function ChatroomPage() {
         }
     };
 
+    const formatDate = (timestamp) => {
+        const date = new Date(timestamp);
+        const options = { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+        return date.toLocaleString('en-US', options);
+    };
+
     useEffect(scrollToBottom, [currentRoom?.messages]);
 
     return (
@@ -109,7 +120,10 @@ function ChatroomPage() {
                                 {currentRoom.messages
                                     .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
                                     .map((message, index) => (
-                                        <div key={index} className={`message ${message.senderEmail === email ? 'sent' : 'received'}`}>
+                                        <div key={index} className={`message ${message.senderEmail === email ? 'sent' : 'received'}`}
+                                            title={formatDate(message.timestamp)}
+                                        >
+
                                             <span className="message-author">{message.senderEmail === email ? 'You' : message.name}</span>: <span className="message-content">{message.content}</span>
                                         </div>
                                     ))}

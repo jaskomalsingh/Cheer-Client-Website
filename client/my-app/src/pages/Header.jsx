@@ -86,7 +86,7 @@ function Header() {
                                          <NavDropdown.Item href="/ImageView" style={{'background-color': '#464f34e8',}} >Photo Gallery</NavDropdown.Item> 
                                     </NavDropdown>
                                     
-                                    {['admin', 'employee'].includes(role) && <Nav.Link href="/clock">Clock in</Nav.Link>}
+                                    
                                     <Nav.Link href="/calendar">Calendar</Nav.Link>
                                     {!role && <Nav.Link href="/signup">
                                         <Button className="login-button">
