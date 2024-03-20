@@ -8,14 +8,18 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import { useMediaQuery } from 'react-responsive';
+import SpeechButton from "./TextToSpeech";
 
 export const HomePage = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
   return (
     <Container fluid>
       <div className="home-page">
+        
         <div className="div">
           <Header />
+          {/* <button id="speakBtn"> aria-label="Speak Text"🔊 Speak</button> */}
+          
           <div className="banner">
             <img className="image-3" alt="Image" src="https://c.animaapp.com/lPCECV6H/img/image-6.png" />
           </div>
@@ -338,6 +342,7 @@ export const HomePage = () => {
           </div>
           <Footer />
         </div>
+        <SpeechButton />
       </div>
     </Container>
   );

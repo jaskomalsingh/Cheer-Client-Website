@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import "../styles/cm1.css";
 import Footer from "./Footer";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import SpeechButton from "./TextToSpeech";
 
 export const ContentManagement1 = () => {
   const [title, setTitle] = useState("");

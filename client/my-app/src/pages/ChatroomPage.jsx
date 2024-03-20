@@ -3,6 +3,7 @@ import Header from './Header'; // Adjust the path as necessary
 import Footer from './Footer'; // Adjust the path as necessary
 import '../styles/ChatroomPage.css'; // Ensure you create and link the CSS file for this page
 import io from 'socket.io-client';
+import SpeechButton from "./TextToSpeech";
 
 function ChatroomPage() {
     const [socket, setSocket] = useState(null);
@@ -133,6 +134,7 @@ function ChatroomPage() {
                     )}
                 </main>
             </div>
+            <SpeechButton/>
             <Footer />
         </div>
     );

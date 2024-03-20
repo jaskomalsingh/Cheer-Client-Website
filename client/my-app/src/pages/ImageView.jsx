@@ -3,6 +3,7 @@ import "../styles/ImageView.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Modal, Button } from 'react-bootstrap';
+import SpeechButton from "./TextToSpeech";
 
 export const ImageView = () => {
     const [photos, setPhotos] = useState([]);
@@ -51,6 +52,7 @@ export const ImageView = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+            <SpeechButton/>
             <Footer />
         </div>
     );

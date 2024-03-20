@@ -2,6 +2,7 @@ import React from 'react';
 import Header from "./Header";
 import Footer from "./Footer";
 import "../styles/style.css";
+import SpeechButton from "./TextToSpeech";
 
 export const Calendar = () => {
   // Inline style for the calendar container
@@ -23,7 +24,9 @@ export const Calendar = () => {
           frameborder="0" 
           scrolling="no"></iframe>
       </div>
+      <SpeechButton/>
       <Footer />
+      
     </div>
   );
 };

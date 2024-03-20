@@ -5,6 +5,7 @@ import LoginForm from "./LoginForm";
 import "../styles/style.css";
 import Container from 'react-bootstrap/Container';
 import { useMediaQuery } from 'react-responsive';
+import SpeechButton from "./TextToSpeech";
 
 export const SignUp = () => {
   const [fullName, setFullName] = useState('');
@@ -144,7 +145,7 @@ export const SignUp = () => {
           </div>
 
         </div>
-
+        <SpeechButton/>
       </div>
       <Footer />
     </Container>
