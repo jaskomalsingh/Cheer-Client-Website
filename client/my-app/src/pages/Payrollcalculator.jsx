@@ -3,6 +3,7 @@
 // PayrollCalculator.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Make sure to import useNavigate
+import ChatButton from './ChatButton';
 
 const PayrollCalculator = () => {
   const [employees, setEmployees] = useState([]);
