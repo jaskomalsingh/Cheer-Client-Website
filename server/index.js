@@ -785,6 +785,55 @@ authRouter.post('/timesheet', async (req, res) => {
     }
 });
 
+authRouter.get('/employee-hours/:email', async (req, res) => {
+    const { email } = req.params; // Extract the email from the request parameters
+    console.log(`Received request for employee hours with email: ${email}`); // Log the received email
+
+    const currentDate = new Date(); // Or use req.query.date if you want to fetch for a specific date
+    console.log(`Current date for querying biweekly period: ${currentDate.toISOString()}`);
+
+    try {
+        // Retrieve the employee's timesheet
+        const timesheet = await timesheetsCollection.findOne({ email: email.toLowerCase() }); // Convert email to lowercase for case-insensitive comparison
+        console.log(`Timesheet found for ${email}:`, timesheet); // Log the retrieved timesheet
+
+        if (!timesheet) {
+            return res.status(404).json({ message: 'Timesheet not found for the given email.' });
+        }
+
+        // Compute start and end date for the current bi-weekly period
+        const biweeklyStart = getBiweeklyStartDate(currentDate).toISOString().split('T')[0];
+        const biweeklyEnd = getBiweeklyEndDate(currentDate).toISOString().split('T')[0];
+        console.log(`Biweekly period start: ${biweeklyStart}, end: ${biweeklyEnd}`); // Log the biweekly period dates
+
+        // Find the bi-weekly period that matches the current dates
+        const currentPeriod = timesheet.biweeklyPeriods.find(period => 
+            period.intervalStart === biweeklyStart && period.intervalEnd === biweeklyEnd);
+        console.log(`Current biweekly period found:`, currentPeriod); // Log the found biweekly period
+
+        if (!currentPeriod) {
+            return res.status(404).json({ message: 'No work data found for the current bi-weekly period.' });
+        }
+
+        res.json({ totalHours: currentPeriod.totalHours });
+    } catch (error) {
+        console.error('Error fetching employee hours:', error); // Log any errors encountered during the operation
+        res.status(500).send('Internal server error');
+    }
+});
+
+authRouter.get('/getemployees', async (req, res) => {
+    try {
+        const employees = await usersCollection.find({ role: 'employee' }).toArray(); // Assuming 'employee' is the role identifier for employees
+        res.json(employees);
+    } catch (error) {
+        console.error('Failed to fetch employees:', error);
+        res.status(500).send('Internal server error');
+    }
+});
+
+
+
 authRouter.post('/upload', imageUpload.single('image'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('No image uploaded.');
