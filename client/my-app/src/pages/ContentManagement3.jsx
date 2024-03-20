@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import ChatButton from './ChatButton';
 import CMSideBar from "./CMSideBar";
 import "../styles/cm3.css";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
@@ -153,7 +154,7 @@ export const ContentManagement3 = () => {
         )}
               
       </div>
-      
+      <ChatButton />
       <Footer />
     </div>
   );

@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import "../styles/contact.css";
 import Header from "./Header";
 import Footer from "./Footer";
+import ChatButton from './ChatButton';
 import emailjs from 'emailjs-com';
 import { useMediaQuery } from 'react-responsive';
 import Container from 'react-bootstrap/Container';
@@ -141,7 +142,7 @@ export const ContactPage = () => {
           <Footer />
           
         </div>
-        
+        <ChatButton />
       </div>
     </Container>
   );

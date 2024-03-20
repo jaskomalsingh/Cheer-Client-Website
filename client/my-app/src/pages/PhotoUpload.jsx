@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import "../styles/PhotoUpload.css";
 import Header from "./Header";
 import Footer from "./Footer";
+import ChatButton from './ChatButton';
 import { useMediaQuery } from 'react-responsive';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -126,6 +127,7 @@ export const PhotoUpload = () => {
         </div>
         
       </Container>
+      <ChatButton />
       <Footer />
     </div>
   );

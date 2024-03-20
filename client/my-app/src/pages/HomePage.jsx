@@ -3,6 +3,7 @@ import "../styles/homePage.css";
 import "../styles/footer.css";
 import Header from "./Header";
 import Footer from "./Footer";
+import ChatButton from './ChatButton';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -343,6 +344,7 @@ export const HomePage = () => {
           <Footer />
         </div>
         <SpeechButton />
+        <ChatButton />
       </div>
     </Container>
   );

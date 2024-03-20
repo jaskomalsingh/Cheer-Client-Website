@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/ImageView.css";
 import Header from "./Header";
 import Footer from "./Footer";
+import ChatButton from './ChatButton';
 import { Modal, Button } from 'react-bootstrap';
 import SpeechButton from "./TextToSpeech";
 
@@ -53,6 +54,7 @@ export const ImageView = () => {
                 </Modal.Footer>
             </Modal>
             <SpeechButton/>
+            <ChatButton />
             <Footer />
         </div>
     );

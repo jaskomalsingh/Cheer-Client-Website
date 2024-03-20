@@ -1,62 +1,118 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import "../styles/ManageSubscriber.css"; // Ensure this path matches your project structure
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import CMSideBar from "./CMSideBar.jsx";
 import SpeechButton from "./TextToSpeech";
 
+function AdminUserControl() {
+  const [users, setUsers] = useState([]);
+  const [expandedUserId, setExpandedUserId] = useState(null);
+import React, { useState, useEffect } from "react";
+
 function ManageSubscriber() {
   const [subscribers, setSubscribers] = useState([]);
 
   useEffect(() => {
-    const fetchSubscribers = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/api/auth/getallusers');
-        if (response.ok) {
-          const data = await response.json();
-          setSubscribers(data);
-        } else {
-          throw new Error('Failed to fetch user details');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    fetchSubscribers();
+    fetch('http://localhost:3001/api/auth/getallusers')
+      .then(response => response.json())
+      .then(data => {
+        // Initialize state for each user
+        const usersWithState = data.map(user => ({
+          ...user,
+          isDeactivated: user.isDeactivated,
+          role: user.role || 'User', // Default to 'User' if no role is set
+        }));
+        setUsers(usersWithState);
+      })
+      .catch(error => console.error('Error fetching users:', error));
   }, []);
 
-  const toggleSubscriber = async (email, isSubscribed) => {
-    // Toggle functionality here, possibly updating isDeactivated or isNews
+  const handleExpandClick = (userId) => {
+    setExpandedUserId(expandedUserId === userId ? null : userId);
+  };
+
+  const handleSave = (userIndex) => {
+    const user = users[userIndex];
+    fetch('http://localhost:3001/api/auth/updateuser', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: user.email,
+        isDeactivated: user.isDeactivated,
+        role: user.role,
+        isVerified: user.isVerified,
+        isNews: user.isNews,
+        fullname: user.fullname
+      }),
+    })
+      .then(response => {
+        if (response.ok) {
+          alert('User updated successfully');
+        } else {
+          alert('Failed to update user');
+        }
+      })
+      .catch(error => console.error('Error updating user:', error));
+  };
+
+  const handleChange = (userIndex, changes) => {
+    const updatedUsers = [...users];
+    updatedUsers[userIndex] = { ...updatedUsers[userIndex], ...changes };
+    setUsers(updatedUsers);
   };
 
   return (
-    <div className="content-management-page">
-      <Header />
-      <h1 className="text-wrapper-heading">Manage Subscribers</h1>
-      
-      <div className="manage-subscribers">
-        <CMSideBar currentTab="Subscribers"/>
-        <div className="subscribers">
-          {subscribers.map((subscriber, index) => (
-            <div key={index} className="subscriber-entry">
-              <div className="subscriber-info">
-                <span><strong>Name:</strong> {subscriber.fullname}</span>
-                <span><strong>Email:</strong> {subscriber.email}</span>
-                <span><strong>Deactivated:</strong> {subscriber.isDeactivated ? 'Yes' : 'No'}</span>
-                <span><strong>Newsletter:</strong> {subscriber.isNews ? 'Subscribed' : 'Unsubscribed'}</span>
-                <span><strong>Role:</strong> {subscriber.role}</span>
-              </div>
-              <button onClick={() => toggleSubscriber(subscriber.email, !subscriber.isNews)}>
-                {subscriber.isNews ? 'Unsubscribe' : 'Subscribe'}
-              </button>
+    <div>
+      <h2>User Management</h2>
+      {users.map((user, index) => (
+        <div key={user._id}>
+          <p onClick={() => handleExpandClick(user._id)}>{user.fullname} - {user.email}</p>
+          {expandedUserId === user._id && (
+            <div>
+              <p>
+                Verified: 
+                <input
+                  type="checkbox"
+                  checked={user.isVerified}
+                  onChange={e => handleChange(index, { isVerified: e.target.checked })}
+                />
+              </p>
+              <p>
+                Deactivated: 
+                <input
+                  type="checkbox"
+                  checked={user.isDeactivated}
+                  onChange={e => handleChange(index, { isDeactivated: e.target.checked })}
+                />
+              </p>
+              <p>
+                Signed up for newsletter: 
+                <input
+                  type="checkbox"
+                  checked={user.isNews}
+                  onChange={e => handleChange(index, { isNews: e.target.checked })}
+                />
+              </p>
+              <p>
+                Role: 
+                <select
+                  value={user.role}
+                  onChange={e => handleChange(index, { role: e.target.value })}
+                >
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                  <option value="employee">Employee</option>
+                  <option value="verifiedUser">Verified User</option>
+                </select>
+              </p>
+              <button onClick={() => handleSave(index)}>Save</button>
             </div>
-          ))}
+          )}
         </div>
-      </div>
-      <Footer height="1024px"/>
+      ))}
     </div>
   );
 }
 
-export default ManageSubscriber;
+export default AdminUserControl;

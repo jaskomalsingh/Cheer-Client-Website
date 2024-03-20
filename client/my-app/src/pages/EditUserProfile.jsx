@@ -2,6 +2,7 @@ import React from "react";
 import LoginForm from "./LoginForm";
 import "../styles/style.css";
 import Header from "./Header";
+import ChatButton from './ChatButton';
 import  Footer  from "./Footer";
 import EditProfileForm from "./EditProfileForm";
 import Container from 'react-bootstrap/Container';
@@ -17,6 +18,7 @@ export const EditUserProfile = () => {
       </div>
     </div>
     <SpeechButton/>
+    <ChatButton />
     <Footer />
     </Container>
   );

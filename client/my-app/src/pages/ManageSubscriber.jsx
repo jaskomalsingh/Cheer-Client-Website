@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/ManageSubscriber.css";
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
+import ChatButton from './ChatButton';
 import CMSideBar from "./CMSideBar.jsx";
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -135,6 +136,7 @@ function ManageSubscriber() {
             ))}
           </div>
         </div>
+        <ChatButton />
         <Footer />
       </div>
     </Container>
