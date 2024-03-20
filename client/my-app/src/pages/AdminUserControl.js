@@ -7,10 +7,7 @@ import SpeechButton from "./TextToSpeech";
 
 function AdminUserControl() {
   const [users, setUsers] = useState([]);
-  const [expandedUserId, setExpandedUserId] = useState(null);
-import React, { useState, useEffect } from "react";
-
-function ManageSubscriber() {
+  const [expandedUserId, setExpandedUserId] = useState(null); 
   const [subscribers, setSubscribers] = useState([]);
 
   useEffect(() => {
