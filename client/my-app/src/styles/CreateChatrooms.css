@@ -1,0 +1,173 @@
+/* CreateChatrooms.css */
+.header_footer_div {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4ecdc; /* Your desired background color */
+  }
+  
+  .gallery-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .right-half {
+    display: flex;
+    align-items: center; /* Centers the image box vertically */
+}
+
+.left-half {
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center items horizontally in the container */
+    justify-content: center; /* Center items vertically (optional) */
+    padding: 20px; /* Adjust padding as needed */
+    width: 48%; /* Adjust width as needed, match with the .right-half */
+    /* Remove any default margin or padding that could affect alignment */
+    margin: 0;
+}
+
+.left-half h2 {
+    text-align: center; /* Center the text */
+    width: 100%; /* Ensure the header takes full width of its container */
+    margin: 0; /* Override any default margin */
+    padding: 0; /* Override any default padding */
+}
+  .side-by-side {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+  }
+  
+  .upload-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 48%;
+    padding: 20px;
+
+    /* box-shadow: 0 4px 8px rgba(0,0,0,0.2); */
+  }
+  .left-half h2 {
+    text-align: center; /* Centers the text */
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
+}
+  
+  .upload-form1 {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 80%;
+    align-content: center;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.8);
+    width: 100%;
+  }
+  .upload-form1 label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.upload-form1 input[type="file"] {
+    border: 1px solid #ccc;
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    margin-bottom: 15px;
+}
+
+.upload-form1 input[type="text"] {
+    border: 1px solid #ccc;
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    margin-bottom: 15px;
+}
+
+.upload-form1 button {
+    background-color: #565e46;
+    color: white;
+    padding: 10px 24px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%
+}
+
+.upload-form1 button:hover {
+    background-color: #a4b385;
+}
+
+.upload-form1 button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+  
+  .image-preview1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48%;
+    margin-top: 20px;
+    background-color: #ffffff;
+    align-content: center;
+    align-self: center;
+    /* box-shadow: 0 4px 8px rgba(0,0,0,0.2); */
+    
+  }
+  
+  .image-preview1 img {
+    
+    width: 100%; 
+    height: 100%;
+    
+    /* Centering image if it is smaller than container */
+    margin: right;
+    display: block;
+    object-fit: contain;
+    
+    box-shadow: 100px 100px 104px rgba(0,0,0,0.1);
+    align-self: center;
+    justify-self: center;
+    border-radius: 8px; /* Optional: if you want rounded corners */
+    border: 8px solid #575f46; /* Adds a border around the image preview */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.8); 
+  }
+  
+  .placeholder-text {
+    width: 48%;
+    height: 300px; /* Set a fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    text-align: center;
+    color: #565e46;
+    background-color: #ffffff;
+    margin-top: 20px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    .side-by-side {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .upload-div, .image-preview, .placeholder-text {
+      width: 100%;
+    }
+  }
+  
+  /* You can add additional media queries and styles as needed */
+  

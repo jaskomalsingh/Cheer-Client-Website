@@ -147,13 +147,14 @@ export const ContactPage = () => {
                   <div className="text-wrapper-12">Send Message</div>
                 </button>
               </form>
-              <SpeechButton/>
+              
             </div>
           }
           
           <Footer />
           
         </div>
+        <SpeechButton/>
         <ChatButton />
       </div>
     </Container>
