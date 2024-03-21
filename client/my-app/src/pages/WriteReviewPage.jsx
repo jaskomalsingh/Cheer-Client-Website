@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import StarRating from './StarRating'; // Ensure this component is adapted to use the provided styles as well
 import '../styles/WriteReviewPage.css'; // Adjust the path as needed to import your CSS
+import Header from './Header';
+import Footer from './Footer';
 
 const WriteReviewPage = () => {
   const [rating, setRating] = useState(0);
@@ -31,6 +33,8 @@ const WriteReviewPage = () => {
   };
 
   return (
+    <div className= "headerDiv">
+      <Header/>
     <div className="write-review-container">
       <h2 className="review-title">Leave Us a Review</h2>
       <form className="review-form" onSubmit={handleSubmit}>
@@ -60,6 +64,8 @@ const WriteReviewPage = () => {
         />
         <button type="submit" className="submit-button">Submit Review</button>
       </form>
+    </div>
+    <Footer/>
     </div>
   );
 }

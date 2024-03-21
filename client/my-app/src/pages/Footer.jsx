@@ -88,6 +88,7 @@ function Footer({ height }) {
                         <Link to="/"><div className="text-wrapper-3">About</div></Link>
                         <Link to="/edituser"><div className="text-wrapper-4">Edit User</div></Link>
                         <Link to="/contact"><div className="text-wrapper-4">Contact Us</div></Link>
+                        <Link to ="/writereviewpage"><div className="text-wrapper-4">Write a Review</div></Link>
                         <div className="text-wrapper-4" >
                           <a className="text-wrapper-4" href="https://www.canadahelps.org/en/pages/olli-cheer/" >Donate</a>
                         </div>
