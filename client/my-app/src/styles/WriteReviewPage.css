@@ -1,0 +1,68 @@
+.write-review-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding: 20px;
+    max-width: 600px;
+  }
+  
+  .review-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .review-title {
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Cabin-Bold', sans-serif;
+    color: #181818;
+    font-size: 32px;
+  }
+  
+  .text-input, .text-area {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: 'Lato-Regular', sans-serif;
+  }
+  
+  .text-area {
+    height: 100px;
+    resize: vertical;
+  }
+  
+  .star-rating-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .star-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    font-size: 24px;
+  }
+  
+  .star-button.filled, .star-button:hover {
+    color: gold;
+  }
+  
+  .submit-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Lato-SemiBold', sans-serif;
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    align-self: center;
+  }
+  

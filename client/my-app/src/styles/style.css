@@ -283,3 +283,30 @@ h2 {
 .login-form-instance {
   margin-bottom: 1rem;
 }
+
+/* Add to your styles.css or a similar stylesheet */
+.star-rating-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Adjust the space between stars */
+}
+
+.star-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #ccc; /* Default star color */
+  font-size: 24px; /* Adjust based on your design */
+}
+
+.star-button.filled {
+  color: gold; /* Active star color */
+}
+
+/* Since we're using the .button class, ensure any unwanted styles are overridden or adapted */
+.star-button.button {
+  padding: 0; /* Remove padding from .button class if necessary */
+  margin: 0; /* Adjust margin if needed */
+  background-color: transparent; /* Override button background */
+  box-shadow: none; /* Remove any box-shadow from .button class */
+}

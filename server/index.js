@@ -954,6 +954,35 @@ authRouter.post('/chatrooms/:chatroomId/send', async (req, res) => {
     }
 });
 
+//-------------reviews endpoints-------------
+
+// Assuming `authRouter` is being used to group related routes,
+// you can add this route to handle POST requests to "/api/auth/reviews"
+authRouter.post('/reviews', async (req, res) => {
+    try {
+        // Destructure the relevant information from the request body
+        const { rating, title, text, reviewerName } = req.body;
+
+        // Create the review document
+        const review = {
+            rating,
+            title,
+            text,
+            reviewerName,
+            dateSubmitted: new Date() // Automatically set the date when the review is submitted
+        };
+
+        // Insert the review document into the "reviews" collection
+        await client.db(dbName).collection('reviews').insertOne(review);
+
+        // Send a response back to the client
+        res.status(201).json({ message: 'Review submitted successfully', review });
+    } catch (error) {
+        console.error('Failed to submit review:', error);
+        res.status(500).send('Error submitting review');
+    }
+});
+
 
 
 
