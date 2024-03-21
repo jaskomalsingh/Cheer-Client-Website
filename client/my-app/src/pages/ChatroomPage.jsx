@@ -35,7 +35,7 @@ function ChatroomPage() {
         });
         setSocket(newSocket);
 
-        newSocket.emit('getChatrooms');
+        newSocket.emit('getChatrooms', { role });
 
         newSocket.on('chatrooms', (data) => {
             setChatrooms(data);

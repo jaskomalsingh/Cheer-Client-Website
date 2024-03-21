@@ -20,6 +20,7 @@ import Payrollcalculator from './pages/Payrollcalculator'; // Make sure this pat
 import ChatroomPage from './pages/ChatroomPage.jsx';
 import{ PhotoUpload  } from './pages/PhotoUpload.jsx';
 import { ImageView } from './pages/ImageView.jsx';
+import CreateChatrooms from './pages/CreateChatrooms.jsx';
 import StarRating from './pages/StarRating';
 import WriteReviewPage from './pages/WriteReviewPage';
 
@@ -52,6 +53,7 @@ const App = () => {
           <Route path='/chatrooms' element = {<ChatroomPage/>}/>
           <Route path='/PhotoUpload' element = {<PhotoUpload/>}/>
           <Route path='/ImageView' element = {<ImageView/>}/>
+          <Route path='/createChatrooms' element = {<CreateChatrooms/>}/>
           <Route path='/starrating' element = {<StarRating/>}/>
           <Route path='/writereviewpage' element = {<WriteReviewPage/>}/>
           

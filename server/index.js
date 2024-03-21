@@ -28,6 +28,7 @@ const bucketName = process.env.GCS_BUCKET_NAME;
 const { ObjectId } = require('mongodb');
 const imageBucketName = process.env.IMAGES_BUCKET_NAME;
 const imageBucket = storage.bucket(imageBucketName);
+const chatBucketName = process.env.CHAT_BUCKET_NAME;
 
 
 
@@ -48,9 +49,16 @@ const io = socketIo(server, {
 io.on('connection', (socket) => {
     console.log('A user connected');
 
-    socket.on('getChatrooms', async () => {
+    socket.on('getChatrooms', async ({ role }) => { // Now expecting an object with the role
         try {
-            const chatrooms = await chatroomsCollection.find({}).toArray();
+            let query = {};
+            
+            // Example filter: if the user's role is 'user', only fetch chatrooms that include 'user' in their allowedRoles
+            
+            query = { allowedRoles: role };
+            
+            
+            const chatrooms = await chatroomsCollection.find(query).toArray();
             socket.emit('chatrooms', chatrooms);
         } catch (error) {
             console.error('Error fetching chatrooms:', error);
@@ -109,6 +117,38 @@ io.on('connection', (socket) => {
 const bucket = storage.bucket(bucketName);
 //const imageCollection = 'photos';
 //console.log(imageBucketName);
+
+const chatbucket = storage.bucket(chatBucketName); // Ensure your environment variable is set
+
+// Multer is used to parse multipart/form-data requests. This is required for file uploads.
+const multerMiddleware = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024, // No larger than 5mb
+  },
+});
+
+// This function uploads a file to GCS and returns the public URL of the file.
+const uploadImageToGCS = async (file) => {
+  const blob = chatbucket.file(Date.now() + file.originalname); // Using the current timestamp as part of the file name
+  const blobStream = blob.createWriteStream({
+    metadata: {
+      contentType: file.mimetype,
+    },
+  });
+
+  await new Promise((resolve, reject) => {
+    blobStream.on('finish', resolve);
+    blobStream.on('error', reject);
+    blobStream.end(file.buffer);
+  });
+
+  // Make the image publicly readable (adjust according to your security requirements)
+  await blob.makePublic();
+
+  // Return the public URL
+  return `https://storage.googleapis.com/${chatbucket.name}/${blob.name}`;
+};
 
 
 
@@ -172,7 +212,8 @@ async function run() {
 run();
 const usersCollection = client.db(dbName).collection('Users');
 const newslettersCollection = client.db(dbName).collection('Newsletters');
-const photosCollection = client.db(dbName).collection('Photos'); const chatroomsCollection = client.db(dbName).collection('Chatrooms')
+const photosCollection = client.db(dbName).collection('Photos'); 
+const chatroomsCollection = client.db(dbName).collection('Chatrooms')
 
 
 function validateInputSignUp(fullname, password, email, role, isNews) {
@@ -898,11 +939,36 @@ authRouter.get('/getchatrooms', async (req, res) => {
     }
 });
 
-// Inside your server-side code (e.g., index.js or a dedicated routes file)
-
-// ... (other requires and setup code)
-
-// This is a simplified example. You'll need to adjust it to fit your auth and DB setup.
+authRouter.post('/createChatroom', multerMiddleware.single('image'), async (req, res) => {
+    try {
+      const { name, allowedRoles } = req.body; // Extract name and allowedRoles from the request body
+      const image = req.file; // Extract the image file from the request
+  
+      if (!name || !allowedRoles || !image) {
+        return res.status(400).send('Missing required chatroom details');
+      }
+  
+      // Upload image to GCS and get the URL
+      const imageUrl = await uploadImageToGCS(image);
+  
+      // Insert the chatroom details into the MongoDB collection
+      const result = await chatroomsCollection.insertOne({
+        name,
+        allowedRoles: JSON.parse(allowedRoles), // Assuming allowedRoles is sent as a JSON string
+        image: imageUrl,
+        messages: [] // Initialize messages as an empty array
+      });
+  
+      if (!result.acknowledged) {
+        throw new Error('Chatroom creation failed');
+      }
+  
+      res.status(201).send('Chatroom created successfully');
+    } catch (error) {
+      console.error('Failed to create chatroom:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
 
 authRouter.post('/chatrooms/:chatroomId/send', async (req, res) => {
     try {

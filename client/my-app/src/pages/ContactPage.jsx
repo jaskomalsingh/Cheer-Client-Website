@@ -154,6 +154,7 @@ export const ContactPage = () => {
           <Footer />
           
         </div>
+        <SpeechButton/>
         <ChatButton />
       </div>
     </Container>
