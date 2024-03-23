@@ -1049,6 +1049,20 @@ authRouter.post('/reviews', async (req, res) => {
     }
 });
 
+// Assuming you are adding this inside your existing setup where 'authRouter' is used
+
+authRouter.get('/reviews', async (req, res) => {
+    try {
+        const reviewsCollection = client.db(dbName).collection('reviews');
+        const reviews = await reviewsCollection.find({}).toArray(); // Fetch all reviews
+        res.json(reviews); // Send the reviews back to the client
+    } catch (error) {
+        console.error('Failed to fetch reviews:', error);
+        res.status(500).send('Error fetching reviews');
+    }
+});
+
+
 
 
 
