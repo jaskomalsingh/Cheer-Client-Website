@@ -17,6 +17,7 @@ import algarvaLogo from '../assets/algarva_logo.png' ;
 import sunsetLogo from '../assets/sunset_community_foundation_logo.jpg';
 import ocLogo from '../assets/ontario_caregiver_logo.png';
 import SpeechButton from "./TextToSpeech";
+import ReadReview from "./ReadReview";
 
 export const HomePage = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
@@ -421,6 +422,8 @@ export const HomePage = () => {
                   </Col>
                 </Row>
               </Container>
+              <p className="text-wrapper-13">Read Real Reviews</p>
+              <ReadReview></ReadReview>
             </div>
           </div>
           <Footer />

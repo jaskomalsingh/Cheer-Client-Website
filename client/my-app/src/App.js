@@ -23,6 +23,7 @@ import { ImageView } from './pages/ImageView.jsx';
 import CreateChatrooms from './pages/CreateChatrooms.jsx';
 import StarRating from './pages/StarRating';
 import WriteReviewPage from './pages/WriteReviewPage';
+import ReadReview from './pages/ReadReview';
 
 //import Header from './pages/Header';
 //import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
@@ -56,6 +57,7 @@ const App = () => {
           <Route path='/createChatrooms' element = {<CreateChatrooms/>}/>
           <Route path='/starrating' element = {<StarRating/>}/>
           <Route path='/writereviewpage' element = {<WriteReviewPage/>}/>
+          <Route path='/readreview' element = {<ReadReview/>}/>
           
         </Routes>
       </BrowserRouter>

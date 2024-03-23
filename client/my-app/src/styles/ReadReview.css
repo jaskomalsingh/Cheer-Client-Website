@@ -1,0 +1,57 @@
+/* ReviewStyles.css */
+.review-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+  }
+  
+  .review-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .submitted-by {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  .review-message {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .star-rating {
+    color: gold;
+    margin-bottom: 10px;
+  }
+  
+  .star-rating .on {
+    color: gold;
+  }
+  
+  .star-rating .off {
+    color: #ddd;
+  }
+  
+  .review-slider-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .review-slider-button {
+    background-color: #545c44; /* Your specified color */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .review-slider-button:hover {
+    background-color: #3e4633; /* Slightly darker for hover effect */
+  }
