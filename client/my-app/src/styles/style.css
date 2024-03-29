@@ -1,7 +1,70 @@
+/* Style for the event form container */
+.event-form-container {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+  /* Spacing from the calendar or other content */
+  width: 80%;
+  max-width: 500px;
+  /* Adjust the max-width as needed */
+  margin-left: auto;
+  /* Centering the form */
+  margin-right: auto;
+  /* Centering the form */
+}
 
+/* Style for the form inputs and button */
+.event-form-container input[type="text"],
+.event-form-container input[type="date"],
+.event-form-container input[type="url"],
+.event-form-container textarea,
+.event-form-container button {
+  width: 100%;
+  /* Full width */
+  padding: 10px;
+  /* Padding inside the inputs */
+  margin-bottom: 15px;
+  /* Space between each field */
+  border: 1px solid #ccc;
+  /* Border color */
+  border-radius: 4px;
+  /* Rounded borders for the inputs */
+  box-sizing: border-box;
+  /* To ensure padding doesn't increase the width */
+}
 
+/* Style for the form button */
+.event-form-container button {
+  background-color: #4CAF50;
+  /* Green background */
+  color: white;
+  /* White text */
+  border: none;
+  /* No border */
+  cursor: pointer;
+  /* Cursor changes to indicate it's clickable */
+  transition: background-color 0.3s;
+  /* Transition for a smooth color change */
+}
 
- .edit-user-profile, .edit-profile-form {
+/* Hover effect for button */
+.event-form-container button:hover {
+  background-color: #45a049;
+  /* Slightly darker green on hover */
+}
+
+/* Adding a title to the form */
+.event-form-container h2 {
+  text-align: center;
+  /* Centering the title */
+  color: #333;
+  /* Dark color for the title */
+}
+
+.edit-user-profile,
+.edit-profile-form {
   background-color: #ffffff;
   display: flex;
   flex-direction: row;
@@ -165,46 +228,49 @@ h2 {
   width: fit-content;
 }
 
-@media screen and (max-width: 992px){
+@media screen and (max-width: 992px) {
   .sign-up {
     display: grid !important;
   }
+
   .sign-up-form {
-    display: grid !important;    
+    display: grid !important;
   }
 
   .login-form {
-    display: grid !important; 
+    display: grid !important;
   }
-  
+
   .form-wrapper {
     display: grid !important;
   }
-  
-  .bio, .h2 {
+
+  .bio,
+  .h2 {
     width: fit-content !important;
   }
-  
+
   .h2 {
     width: fit-content !important;
   }
 
   .line {
     margin: 2rem 0;
-  }  
-  
+  }
+
 }
 
-@media screen and (min-width: 992px){
+@media screen and (min-width: 992px) {
   .login-form {
-    gap: 5.6875rem;  
+    gap: 5.6875rem;
   }
+
   .sign-up-form {
-    gap: 5.6875rem;    
+    gap: 5.6875rem;
   }
 
   .sign-up {
-      justify-content: center;
+    justify-content: center;
   }
 }
 
@@ -288,25 +354,33 @@ h2 {
 .star-rating-container {
   display: flex;
   justify-content: center;
-  gap: 10px; /* Adjust the space between stars */
+  gap: 10px;
+  /* Adjust the space between stars */
 }
 
 .star-button {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  color: #ccc; /* Default star color */
-  font-size: 24px; /* Adjust based on your design */
+  color: #ccc;
+  /* Default star color */
+  font-size: 24px;
+  /* Adjust based on your design */
 }
 
 .star-button.filled {
-  color: gold; /* Active star color */
+  color: gold;
+  /* Active star color */
 }
 
 /* Since we're using the .button class, ensure any unwanted styles are overridden or adapted */
 .star-button.button {
-  padding: 0; /* Remove padding from .button class if necessary */
-  margin: 0; /* Adjust margin if needed */
-  background-color: transparent; /* Override button background */
-  box-shadow: none; /* Remove any box-shadow from .button class */
+  padding: 0;
+  /* Remove padding from .button class if necessary */
+  margin: 0;
+  /* Adjust margin if needed */
+  background-color: transparent;
+  /* Override button background */
+  box-shadow: none;
+  /* Remove any box-shadow from .button class */
 }
