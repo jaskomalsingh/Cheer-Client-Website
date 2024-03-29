@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 const cors = require('cors');
-
+const pathToSwaggerUi = require('swagger-ui-dist').absolutePath()
 const authRouter = express.Router();
 const fs = require('fs');
 const fsPromises = require('fs').promises;
@@ -21,6 +21,7 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use('/api/auth', authRouter);
+app.use(express.static(pathToSwaggerUi));
 const multer = require('multer');
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage();
@@ -1062,9 +1063,77 @@ authRouter.get('/reviews', async (req, res) => {
     }
 });
 
+authRouter.post('/sage/intialize', async (req, res) => {
 
+})
 
+authRouter.post('/sage/contacts', async (req, res) => {
+    try {
+        let response = await fetch(`/contacts`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "contact": {
+                    "contact_type_ids": ["CUSTOMER"],
+                    "name": "Great Example Inc",
+                    "main_address": {
+                      "address_type_id": "ACCOUNTS",
+                      "address_line_1": "Some Where",
+                      "city": "LA",
+                      "region": "US-CA",
+                      "postal_code": "90210",
+                      "country_group_id": "US"
+                    }
+                }
+            }),
+        });
 
+        if (response.status == 200) {
+            console.log('Contact created')
+        }
+
+    } catch (error) {
+        console.log('Contact error from Sage: ', error)
+        res.status(500).send('Error for reviews')
+    }
+})
+
+authRouter.post('/sage/contacts', async (req, res) => {
+    try {
+        let response = await fetch(`/contacts`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "contact": {
+                    "contact_type_ids": ["CUSTOMER"],
+                    "name": "Great Example Inc",
+                    "main_address": {
+                      "address_type_id": "ACCOUNTS",
+                      "address_line_1": "Some Where",
+                      "city": "LA",
+                      "region": "US-CA",
+                      "postal_code": "90210",
+                      "country_group_id": "US"
+                    }
+                }
+            }),
+        });
+
+        if (response.status == 200) {
+            console.log('Contact created')
+        }
+
+    } catch (error) {
+        console.log('Contact error from Sage: ', error)
+        res.status(500).send('Error for reviews')
+    }
+})
 
 
 server.listen(port, () => {

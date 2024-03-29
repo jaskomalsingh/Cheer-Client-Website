@@ -403,8 +403,20 @@
   }
 
   .home-page .img-partner {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     max-height: 191px;
-    
+  }
+
+  .home-page .partner-text {
+    color: #181818;
+    font-family: "Lato-Bold", Helvetica;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 26.6px;
+    text-align: center;
   }
   
   .home-page .content-7 {
