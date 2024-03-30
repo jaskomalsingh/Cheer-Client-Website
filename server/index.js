@@ -150,10 +150,6 @@ const uploadImageToGCS = async (file) => {
   return `https://storage.googleapis.com/${chatbucket.name}/${blob.name}`;
 };
 
-
-
-
-run();
 const upload = multer({
     limits: { fileSize: 50 * 1024 * 1024 },//50 mb files
     dest: 'uploads/', fileFilter: (req, file, cb) => {
@@ -196,25 +192,25 @@ const newsletterSender = nodemailer.createTransport({
 
 const timesheetsCollection = client.db(dbName).collection('Timesheets');
 
-
 async function run() {
     try {
-        // Connect the client to the server	(optional starting in v4.7)
+        // Connect to the MongoDB client
         await client.connect();
-        // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        console.log("Successfully connected to MongoDB!");
+        const db = client.db(dbName);
+
     } catch (error) {
-        console.log('error connecting to DB');
+        console.error('Error connecting to MongoDB:', error);
     }
 }
 
-run();
+run().catch(console.dir);
+
 const usersCollection = client.db(dbName).collection('Users');
 const newslettersCollection = client.db(dbName).collection('Newsletters');
 const photosCollection = client.db(dbName).collection('Photos'); 
-const chatroomsCollection = client.db(dbName).collection('Chatrooms')
-
+const chatroomsCollection = client.db(dbName).collection('Chatrooms');
+const eventCollection = client.db(dbName).collection('Events');
 
 function validateInputSignUp(fullname, password, email, role, isNews) {
 
@@ -296,6 +292,37 @@ authRouter.route('/getallusers')
     });
 
 const saltRounds = 10; // or another appropriate value for bcrypt
+
+app.post('/api/events', async (req, res) => {
+    try {
+        const { title, description, date, googleFormLink } = req.body;
+        const newEvent = { title, description, date, googleFormLink };
+
+        // Insert the new event into the eventCollection
+        const result = await eventCollection.insertOne(newEvent);
+        console.log('Event created:', result.insertedId);
+        // Respond with success message and the inserted event details
+        res.status(201).json({ message: "Event created successfully", eventId: result.insertedId, event: newEvent });
+    } catch (error) {
+        console.error('Error creating event:', error);
+        res.status(500).json({ message: "Error creating event", error: error.message });
+    }
+});
+
+
+app.get('/api/events', async (req, res) => {
+    try {
+        // Fetch all events from the eventCollection
+        const events = await eventCollection.find({}).toArray();
+        console.log('Fetched events:', events);
+        // Respond with the fetched events
+        res.status(200).json(events);
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        res.status(500).json({ message: "Error fetching events", error: error.message });
+    }
+});
+
 
 authRouter.route('/editprofile')
     .post(async (req, res) => {

@@ -15,6 +15,45 @@
   /* Centering the form */
 }
 
+/* Event list styles */
+.events-list {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Event card styles */
+.event {
+  background-color: #ffffff; /* White background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px;
+  margin-bottom: 20px; /* Space between event cards */
+  width: 80%; /* Taking up 80% of its container width */
+  max-width: 600px; /* Maximum width, adjust as needed */
+}
+
+/* Event signup button styles, assuming you want it to look similar to the Post Event button */
+.event-signup-button {
+  display: block; /* Block-level element to take up full width of its container */
+  width: 100%; /* Full width of its container */
+  padding: 10px 0; /* Padding for the button */
+  margin-top: 10px; /* Space above the button */
+  background-color: #4CAF50; /* Green background, like your Post Event button */
+  color: #ffffff; /* White text */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Cursor to indicate it's clickable */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* No underline */
+  font-size: 1em; /* Font size */
+}
+
+.event-signup-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
 /* Style for the form inputs and button */
 .event-form-container input[type="text"],
 .event-form-container input[type="date"],
