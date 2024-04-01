@@ -67,19 +67,20 @@ io.on('connection', (socket) => {
 
     socket.on('sendMessage', async (chatroomId, message) => {
         try {
-            const id = new ObjectId(chatroomId);
-            // Assign a server-side timestamp to ensure consistency
+            const chatroomIdObj = new ObjectId(chatroomId);
+            // Assign a server-side timestamp and a new ObjectId as messageId to ensure consistency and uniqueness
             const timestamp = new Date();
-            const messageWithTimestamp = { ...message, timestamp };
+            const messageId = new ObjectId();  // Generate a new unique ObjectId for messageId
+            const messageWithTimestampAndId = { ...message, timestamp, _id: messageId };
     
             const result = await chatroomsCollection.updateOne(
-                { _id: id },
-                { $push: { messages: messageWithTimestamp } }
+                { _id: chatroomIdObj },
+                { $push: { messages: messageWithTimestampAndId } }
             );
-
-
+    
             if (result.modifiedCount === 1) {
-                io.to(chatroomId).emit('newMessage', message); // Emit the new message to all users in the chatroom
+                // Emit the new message with its unique messageId and timestamp to all users in the chatroom
+                io.to(chatroomId).emit('newMessage', messageWithTimestampAndId);
             } else {
                 console.log("Message update failed for chatroom:", chatroomId);
             }
@@ -87,6 +88,32 @@ io.on('connection', (socket) => {
             console.error('Error sending message:', error);
         }
     });
+    
+
+    socket.on('deleteMessage', async (messageToDelete) => {
+        try {
+            console.log(`Deleting message in chatroom: ${messageToDelete.chatroomId} with message _id: ${messageToDelete._id}`);
+            
+            const chatroomIdObj = new ObjectId(messageToDelete.chatroomId);
+            const messageIdObj = new ObjectId(messageToDelete._id); // Convert string ID to ObjectId
+            
+            // Use _id to match the message for deletion
+            const result = await chatroomsCollection.updateOne(
+                { _id: chatroomIdObj },
+                { $pull: { messages: { _id: messageIdObj } } } // Use _id for pulling/deleting the message
+            );
+    
+            if (result.modifiedCount === 1) {
+                io.to(messageToDelete.chatroomId).emit('messageDeleted', messageToDelete._id); // Emit event with the ObjectId of the deleted message
+            } else {
+                console.log("Message deletion failed for chatroom:", messageToDelete.chatroomId);
+            }
+        } catch (error) {
+            console.error('Error deleting message:', error);
+        }
+    });
+    
+    
 
     socket.on('joinRoom', (chatroomId) => {
         const id = new ObjectId(chatroomId);
@@ -265,6 +292,17 @@ async function sendVerificationEmail(email, token) {
 
     await transporter.sendMail(mailOptions);
 }
+authRouter.get('/chatrooms', async (req, res) => {
+    try {
+        const chatrooms = await chatroomsCollection.find({}).toArray(); // Retrieve all chatrooms
+        res.json(chatrooms); // Send chatrooms as a response
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while fetching chatrooms');
+    } finally {
+        await client.close(); // Ensure the client is closed after operation
+    }
+});
 
 authRouter.route('/getuser')
     .get(async (req, res) => {
@@ -996,6 +1034,72 @@ authRouter.post('/createChatroom', multerMiddleware.single('image'), async (req,
       res.status(500).send('Internal Server Error');
     }
   });
+
+  authRouter.put('/editChatroom/:id', multerMiddleware.single('image'), async (req, res) => {
+    try {
+        const chatroomId = req.params.id; // Extract chatroom ID from the URL parameter
+        const { name, allowedRoles } = req.body; // Extract name and allowedRoles from the request body
+        const newImage = req.file; // Extract the new image file from the request, if present
+
+        if (!chatroomId || !name || !allowedRoles) {
+            return res.status(400).send('Missing required chatroom details or ID');
+        }
+
+        // Find the existing chatroom document
+        const existingChatroom = await chatroomsCollection.findOne({ _id: new ObjectId(chatroomId) });
+        if (!existingChatroom) {
+            return res.status(404).send('Chatroom not found');
+        }
+
+        let imageUrl = existingChatroom.image; // Default to existing image URL
+
+        // If a new image is uploaded, upload it to GCS and get the new URL
+        if (newImage) {
+            imageUrl = await uploadImageToGCS(newImage);
+        }
+
+        // Update the chatroom document with new details
+        const result = await chatroomsCollection.updateOne(
+            { _id: new ObjectId(chatroomId) },
+            {
+                $set: {
+                    name,
+                    allowedRoles: JSON.parse(allowedRoles), // Assuming allowedRoles is sent as a JSON string
+                    image: imageUrl // Set to new image URL if a new image was uploaded, otherwise remains unchanged
+                }
+            }
+        );
+
+        if (result.modifiedCount === 0) {
+            throw new Error('Chatroom update failed');
+        }
+
+        res.send('Chatroom updated successfully');
+    } catch (error) {
+        console.error('Failed to update chatroom:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+authRouter.delete('/chatrooms/:id', async (req, res) => {
+    const chatroomId = req.params.id;
+
+    try {
+        // Convert string ID to MongoDB ObjectId
+        const objectId = new ObjectId(chatroomId);
+        // Delete the chatroom from the collection
+        const result = await chatroomsCollection.deleteOne({ _id: objectId });
+
+        if (result.deletedCount === 1) {
+            res.status(200).send({ message: 'Chatroom deleted successfully' });
+        } else {
+            res.status(404).send({ message: 'Chatroom not found' });
+        }
+    } catch (error) {
+        console.error('Error deleting chatroom:', error);
+        res.status(500).send({ message: 'Internal Server Error' });
+    }
+});
 
 authRouter.post('/chatrooms/:chatroomId/send', async (req, res) => {
     try {

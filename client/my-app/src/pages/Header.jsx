@@ -71,6 +71,20 @@ function Header() {
                                                 </div>
                                             </div>
                                         </NavDropdown.Item>
+                                        <NavDropdown.Item href="/createChatrooms" style={{'background-color': '#464f34e8',}}>
+                                        <div className="home-wrapper">
+                                                <div className="home">
+                                                        <div className= "text-wrapper-23 fs-6">Create Chatrooms</div>
+                                                </div>
+                                            </div>
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item href="/editChatrooms" style={{'background-color': '#464f34e8',}}>
+                                            <div className="home-wrapper">
+                                                <div className="home">
+                                                        <div className= "text-wrapper-23 fs-6">Edit Chatrooms</div>
+                                                </div>
+                                            </div>
+                                        </NavDropdown.Item>
                                     </NavDropdown>
                                     )}
                                     {role && <Nav.Link href="/edituser">Edit User</Nav.Link>}
