@@ -1089,6 +1089,31 @@ authRouter.get('/reviews', async (req, res) => {
     }
 });
 
+// Assuming authRouter is your express router
+
+authRouter.delete('/reviews/:id', async (req, res) => {
+    const { id } = req.params;
+
+    // Validate the provided ID
+    if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'Invalid ID format.' });
+    }
+
+    try {
+        // Assuming you have established a connection to your database and have access to the `client` object
+        const collection = client.db(dbName).collection("reviews");
+        const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: 'Review not found or already deleted.' });
+        }
+
+        res.status(200).json({ message: 'Review successfully deleted.' });
+    } catch (error) {
+        console.error('Error deleting review:', error);
+        res.status(500).json({ message: 'Failed to delete review due to an internal error.' });
+    }
+});
 
 
 
