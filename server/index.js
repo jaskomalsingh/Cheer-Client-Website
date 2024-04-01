@@ -1,8 +1,6 @@
 const express = require('express');
 const app = express();
-
 const cors = require('cors');
-
 const authRouter = express.Router();
 const fs = require('fs');
 const fsPromises = require('fs').promises;
@@ -16,7 +14,6 @@ const corsOptions = {
     origin:  ["http://localhost:3000", "http://34.130.147.130"], // Allow only the React app to connect
     credentials: true, // Allow cookies and authentication headers
 };
-
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
@@ -29,9 +26,6 @@ const { ObjectId } = require('mongodb');
 const imageBucketName = process.env.IMAGES_BUCKET_NAME;
 const imageBucket = storage.bucket(imageBucketName);
 const chatBucketName = process.env.CHAT_BUCKET_NAME;
-
-
-
 // Chatroom Stuff
 const http = require('http');
 const socketIo = require('socket.io');
