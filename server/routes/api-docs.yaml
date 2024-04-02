@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info:
+  title: Sage API Integration
+  description: API endpoints for integrating with Sage for authentication and invoice management.
+  version: "1.0"
+servers:
+  - url: http://localhost:3001/api
+paths:
+  /api/auth/sage/initialize:
+    get:
+      summary: Initializes the authentication process
+      operationId: initializeAuth
+      responses:
+        302:
+          description: Redirects to the Sage authentication page
+
+  /api/auth/sage/done:
+    get:
+      summary: Completes the authentication process being the callback
+      operationId: completeAuth
+      parameters:
+        - in: query
+          name: code
+          required: true
+          schema:
+            type: string
+          description: Authorization code returned by Sage after user authorization
+      responses:
+        200:
+          description: Authentication successful, redirects to the application
+        400:
+          description: Authorization code not found in the request
+        500:
+          description: Authentication failed
+
+  /api/auth/sage/get-all-sales-invoices:
+    get:
+      summary: Fetches all sales invoices
+      operationId: getAllSalesInvoices
+      responses:
+        200:
+          description: List of all sales invoices
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+        401:
+          description: Access token is missing or invalid
+        500:
+          description: Error fetching sales invoices
+
+  /api/auth/sage/get-sales-invoice/{id}:
+    get:
+      summary: Fetches a single sales invoice by ID
+      operationId: getSalesInvoiceById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the sales invoice to fetch
+      responses:
+        200:
+          description: Sales invoice details
+          content:
+            application/json:
+              schema: {}
+        500:
+          description: Error fetching sales invoice details
+
+  /api/auth/sage/get-all-purchase-invoices:
+    get:
+      summary: Fetches all purchase invoices
+      operationId: getAllPurchaseInvoices
+      responses:
+        200:
+          description: List of all purchase invoices
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+        401:
+          description: Access token is missing or invalid
+        500:
+          description: Error fetching purchase invoices
+
+  /api/auth/sage/get-purchase-invoice/{id}:
+    get:
+      summary: Fetches a single purchase invoice by ID
+      operationId: getPurchaseInvoiceById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the purchase invoice to fetch
+      responses:
+        200:
+          description: Purchase invoice details
+          content:
+            application/json:
+              schema: {}
+        500:
+          description: Error fetching purchase invoice details

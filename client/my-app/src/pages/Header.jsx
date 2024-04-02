@@ -92,6 +92,7 @@ function Header() {
                                     {['admin', 'employee'].includes(role) && <NavDropdown title="Employee" id="clock-in-dropdown" style={{ 'backdrop-filter': 'blur(21px) brightness(100%);'}} variant="dark">
                                         <NavDropdown.Item href="/Payrollcalculator" style={{'background-color': '#464f34e8',}} >Payroll Calculator</NavDropdown.Item>
                                         <NavDropdown.Item href="/clock" style={{'background-color': '#464f34e8',}} >Clock In</NavDropdown.Item>
+                                        <NavDropdown.Item href="/invoices" style={{'background-color': '#464f34e8',}} >Invoices</NavDropdown.Item>
                                     </NavDropdown> }
 
 

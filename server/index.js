@@ -1,6 +1,14 @@
 const express = require('express');
 const app = express();
+const axios = require('axios');
 const cors = require('cors');
+const pathToSwaggerUi = require('swagger-ui-dist').absolutePath()
+const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser'); 
+const swaggerJsdoc = require("swagger-jsdoc");
+const qs = require('qs');
+const cheerio = require('cheerio');
+const swaggerUi = require("swagger-ui-express");
 const authRouter = express.Router();
 const fs = require('fs');
 const fsPromises = require('fs').promises;
@@ -15,9 +23,11 @@ const corsOptions = {
     credentials: true, // Allow cookies and authentication headers
 };
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use('/api/auth', authRouter);
+app.use(express.static(pathToSwaggerUi));
 const multer = require('multer');
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage();
@@ -1216,6 +1226,161 @@ authRouter.delete('/reviews/:id', async (req, res) => {
 
 
 
+authRouter.get('/sage/initialize', async (req, res) => {
+    console.log('Initialize Sage')
+    const clientId = process.env.SAGE_CLIENT_ID;
+    const redirectUri = encodeURIComponent(process.env.SAGE_REDIRECT_URI);
+    res.redirect(`https://www.sageone.com/oauth2/auth/central?filter=apiv3.1&response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`);
+})
+authRouter.get('/sage/done', async (req, res)=> {
+    const code = req.query.code;
+    if (!code) {
+        return res.status(400).send("Authorization code not found in the request.");
+    }
+    try {
+        const response = await axios.post('https://oauth.accounting.sage.com/token', qs.stringify({
+          code,
+          redirect_uri: process.env.SAGE_REDIRECT_URI,
+          client_id: process.env.SAGE_CLIENT_ID,
+          client_secret: process.env.SAGE_CLIENT_SECRET,
+          grant_type: 'authorization_code'
+        }), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        const accessToken = response.data.access_token;
+        const access_expires_in = response.data.expires_in;
+        const refreshToken = response.data.refresh_token;
+
+        res.cookie('accessToken', accessToken, { httpOnly: true, secure: true });
+        res.cookie('access_expires_in', access_expires_in, { httpOnly: true, secure: true });
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
+        res.redirect(process.env.SAGE_FRONTEND_REDIRECT);
+        // Use the access token to make API calls
+      } catch (error) {
+        console.log(error)
+        res.status(500).send("Authentication failed");
+      }
+})
+
+authRouter.get('/sage/get-all-sales-invoices', async (req, res) => {
+    const accessToken = req.cookies.accessToken;
+    if (!accessToken) {
+        return res.status(401).send('Access token is missing or invalid');
+    }
+    console.log('Get all Sales Invoices')
+    try {
+        const response = await axios.get(`https://api.accounting.sage.com/v3.1/sales_invoices`, {
+            headers: {
+                'Authorization': `Bearer ${req.cookies.accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        res.json(response.data);
+        res.status(200)
+    } catch (error) {
+        console.error('Error fetching sales invoices from Sage:', error);
+        res.status(500).send('Error fetching sales invoices');
+    }
+})
+
+authRouter.get('/sage/get-sales-invoice/:id', async (req, res) => {
+    const key = req.params.id;
+    const accessToken = req.cookies.accessToken;
+    if (!accessToken) {
+        return res.status(401).send('Access token is missing or invalid');
+    }
+    console.log('Get Sales Invoice: ' + key);
+    try {
+        const response = await axios.get(`https://api.accounting.sage.com/v3.1/sales_invoices/${key}`, {
+            headers: {
+                'Authorization': `Bearer ${req.cookies.accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error fetching sales invoice from Sage:', error);
+        res.status(error.response ? error.response.status : 500).send('Error fetching sales invoice details');
+    }
+})
+
+authRouter.get('/sage/get-all-purchase-invoices', async (req, res) => {
+    const accessToken = req.cookies.accessToken;
+    if (!accessToken) {
+        return res.status(401).send('Access token is missing or invalid');
+    }
+    console.log('Get all Purchase Invoices')
+
+    try {
+        const axiosResponse = await axios.get(`https://api.accounting.sage.com/v3.1/purchase_invoices`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        res.json(axiosResponse.data);
+        res.status(200)
+    } catch (error) {
+        console.error('Error fetching purchase invoices from Sage:', error);
+        if (error.response) {
+            // If Sage API returns an error, forward that status code and message
+            res.status(error.response.status).send(error.response.data);
+        } else {
+            // If the error is not from Sage API, send a 500 status code
+            res.status(500).send('Error fetching purchase invoices');
+        }
+    }
+})
+
+authRouter.get('/sage/get-purchase-invoice/:id', async (req, res) => {
+    const key = req.params.id;
+    console.log('Get Purchase Invoice: ' + key);
+    const accessToken = req.cookies.accessToken;
+    if (!accessToken) {
+        return res.status(401).send('Access token is missing or invalid');
+    }
+    try {
+        const response = await axios.get(`https://api.accounting.sage.com/v3.1/purchase_invoices/${key}`, {
+            headers: {
+                'Authorization': `Bearer ${req.cookies.accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error fetching purchase invoice from Sage:', error);
+        res.status(error.response ? error.response.status : 500).send('Error fetching purchase invoice details');
+    }    
+})
+
+const options = {
+  definition: {
+    openapi: "3.1.0",
+    info: {
+      title: "Sage API Integration",
+      version: "1.0",
+      description:
+        "API endpoints for integrating with Sage for authentication and invoice management.",
+    },
+    servers: [
+      {
+        url: "http://localhost:3001",
+      },
+    ],
+  },
+  apis: ["./routes/*.yaml"],
+};
+
+const specs = swaggerJsdoc(options);
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, { explorer: true })
+);
 
 server.listen(port, () => {
     console.log(`Listening on port ${port}`);

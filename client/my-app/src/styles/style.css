@@ -367,7 +367,6 @@ h2 {
   transform: translateX(-50%);
   object-fit: cover;
   position: relative;
-  top: 1rem;
   width: 100%;
 }
 

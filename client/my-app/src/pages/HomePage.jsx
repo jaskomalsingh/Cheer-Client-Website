@@ -86,7 +86,7 @@ export const HomePage = () => {
                     <div className="text-wrapper-7">Founding and Purpose</div>
                     <p className="p">
                       Founded in 2021, OLLI was established by a group of caregivers and activists to support
-                      seniors with intellectual disabilities, fostering a supportive community for them and their
+                      people with intellectual disabilities, fostering a supportive community for them and their
                       families.
                     </p>
                   </div>
@@ -178,7 +178,7 @@ export const HomePage = () => {
                         <div className="div-2">
                           <div className="text-wrapper-7">Compassion</div>
                           <p className="text-wrapper-11">
-                            We believe in showing deep empathy and understanding towards all our residents. Our approach is
+                            We believe in showing deep empathy and understanding towards all our members. Our approach is
                             to care for each individual with kindness, patience, and a nurturing spirit.
                           </p>
                         </div>
@@ -189,8 +189,8 @@ export const HomePage = () => {
                         <div className="div-2">
                           <div className="text-wrapper-7">Respect</div>
                           <p className="text-wrapper-12">
-                            Every senior is treated with the utmost respect and dignity. We recognize the rich life
-                            experiences of our residents and honor their wisdom and individuality.
+                            Every person is treated with the utmost respect and dignity. We recognize the rich life
+                            experiences of our members and honor their wisdom and individuality.
                           </p>
                         </div>
                       </div>
@@ -203,7 +203,7 @@ export const HomePage = () => {
                           <div className="text-wrapper-7">Integrity</div>
                           <p className="text-wrapper-12">
                             Integrity guides our actions. We are committed to honesty, ethical practices, and transparency
-                            in all our dealings with residents, their families, and our community.
+                            in all our dealings with members, their families, and our community.
                           </p>
                         </div>
                       </div>
@@ -214,7 +214,7 @@ export const HomePage = () => {
                           <div className="text-wrapper-7">Joy and Positivity</div>
                           <p className="text-wrapper-12">
                             Our center is a place of happiness and optimism. We encourage activities and interactions that
-                            bring joy and laughter to our residents’ lives.
+                            bring joy and laughter to our members' lives.
                           </p>
                         </div>
                       </div>
@@ -404,21 +404,21 @@ export const HomePage = () => {
                 <Row>
                   <Col>
                     <Image className="img-partner" alt="Element" src={rockLogo} fluid />
-                    <p>Rock Glen Family Resort</p>
+                    <p className="partner-text">Rock Glen Family Resort</p>
                   </Col>
                   <Col>
                     <Image className="img-partner" alt="Element" src={algarvaLogo} />
-                    <p>Algarva 168 Grand Bend</p>
+                    <p className="partner-text">Algarva 168 Grand Bend</p>
                   </Col>
                 </Row>
                 <Row>
                   <Col style={{}}>
                     <Image className="img-partner"alt="Element" src={sunsetLogo} />
-                    <p>Sunset Foundation</p>
+                    <p className="partner-text">Sunset Foundation</p>
                   </Col>
                   <Col>
                     <Image className="img-partner" alt="Element" src={ocLogo} />
-                    <p>Ontario Caregivers Association</p>
+                    <p className="partner-text">Ontario Caregivers Association</p>
                   </Col>
                 </Row>
               </Container>

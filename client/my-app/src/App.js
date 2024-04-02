@@ -6,6 +6,7 @@ import {ContactPage} from './pages/ContactPage'
 import {ContentManagement1} from './pages/ContentManagement1'
 import {ContentManagement2} from './pages/ContentManagement2'
 import {ContentManagement3} from './pages/ContentManagement3'
+import {AdminSalesInvoice} from './pages/AdminSalesInvoice.jsx'
 import {HomePage} from './pages/HomePage'
 import SignIn from './pages/LoginForm.jsx';
 import {SignUp} from './pages/SignUp';
@@ -60,6 +61,7 @@ const App = () => {
           <Route path='/writereviewpage' element = {<WriteReviewPage/>}/>
           <Route path='/readreview' element = {<ReadReview/>}/>
           <Route path='/editChatrooms' element = {<EditChatrooms/>}/>
+          <Route path='/invoices' element ={<AdminSalesInvoice/>}/>
           
         </Routes>
       </BrowserRouter>
