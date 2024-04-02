@@ -17,14 +17,14 @@
   @media screen and (max-width: 992px) {
     .footer-content .background, .footer-content .background-wrapper,
     .footer-content .img, .footer-content .overlap-group, .footer-content{
-      height: 20rem;
+      height: 14rem;
     }
   }
   
   @media screen and (min-width: 992px) {
     .footer-content .background, .footer-content .background-wrapper,
     .footer-content .img, .footer-content .overlap-group, .footer-content{
-      height: 30.625rem;
+      height: 20rem;
     }
   }
 
@@ -41,23 +41,13 @@
     width: 100%;
   }
 
-  .footer-content .line {
-    height: 1px;
-    left: 0;
-    object-fit: cover;
-    position: absolute;
-    top: -1px;
-    width: 100%;
-    max-width: 1200px;
-  }
-
   .footer-content .content-2 {
     align-items: flex-start;
     display: flex;
     left: 50%;
     transform: translateX(-50%);
     position: absolute;
-    top: 7.375rem;
+    top: 3rem;
     width: 100%;
     max-width: 1200px;
   }
@@ -91,7 +81,7 @@
 
   @media screen and (min-width: 992px) {
     .footer-content .content-2 {
-      gap: 290px;
+      gap: 18.125rem;
     }
 
     .footer-content .copyright {
@@ -99,7 +89,7 @@
       left: 50%;
       transform: translateX(-50%);
       position: absolute;
-      top: 26.1875rem;
+      top: 16rem;
       width: 100%;
       max-width: 1200px;
     }
