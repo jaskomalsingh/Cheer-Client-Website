@@ -16,6 +16,8 @@ function ChatroomPage() {
     const messagesEndRef = useRef(null);
     const currentRoomRef = useRef(currentRoom); // Ref to track the current room
     const navigate = useNavigate();
+    const isAdmin = localStorage.getItem('role') === 'admin';
+    const [selectedMessageId, setSelectedMessageId] = useState(null); // State to track selected message
 
     useEffect(() => {
         currentRoomRef.current = currentRoom; // Update ref whenever currentRoom changes
@@ -26,7 +28,7 @@ function ChatroomPage() {
 
         // Redirect if not admin
         if (role == 'user' || !role) {
-          navigate('/'); // Redirect to home page or a designated "not authorized" page
+            navigate('/'); // Redirect to home page or a designated "not authorized" page
         }
         const forceUpdate = () => setCurrentRoom((prevRoom) => ({ ...prevRoom }))
         const newSocket = io('http://localhost:3001', {
@@ -98,6 +100,35 @@ function ChatroomPage() {
             chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
         }
     };
+    const handleDeleteMessage = (messageToDel) => {
+        if (!isAdmin) return;
+        socket.emit('deleteMessage', messageToDel);
+        setCurrentRoom((prevRoom) => {
+            const updatedMessages = prevRoom.messages.filter((message) => message !== messageToDel);
+            return { ...prevRoom, messages: updatedMessages };
+        });
+        setSelectedMessageId(null); // Reset selected message ID after deletion
+        console.log("chatroomid", currentRoomRef.current._id, "messageToDel", messageToDel)
+    };
+
+    const handleSelectMessage = (messageId) => {
+        setSelectedMessageId(messageId); // Toggle selection
+    };
+
+    const toggleMessageSelect = (message) => {
+        setCurrentRoom((prevRoom) => {
+            const updatedMessages = prevRoom.messages.map((messages) => {
+                if (messages === message) {
+                    return { ...message, selected: !message.selected };
+                }
+                return message;
+            });
+            console.log("updatedMessages", message)
+
+            return { ...prevRoom, messages: updatedMessages };
+        });
+    };
+
 
     const formatDate = (timestamp) => {
         const date = new Date(timestamp);
@@ -129,10 +160,14 @@ function ChatroomPage() {
                                 {currentRoom.messages
                                     .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
                                     .map((message, index) => (
-                                        <div key={index} className={`message ${message.senderEmail === email ? 'sent' : 'received'}`}
+                                        <div key={index}
+                                            className={`message ${message.senderEmail === email ? 'sent' : 'received'} ${message.selected ? 'selected' : ''}`}
                                             title={formatDate(message.timestamp)}
+                                            onClick={() => handleSelectMessage(message)} // Toggle select on click
                                         >
-
+                                            {isAdmin && selectedMessageId === message && (
+                                <span className="delete-button" onClick={() => handleDeleteMessage(message)}>Delete</span>
+                            )}
                                             <span className="message-author">{message.senderEmail === email ? 'You' : message.name}</span>: <span className="message-content">{message.content}</span>
                                         </div>
                                     ))}
@@ -156,7 +191,7 @@ function ChatroomPage() {
                     )}
                 </main>
             </div>
-            <SpeechButton/>
+            <SpeechButton />
             <Footer />
         </div>
     );

@@ -22,6 +22,7 @@ import ChatroomPage from './pages/ChatroomPage.jsx';
 import{ PhotoUpload  } from './pages/PhotoUpload.jsx';
 import { ImageView } from './pages/ImageView.jsx';
 import CreateChatrooms from './pages/CreateChatrooms.jsx';
+import EditChatrooms from './pages/EditChatrooms.jsx';
 import StarRating from './pages/StarRating';
 import WriteReviewPage from './pages/WriteReviewPage';
 import ReadReview from './pages/ReadReview';
@@ -59,6 +60,7 @@ const App = () => {
           <Route path='/starrating' element = {<StarRating/>}/>
           <Route path='/writereviewpage' element = {<WriteReviewPage/>}/>
           <Route path='/readreview' element = {<ReadReview/>}/>
+          <Route path='/editChatrooms' element = {<EditChatrooms/>}/>
           <Route path='/invoices' element ={<AdminSalesInvoice/>}/>
           
         </Routes>

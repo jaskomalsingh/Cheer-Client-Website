@@ -169,5 +169,18 @@
     }
   }
   
+.btn-danger {
+    background-color: #dc3545; /* Bootstrap's red color */
+    color: white;
+    border: none; /* Remove default border */
+    padding: 10px 20px; /* Add some padding */
+    border-radius: 5px; /* Optional: rounded corners */
+    cursor: pointer; /* Change mouse cursor to indicate clickable */
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* A slightly darker red for hover effect */
+}
+
   /* You can add additional media queries and styles as needed */
   

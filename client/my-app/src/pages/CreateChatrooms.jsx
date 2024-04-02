@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import ChatButton from './ChatButton';
 import '../styles/CreateChatrooms.css'; // Ensure you link to your CSS file
 
 const CreateChatrooms = () => {
     const [name, setName] = useState('');
-    const [allowedRoles, setAllowedRoles] = useState([]);
+    const [allowedRoles, setAllowedRoles] = useState(['admin']);
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
+    const navigate = useNavigate();
+
+
+    
+    useEffect(() => {
+      const role = localStorage.getItem('role'); // Get role from localStorage
+
+      // Redirect if not admin
+      if (role !== 'admin') {
+        navigate('/'); // Redirect to home page or a designated "not authorized" page
+    }});
+
+   
 
     const handleRoleChange = (role, isChecked) => {
         if (isChecked) {
@@ -48,9 +62,13 @@ const CreateChatrooms = () => {
             });
 
             if (response.ok) {
-                alert('Chatroom created successfully!');
-                // Optionally, redirect or clear the form
-            } else {
+              alert('Chatroom created successfully!');
+              // Reset form fields to their initial state
+              setName('');
+              setAllowedRoles(['admin']); // Reset to default or initial state as per your requirement
+              setImage(null);
+              setImagePreview(null);
+          } else {
                 alert('Failed to create chatroom.');
             }
         } catch (error) {
@@ -82,7 +100,7 @@ const CreateChatrooms = () => {
       
                   <fieldset className="form-group">
                     <legend>Allowed Roles</legend>
-                    {['admin', 'user', 'verifiedUser', 'employee'].map((role) => (
+                    {['user', 'verifiedUser', 'employee'].map((role) => (
                       <div className="form-check" key={role}>
                         <input
                           className="form-check-input"

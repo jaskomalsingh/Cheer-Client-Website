@@ -62,7 +62,9 @@ const WriteReviewPage = () => {
           placeholder="Your Name"
           required
         />
-        <button type="submit" className="submit-button">Submit Review</button>
+        <button 
+        style={{ backgroundColor: '#545c44', color: 'white' }}
+        type="submit" className="submit-button">Submit Review</button>
       </form>
     </div>
     <Footer/>

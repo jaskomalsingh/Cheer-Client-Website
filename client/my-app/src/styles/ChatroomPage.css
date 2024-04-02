@@ -133,4 +133,24 @@
     color: #666; /* Adjust as needed */
     
   }
+  .delete-button {
+    cursor: pointer;
+    color: white;
+    background-color: red;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-left: 10px;
+    font-size: 0.8em;
+    border: none;
+    display: inline-block;
+    vertical-align: middle;
+  }
   
+  .message.selected .delete-button {
+    visibility: visible;
+  }
+  
+  
+  .message:hover .delete-button {
+    visibility: visible;
+  }
