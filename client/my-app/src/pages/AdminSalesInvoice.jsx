@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import ChatButton from './ChatButton';
 import "../styles/AdminSalesInvoice.css";
 import SpeechButton from "./TextToSpeech";
+import Cookies from 'js-cookie';
 
 export const AdminSalesInvoice = () => {
     const [invoices, setInvoices] = useState([]);
@@ -12,10 +13,13 @@ export const AdminSalesInvoice = () => {
     const [detailedInvoice, setDetailedInvoice] = useState(null);
     const [invoiceType, setInvoiceType] = useState('sales'); // 'sales' or 'purchase'
     const [selectedInvoiceType, setSelectedInvoiceType] = useState('sales');
-
+    const [sageConnected, setSageConnected] = useState(false);
 
     useEffect(() => {
-        authenticateSage();
+        //authenticateSage();
+        if (Cookies.get('access_expires_in')) {
+            setSageConnected(true)
+        }
     }, []);
 
     const authenticateSage = async () => {
@@ -31,16 +35,43 @@ export const AdminSalesInvoice = () => {
             } else {
                 throw new Error('Failed to authenticate with Sage');
             }
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const refreshAccessToken = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/api/auth/sage/initialize', {
+                method: 'GET',
+                credentials: 'include', 
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json'
+                },
+            });
+            if (response.ok) {
+                console.log(response)
+                // If you're redirected to an authentication page, you won't handle it here.
+                // The user will be redirected back to your app after authentication is done.
+                // After redirecting back, you would call getAllSalesInvoices.
+            } else {
+                throw new Error('Failed to authenticate with Sage');
+            }
         } catch (error) {
             console.error('Error:', error);
         }
     };
 
     const connectToSage = async () => {
-        // The logic to authenticate with Sage will go here
-        // It could simply be a window.location redirect to your backend endpoint
-        // which will start the OAuth process and redirect to the Sage login page.
         window.location.href = 'http://localhost:3001/api/auth/sage/initialize';
+        /*if (sageConnected) {
+            refreshAccessToken()
+        } else {
+            window.location.href = 'http://localhost:3001/api/auth/sage/initialize';
+            setSageConnected(true)
+        }*/
     };
 
     const getInvoices = async (type) => {
@@ -141,12 +172,11 @@ export const AdminSalesInvoice = () => {
         );
     };
 
-
-    // ... other functions ...
     return (
         <div>
             <Header />
             <div className="sage-sales-invoice">
+                <h1>Sage Accounting Invoicing</h1>
                 {showInvoiceDetails ? (
                     renderInvoiceDetails()
                 ) : (
@@ -154,7 +184,7 @@ export const AdminSalesInvoice = () => {
                         {loading ? (
                             <p>Loading invoices...</p>
                         ) : invoices.length > 0 ? (
-                            <table>
+                            <table className="invoices-all">
                                 <thead>
                                     <tr>
                                         <th>Invoice ID</th>

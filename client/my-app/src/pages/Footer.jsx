@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 
 function Footer({ height }) {
   const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
-  console.log(isMobile)
+
   return (
     <div className="footer-content">
       <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>

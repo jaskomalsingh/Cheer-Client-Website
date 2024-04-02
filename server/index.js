@@ -1069,10 +1069,9 @@ authRouter.get('/reviews', async (req, res) => {
 });
 
 authRouter.get('/sage/initialize', async (req, res) => {
-    console.log('initialize')
+    console.log('Initialize Sage')
     const clientId = process.env.SAGE_CLIENT_ID;
     const redirectUri = encodeURIComponent(process.env.SAGE_REDIRECT_URI);
-    console.log(process.env.SAGE_CLIENT_SECRET === 't>eLHGI@ORM;zj#]h)vg')
     res.redirect(`https://www.sageone.com/oauth2/auth/central?filter=apiv3.1&response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`);
 })
 authRouter.get('/sage/done', async (req, res)=> {
@@ -1093,7 +1092,12 @@ authRouter.get('/sage/done', async (req, res)=> {
             }
         });
         const accessToken = response.data.access_token;
+        const access_expires_in = response.data.expires_in;
+        const refreshToken = response.data.refresh_token;
+
         res.cookie('accessToken', accessToken, { httpOnly: true, secure: true });
+        res.cookie('access_expires_in', access_expires_in, { httpOnly: true, secure: true });
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
         res.redirect(process.env.SAGE_FRONTEND_REDIRECT);
         // Use the access token to make API calls
       } catch (error) {
@@ -1107,7 +1111,7 @@ authRouter.get('/sage/get-all-sales-invoices', async (req, res) => {
     if (!accessToken) {
         return res.status(401).send('Access token is missing or invalid');
     }
-
+    console.log('Get all Sales Invoices')
     try {
         const response = await axios.get(`https://api.accounting.sage.com/v3.1/sales_invoices`, {
             headers: {
@@ -1129,6 +1133,7 @@ authRouter.get('/sage/get-sales-invoice/:id', async (req, res) => {
     if (!accessToken) {
         return res.status(401).send('Access token is missing or invalid');
     }
+    console.log('Get Sales Invoice: ' + key);
     try {
         const response = await axios.get(`https://api.accounting.sage.com/v3.1/sales_invoices/${key}`, {
             headers: {
