@@ -31,7 +31,7 @@ export const NewsletterView = () => {
     return (
         <div className="NewsGallery">
             {/* <Header /> */}
-            <div className="gallery-title">Our Newsletters!</div>
+            <div className="gallery-title">Our Newsletters</div>
             <div className="horizontal-scroll-box">
                 <div className="scroll-container">
                 {newsletters.map(newsletter => (
