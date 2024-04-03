@@ -190,7 +190,7 @@
   }
   
   .home-page .element-5 {
-    background-color: #bdbcaa;
+    background-color: white;
     border-radius: 26.17px;
     height: 52.33px;
     position: relative;
@@ -218,7 +218,7 @@
   
   .home-page .core-wrapper {
     align-items: flex-start;
-    background-color: #ebebd3;
+    background-color: white;
     border-radius: 1.25rem;
     display: inline-flex;
     flex: 0 0 auto;
@@ -746,6 +746,10 @@
     position: relative;
     width: 420.2px;
   }
+  .scroll-container {
+    display: flex;
+    align-items: center;
+}
   
   .home-page .element-16 {
     align-items: flex-start;

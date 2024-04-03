@@ -26,6 +26,7 @@ import EditChatrooms from './pages/EditChatrooms.jsx';
 import StarRating from './pages/StarRating';
 import WriteReviewPage from './pages/WriteReviewPage';
 import ReadReview from './pages/ReadReview';
+import { NewsletterView } from './pages/NewsletterView.jsx';
 
 //import Header from './pages/Header';
 //import CheckBoxWithLabel from './pages/CheckBoxWithLabel.jsx';
@@ -62,6 +63,7 @@ const App = () => {
           <Route path='/readreview' element = {<ReadReview/>}/>
           <Route path='/editChatrooms' element = {<EditChatrooms/>}/>
           <Route path='/invoices' element ={<AdminSalesInvoice/>}/>
+          <Route path='/NewsletterView' element ={<NewsletterView/>}/>
           
         </Routes>
       </BrowserRouter>

@@ -1,0 +1,93 @@
+
+
+/* Updated styling for newsletter gallery */
+.horizontal-scroll-box {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.8);
+    border-radius: 18px;
+    background: #f8f9fa; /* Light gray background, suitable for readability */
+    margin: 20px auto;
+    position: relative;
+    max-width: 90%;
+}
+
+.scroll-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Styling for individual newsletter previews */
+.newsletter-container {
+    display: inline-flex;
+    flex-direction: column; /* Stack image and text vertically */
+    align-items: center; /* Center-align the contents */
+    margin-right: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.newsletter-container img {
+    height: 100px; /* Adjust based on your design */
+    width: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.newsletter-container p {
+    margin-top: 10px; /* Space between image and text */
+    color: #333; /* Text color */
+    font-size: 20px; /* Text size */
+    font-weight:bolder;
+    font-style: bold;
+    text-align: center; /* Center text */
+}
+
+.newsletter-container:hover {
+    transform: scale(1.1);
+}
+
+.modal-image {
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .horizontal-scroll-box {
+        padding: 10px;
+    }
+
+    .newsletter-container img {
+        height: 150px; /* Smaller on smaller screens */
+    }
+}
+
+.gallery-title {
+    font-size: 30px;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Scrollbar styling */
+.horizontal-scroll-box::-webkit-scrollbar {
+    height: 8px;
+    background-color: white;
+}
+
+.horizontal-scroll-box::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 10px;
+    border: 2px solid white;
+}
+
+.horizontal-scroll-box::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px grey;
+}
