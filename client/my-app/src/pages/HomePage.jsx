@@ -18,6 +18,7 @@ import sunsetLogo from '../assets/sunset_community_foundation_logo.jpg';
 import ocLogo from '../assets/ontario_caregiver_logo.png';
 import SpeechButton from "./TextToSpeech";
 import ReadReview from "./ReadReview";
+import { NewsletterView } from "./NewsletterView";
 
 export const HomePage = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 992px)` });
@@ -422,7 +423,8 @@ export const HomePage = () => {
                   </Col>
                 </Row>
               </Container>
-              <p className="text-wrapper-13">Read Real Reviews</p>
+              <NewsletterView />
+              <p className="text-wrapper-13">Reviews</p>
               <ReadReview></ReadReview>
             </div>
           </div>
