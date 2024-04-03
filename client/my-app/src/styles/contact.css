@@ -1,12 +1,8 @@
-.contact-page {
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-  }
+
   
   .contact-page .div {
+    padding-top:2%;
+    padding-bottom:2% ;
     background-color: #ffffff;
     overflow: hidden;
     position: relative;

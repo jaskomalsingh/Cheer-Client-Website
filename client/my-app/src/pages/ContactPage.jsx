@@ -40,8 +40,9 @@ export const ContactPage = () => {
   return (
     <Container fluid>
       <div className="contact-page">
+      <Header />
         <div className="div">
-          <Header />
+          
           {isMobile ?
             <div className="contact-form">
               <div className="proccess">
@@ -55,35 +56,35 @@ export const ContactPage = () => {
                       Let us know about any questions you may have and just submit the form. We will get back to you as soon as we can to help provide any more information.
                     </p>
                     <p>
-                    Address: 8685 Rockglen Rd. Arkona ON, N0M 1B0
+                      Address: 8685 Rockglen Rd. Arkona ON, N0M 1B0
                     </p>
                     <p>
-                    Email: ongoinglivinglearning@gmail.com
+                      Email: ongoinglivinglearning@gmail.com
                     </p>
                   </div>
                 </div>
               </div>
               <form className="form" ref={refForm}>
-                
-                  <div className="div-2">
-                    <div className="text-wrapper-10">Full Name</div>
-                    <input type="text" name="name" className="text-4" placeholder="John Doe" />
-                  </div>
-                  <div className="div-2">
-                    <div className="text-wrapper-10">Email</div>
-                    <input type="email" name="email" className="text-5" placeholder="email@email.com" />
-                  </div>
+
+                <div className="div-2">
+                  <div className="text-wrapper-10">Full Name</div>
+                  <input type="text" name="name" className="text-4" placeholder="John Doe" />
+                </div>
+                <div className="div-2">
+                  <div className="text-wrapper-10">Email</div>
+                  <input type="email" name="email" className="text-5" placeholder="email@email.com" />
+                </div>
 
 
-                  <div className="div-2">
-                    <div className="text-wrapper-10">Phone</div>
-                    <input type="tel" className="text-4" placeholder="111-111-1111" />
-                  </div>
-                  <div className="div-2">
-                    <div className="text-wrapper-10">Service Inquiry (Optional)</div>
-                    <input type="text" name='subject' className="text-5" placeholder="C.H.E.E.R. Work for example" />
-                  </div>
-                
+                <div className="div-2">
+                  <div className="text-wrapper-10">Phone</div>
+                  <input type="tel" className="text-4" placeholder="111-111-1111" />
+                </div>
+                <div className="div-2">
+                  <div className="text-wrapper-10">Service Inquiry (Optional)</div>
+                  <input type="text" name='subject' className="text-5" placeholder="C.H.E.E.R. Work for example" />
+                </div>
+
                 <div className="element">
                   <div className="div-2">
                     <div className="text-wrapper-10">Message</div>
@@ -108,10 +109,10 @@ export const ContactPage = () => {
                       Let us know about any questions you may have and just submit the form. We will get back to you as soon as we can to help provide any more information.
                     </p>
                     <p>
-                    Address: 8685 Rockglen Rd. Arkona ON, N0M 1B0
+                      Address: 8685 Rockglen Rd. Arkona ON, N0M 1B0
                     </p>
                     <p>
-                    Email: ongoinglivinglearning@gmail.com
+                      Email: ongoinglivinglearning@gmail.com
                     </p>
                   </div>
                 </div>
@@ -147,15 +148,17 @@ export const ContactPage = () => {
                   <div className="text-wrapper-12">Send Message</div>
                 </button>
               </form>
-              
+
             </div>
           }
-          <SpeechButton/>
-          <Footer />
-          
+
+
+
         </div>
-        <SpeechButton/>
-        <ChatButton />
+
+        <SpeechButton />
+          <ChatButton />
+          <Footer />
       </div>
     </Container>
   );
