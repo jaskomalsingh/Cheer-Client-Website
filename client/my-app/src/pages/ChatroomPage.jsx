@@ -64,6 +64,22 @@ function ChatroomPage() {
                 });
             }
         });
+        newSocket.on('messageDeleted', (deletedMessage) => {
+            // Ensure there's a current room and the deleted message belongs to this room
+            if (currentRoomRef.current && deletedMessage.chatroomId === currentRoomRef.current._id) {
+                setCurrentRoom((prevRoom) => {
+                    // If the message is for another room, ignore it
+                    if (deletedMessage.chatroomId !== prevRoom._id) {
+                        return prevRoom;
+                    }
+        
+                    // Filter out the deleted message by its ID
+                    const updatedMessages = prevRoom.messages.filter((message) => message._id !== deletedMessage.messageId);
+                    
+                    return { ...prevRoom, messages: updatedMessages };
+                });
+            }
+        });
 
         return () => {
             newSocket.close();
@@ -112,7 +128,11 @@ function ChatroomPage() {
     };
 
     const handleSelectMessage = (messageId) => {
-        setSelectedMessageId(messageId); // Toggle selection
+        if (selectedMessageId === messageId) {
+            setSelectedMessageId(null); // Unset the selectedMessageId if the same message is clicked again
+        } else {
+            setSelectedMessageId(messageId); // Set the selectedMessageId to the clicked message's ID
+        }
     };
 
     const toggleMessageSelect = (message) => {
