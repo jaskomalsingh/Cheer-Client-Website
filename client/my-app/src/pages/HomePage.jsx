@@ -424,7 +424,7 @@ export const HomePage = () => {
                 </Row>
               </Container>
               <NewsletterView />
-              <p className="text-wrapper-13">Read Real Reviews</p>
+              <p className="text-wrapper-13">Reviews</p>
               <ReadReview></ReadReview>
             </div>
           </div>
